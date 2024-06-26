@@ -1,0 +1,21 @@
+// User Template For C++
+
+bool isToepliz(vector<vector<int>>& mat) {
+    int rows = mat.size();
+    int cols = mat[0].size();
+    for (int col = 0; col < cols; ++col) {
+        int value = mat[0][col];
+        for (int i = 1, j = col + 1; i < rows && j < cols; ++i, ++j) {
+            if (mat[i][j] != value)
+                return false;
+        }
+    }
+    for (int row = 1; row < rows; ++row) {
+        int value = mat[row][0];
+        for (int i = row + 1, j = 1; i < rows && j < cols; ++i, ++j) {
+            if (mat[i][j] != value)
+                return false;
+        }
+    }
+    return true;
+}
