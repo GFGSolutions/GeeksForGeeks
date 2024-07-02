@@ -1,0 +1,27 @@
+// User Template For C++
+
+class Solution {
+  public:
+    Node* removeAllDuplicates(struct Node* head) {
+        Node* temp= new Node(0);
+        temp->next = head;
+        Node* prev = temp;
+        Node* current = head;
+        while (current != NULL) {
+            bool isDuplicate = false;
+            while (current->next != NULL && current->data == current->next->data) {
+                isDuplicate = true;
+                current = current->next;
+            }
+            if (isDuplicate) {
+                prev->next = current->next;
+            } else {
+                prev = prev->next;
+            }
+            current = current->next;
+        }
+        Node* newHead = temp->next;
+        delete temp; 
+        return newHead;
+    }
+};
