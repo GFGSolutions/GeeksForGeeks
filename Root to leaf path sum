@@ -1,0 +1,13 @@
+// User Template For C++
+
+class Solution {
+  public:
+    bool hasPathSum(Node *root, int target) {
+        if(!root->left and !root->right){
+            return root->data==target;
+        }
+        bool t1 = (!root->left)?false:hasPathSum(root->left,target-root->data);
+        bool t2 = (!root->right)?false:hasPathSum(root->right,target-root->data);
+        return t1||t2;
+    }
+};
