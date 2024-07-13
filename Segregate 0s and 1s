@@ -1,0 +1,12 @@
+// User Template For C++
+
+class Solution {
+  public:
+    void segregate0and1(vector<int> &arr) {
+        int low=0,high=0;
+        while(high<arr.size()){
+            if(arr[high]==0) swap(arr[low++],arr[high]);
+            high++;
+        }
+    }
+};
