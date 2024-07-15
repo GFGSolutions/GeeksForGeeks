@@ -1,0 +1,17 @@
+// User Template For C++
+
+class Solution {
+  public:
+    string printString(string s, char ch, int count) {
+        int n=s.size();
+        int i=0;
+        while(i<n){
+            if(s[i]==ch)count--;
+            i++;
+            if(!count){
+                return s.substr(i);
+            }
+        }
+        return "";
+    }
+};
