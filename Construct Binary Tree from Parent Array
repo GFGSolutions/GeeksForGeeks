@@ -1,0 +1,26 @@
+// User Template For C++
+
+class Solution {
+  public:
+    Node *createTree(vector<int> parent) {
+        unordered_map<int,Node*> mp;
+        Node* root=nullptr;
+        int n=parent.size();
+        for(int i=0;i<n;i++){
+            int par=parent[i];
+            if(mp.count(i)==0) mp[i]=new Node(i);
+            if(par==-1){
+                root=mp[i];
+                continue;
+            }
+            if(mp.count(par)==0) mp[par]=new Node(par);
+            if(mp[par]->left==nullptr){
+                mp[par]->left=mp[i];
+            }
+            else{
+                 mp[par]->right=mp[i];
+            }
+        }
+        return root;
+    }
+};
