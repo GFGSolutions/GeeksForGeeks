@@ -1,0 +1,26 @@
+// User Template For C++
+
+class Solution {
+  public:
+     Node* solve(Node* root){
+        if(root==NULL){
+            return root;
+        }
+        root->left=solve(root->left);
+        root->right=solve(root->right);
+        if(root->left!=NULL && root->right==NULL){
+            Node* temp=root->left;
+            delete root;
+            return temp;
+        }
+        if(root->left==NULL && root->right!=NULL){
+            Node* temp=root->right;
+            delete root;
+            return temp;
+        }
+        return root;
+    }
+    Node *RemoveHalfNodes(Node *root) {
+        return solve(root);
+    }
+};
