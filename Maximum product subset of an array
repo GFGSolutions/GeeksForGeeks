@@ -1,0 +1,16 @@
+// User Template For C++
+
+class Solution {
+  public:
+    const long long MOD = 1e9+7; 
+    long long int findMaxProduct(vector<int>& arr) {
+        long long prod = 1;
+        long long maxi = -1e9;
+        for(auto &x : arr){
+            if(x != 0) prod = ((prod%MOD)*x)%MOD;
+            if(x < 0) maxi = max(maxi,(long long)x);
+        }   
+        if(prod < 0) prod = prod/maxi;
+        return prod;
+    }
+};
