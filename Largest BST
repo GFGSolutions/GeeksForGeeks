@@ -1,0 +1,26 @@
+// User Template For C++
+
+class Solution{
+    public:
+    pair<pair<pair<int,int>,int>,bool> solve(Node* root,int& maxi){
+        if(root==NULL) return {{{INT_MAX,INT_MIN},0},true};
+        if(root->left==NULL && root->right==NULL) return {{{root->data,root->data},1},true};
+        auto p1=solve(root->left,maxi);
+        auto p2=solve(root->right,maxi);
+        if(p1.second==false || p2.second==false) return {{{INT_MAX,INT_MIN},0},false};
+        if(root->data>p1.first.first.second && root->data<p2.first.first.first){
+            int curr_length=1+p1.first.second+p2.first.second;
+            maxi=max(maxi,curr_length);
+            int minElement=min(p1.first.first.first,root->data);
+            int maxElement=max(p2.first.first.second,root->data);
+            return {{{minElement,maxElement},curr_length},true};
+        }
+        return {{{INT_MAX,INT_MIN},0},false};
+    }
+    int largestBst(Node *root)
+    {
+        int maxi=1;
+        solve(root,maxi);
+        return maxi;
+    }
+};
