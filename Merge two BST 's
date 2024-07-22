@@ -1,0 +1,24 @@
+// User Template For C++
+
+class Solution {
+  public:
+    void inorderTraversal(Node* root, vector<int>& result) {
+        if (root == NULL) {
+            return;
+        }
+        inorderTraversal(root->left, result);
+        result.push_back(root->data);
+        inorderTraversal(root->right, result);
+    }
+    vector<int> merge(Node *root1, Node *root2) {
+        vector<int>result;
+        if(root1==NULL && root2==NULL)
+        {
+            return result;
+        }
+        inorderTraversal(root1,result);
+        inorderTraversal(root2,result);
+        sort(result.begin(),result.end());
+        return result;
+    }
+};
