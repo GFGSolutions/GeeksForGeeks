@@ -1,0 +1,18 @@
+// User Template For C++
+
+class Solution {
+  public:
+    int rowWithMax1s(vector<vector<int>>& arr) {
+        int row = -1;
+        int col = arr[0].size() - 1;
+        for (int i = 0; i < arr.size(); ++i) {
+            if (arr[i][col] == 1) {
+                row = i;
+                while (arr[i][col] == 1) {
+                    --col;
+                }
+            }
+        }
+        return row;
+    }
+};
