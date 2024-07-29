@@ -1,0 +1,163 @@
+// User Template For Java
+
+import java.util.*;
+class Solution {
+  public int numTeams(int[] rating) {
+    int n = rating.length;
+    if (n < 3) return 0;
+    List<Soldier> soldiers = new ArrayList<>();
+    for (int i = 0; i < n; i++) {
+      soldiers.add(new Soldier(rating[i], i));
+    }
+    Collections.sort(soldiers);
+    int[] indexMap = new int[n];
+    for (int i = 0; i < n; i++) {
+      indexMap[soldiers.get(i).index] = i;
+    }
+    int teams = 0;
+    teams += countTeams(indexMap, n, true);
+    teams += countTeams(indexMap, n, false);
+    return teams;
+  }
+  private int countTeams(int[] indexMap, int n, boolean ascending) {
+    int[] bit = new int[n + 1];
+    int teams = 0;
+    for (int i = 0; i < n; i++) {
+      int rank = indexMap[i] + 1;
+      int left = ascending ? getSum(bit, rank - 1) : getSum(bit, n) - getSum(bit, rank);
+      int right = ascending ? n - rank - (getSum(bit, n) - getSum(bit, rank)) : rank - 1 - getSum(bit, rank - 1);
+      teams += left * right;
+      update(bit, rank, 1);
+    }
+    return teams;
+  }
+  private void update(int[] bit, int index, int val) {
+    while (index < bit.length) {
+      bit[index] += val;
+      index += index & (-index);
+    }
+  }
+  private int getSum(int[] bit, int index) {
+    int sum = 0;
+    while (index > 0) {
+      sum += bit[index];
+      index -= index & (-index);
+    }
+    return sum;
+  }
+  private class Soldier implements Comparable<Soldier> {
+    int rating;
+    int index;
+    Soldier(int rating, int index) {
+      this.rating = rating;
+      this.index = index;
+    }
+    @Override
+    public int compareTo(Soldier other) {
+      return Integer.compare(this.rating, other.rating);
+    }
+  }
+}
+
+
+
+
+
+
+// User Template For C++
+class Solution {
+public:
+    int numTeams(vector<int>& rating) {
+        int n = rating.size();
+        if (n < 3) return 0;
+        
+        vector<pair<int, int>> soldiers;
+        for (int i = 0; i < n; i++) {
+            soldiers.push_back({rating[i], i});
+        }
+        sort(soldiers.begin(), soldiers.end());
+        
+        vector<int> indexMap(n);
+        for (int i = 0; i < n; i++) {
+            indexMap[soldiers[i].second] = i;
+        }
+        
+        return countTeams(indexMap, n, true) + countTeams(indexMap, n, false);
+    }
+    
+private:
+    int countTeams(const vector<int>& indexMap, int n, bool ascending) {
+        vector<int> bit(n + 1, 0);
+        int teams = 0;
+        
+        for (int i = 0; i < n; i++) {
+            int rank = indexMap[i] + 1;
+            int left = ascending ? getSum(bit, rank - 1) : getSum(bit, n) - getSum(bit, rank);
+            int right = ascending ? n - rank - (getSum(bit, n) - getSum(bit, rank)) : rank - 1 - getSum(bit, rank - 1);
+            teams += left * right;
+            update(bit, rank, 1);
+        }
+        
+        return teams;
+    }
+    
+    void update(vector<int>& bit, int index, int val) {
+        while (index < bit.size()) {
+            bit[index] += val;
+            index += index & (-index);
+        }
+    }
+    
+    int getSum(const vector<int>& bit, int index) {
+        int sum = 0;
+        while (index > 0) {
+            sum += bit[index];
+            index -= index & (-index);
+        }
+        return sum;
+    }
+};
+
+
+
+
+
+
+// User Template For Python
+class Solution:
+    def numTeams(self, rating: List[int]) -> int:
+        n = len(rating)
+        if n < 3:
+            return 0
+        
+        soldiers = sorted([(r, i) for i, r in enumerate(rating)])
+        index_map = [0] * n
+        for i, (_, idx) in enumerate(soldiers):
+            index_map[idx] = i
+        
+        def count_teams(ascending: bool) -> int:
+            bit = [0] * (n + 1)
+            teams = 0
+            
+            for i in range(n):
+                rank = index_map[i] + 1
+                left = self.get_sum(bit, rank - 1) if ascending else self.get_sum(bit, n) - self.get_sum(bit, rank)
+                right = n - rank - (self.get_sum(bit, n) - self.get_sum(bit, rank)) if ascending else rank - 1 - self.get_sum(bit, rank - 1)
+                teams += left * right
+                self.update(bit, rank, 1)
+            
+            return teams
+        
+        return count_teams(True) + count_teams(False)
+    
+    def update(self, bit: List[int], index: int, val: int) -> None:
+        while index < len(bit):
+            bit[index] += val
+            index += index & (-index)
+    
+    def get_sum(self, bit: List[int], index: int) -> int:
+        total = 0
+        while index > 0:
+            total += bit[index]
+            index -= index & (-index)
+        return total
