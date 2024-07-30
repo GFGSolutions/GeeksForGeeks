@@ -1,0 +1,30 @@
+// User Template For C++
+
+class Solution {
+  public:
+    string longestCommonPrefix(vector<string> arr) {
+        int n=arr.size();
+        if(n==1) return arr[0];
+        string ans="";
+        string s1=arr[0];
+        for(int i=1;i<n;i++){
+            string s2=arr[i];
+            int j=0;
+            int p=s1.size(), q=s2.size();
+            string temp="";
+            while(j<p && j<q){
+                if(s1[j]==s2[j]){
+                    temp+=s1[j];
+                    j++;
+                }
+                else{
+                    break;
+                }
+            }
+            ans=temp;
+            s1=ans;
+        }
+        if(ans.empty()) return "-1";
+        return ans;
+    }
+};
