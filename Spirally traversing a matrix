@@ -1,0 +1,32 @@
+// User Template For C++
+
+class Solution {
+  public:
+    vector<int> spirallyTraverse(vector<vector<int> > &matrix) {
+        vector<int>ans;
+        int str = 0,stc = 0,enr = matrix.size()-1,enc = matrix[0].size()-1;
+        while(ans.size() < matrix.size() * matrix[0].size()){
+            for(int j=stc;j<=enc;j++){
+                ans.push_back(matrix[str][j]);
+            }
+            str++;
+            if(ans.size() == matrix.size() * matrix[0].size())break;
+            for(int i=str;i<=enr;i++){
+                ans.push_back(matrix[i][enc]);
+            }
+            enc--;
+            if(ans.size() == matrix.size() * matrix[0].size())break;
+            for(int j=enc;j >= stc;j--){
+                ans.push_back(matrix[enr][j]);
+            }
+            enr--;
+            if(ans.size() == matrix.size() * matrix[0].size())break;
+            for(int i=enr;i>=str;i--){
+                ans.push_back(matrix[i][stc]);
+            }
+            if(ans.size() == matrix.size() * matrix[0].size())break;
+            stc++;
+        }
+        return ans;
+    }
+};
