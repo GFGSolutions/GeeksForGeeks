@@ -1,0 +1,24 @@
+// User Template For C++
+
+class Solution {
+  public:
+    int celebrity(vector<vector<int> >& mat) {
+        int rows = mat.size();
+        int cols = mat[0].size();
+        vector<pair<int, int>> freq(rows);
+        for(int i = 0; i < rows; i++){
+            for(int j = 0; j < cols; j++){
+                if(mat[i][j] == 1){
+                    freq[i].first++;
+                    freq[j].second++;
+                }
+            }
+        }
+        for(int i = 0; i < freq.size(); i++){
+            if(freq[i].first == 0 && freq[i].second == rows - 1){
+                return i;
+            }
+        }
+        return -1;
+    }
+};
