@@ -1,0 +1,26 @@
+// User Template For C++
+
+class Solution {
+  public:
+    int maxMeetings(int n, int start[], int end[]) {
+        vector<pair<int,int>>arr;
+        for(int i=0;i<n;i++)
+        {
+            arr.push_back({end[i],start[i]});
+        }
+        sort(arr.begin(),arr.end());
+        int count = 0;
+        int ending = -1;
+        for(int i=0;i<n;i++)
+        {
+            int startingTime = arr[i].second;
+            int endingTime = arr[i].first;
+            if(startingTime > ending)
+            {
+               count++;
+               ending = endingTime;
+            }
+        }
+        return count;
+    }
+};
