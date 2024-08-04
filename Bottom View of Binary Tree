@@ -1,0 +1,24 @@
+// User Template For C++
+
+class Solution {
+  public:
+    void solve(Node * root, map<int,pair<int,int>>&mp, int lvl, int depth)
+    {
+        if(!root)
+        return;
+        if(mp.find(lvl)==mp.end())
+        mp[lvl] = make_pair(depth,root->data);
+        else if(depth>=mp[lvl].first)
+        mp[lvl] = make_pair(depth,root->data);
+        solve(root->left,mp,lvl-1,depth+1);
+        solve(root->right,mp,lvl+1,depth+1);
+    }
+    vector <int> bottomView(Node *root) {
+        map<int,pair<int,int>> mp;
+        solve(root,mp,0,0);
+        vector<int> res;
+        for(auto it : mp)
+        res.push_back(it.second.second);
+        return res;
+    }
+};
