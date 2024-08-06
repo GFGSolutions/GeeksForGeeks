@@ -1,15 +1,26 @@
 // User Template For Java
 
-class Solution {
-    public boolean isValid(String str) {
-        String[] s = str.split("\\.");
-        for(int i=0;i<s.length;i++){
-            int x=Integer.parseInt(s[i]);
-            if(x>=0 && x<=255)
-                continue;
-            else
-                return false;
+class Solution 
+{
+    public boolean isValid(String str) 
+    {
+        str=str+".";
+        int count=0;
+        StringBuilder sb=new StringBuilder();
+        for(int i=0;i<str.length();i++)
+        {
+            char c=str.charAt(i);
+            if(c!='.')   sb.append(c);
+            else if(sb.length()>0)
+            {
+                count++;
+                int val=Integer.parseInt(sb.toString());
+                if(val<0 || val>255) return false;
+                if(sb.length()>1 && sb.charAt(0)=='0') return false;
+                sb.setLength(0);
+            }
+            else return false;
         }
-        return true;
+        return count==4?true:false;
     }
 }
