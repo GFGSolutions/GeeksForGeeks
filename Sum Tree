@@ -1,0 +1,22 @@
+// User Template For Java
+
+class Solution {
+    private int isSumTreeUtil(Node node) {
+        if (node == null) {
+            return 0;
+        }
+        if (node.left == null && node.right == null) {
+            return node.data;
+        }
+        int leftSum = isSumTreeUtil(node.left);
+        int rightSum = isSumTreeUtil(node.right);
+        if (leftSum + rightSum == node.data) {
+            return leftSum + rightSum + node.data;
+        } else {
+            return -1;
+        }
+    }
+    public boolean isSumTree(Node root) {
+        return isSumTreeUtil(root) != -1;
+    }
+}
