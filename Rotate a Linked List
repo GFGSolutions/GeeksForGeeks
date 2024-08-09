@@ -1,0 +1,26 @@
+// User Template For C++
+
+class Solution {
+  public:
+   Node* rotate(Node* head, int k)  {
+        if(k==0){
+            return head;
+        }
+        Node*p=NULL;
+        Node*pp=head;
+        while(pp!=NULL)  {
+            p=pp;
+            pp=pp->next;
+        }
+        p->next=head;
+        Node*ptr=head;
+        int i=1;
+        while(i<k) {
+            ptr=ptr->next;
+            i++;
+        }
+        Node*newhead=ptr->next;
+        ptr->next=NULL;
+        return newhead;
+    }
+};
