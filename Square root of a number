@@ -1,0 +1,12 @@
+// User Template For C++
+
+class Solution {
+  public:
+    long long int floorSqrt(long long int n) {
+        long long int ans=n;
+        while(ans*ans>n){
+            ans=(ans+n/ans)/2;
+        }
+        return ans;
+    }
+};
