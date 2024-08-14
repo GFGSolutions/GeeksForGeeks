@@ -1,0 +1,26 @@
+// User Template For C++
+
+class Solution {
+  public:
+    int recursion(Node* temp){
+        if(temp == nullptr)
+            return 1;
+        int carry=recursion(temp->next);
+        temp->data=(temp->data)+carry;
+        if(temp->data >=10)   {
+            temp->data=0;
+            carry=1;   }
+        else   {
+            carry=0;  }
+        return carry;   }
+        Node* addOne(Node* head) {
+        if(head == nullptr)
+            return head;
+        int carry=recursion(head);
+        if(carry ==1)    {
+            Node* nn=new Node(carry);
+            nn->next=head;
+            head=nn;   }
+        return head;
+    }
+};
