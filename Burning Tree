@@ -1,0 +1,27 @@
+// User Template For C++
+
+class Solution {
+  public:
+    int ans(Node*ptr,int &tar,int &a){
+        if(ptr==NULL)
+            return 0;
+        int aa=ans(ptr->left,tar,a);
+        int bb=ans(ptr->right,tar,a);
+        if(ptr->data==tar)  {
+            a=max(a,max(aa,bb));
+            return -1; }
+        else  {
+            if(aa>=0&&bb>=0)
+                return max(aa,bb)+1;
+            if(aa>bb)
+                swap(aa,bb);
+            a=max(a,bb-aa);
+            return aa-1;
+        }
+    }
+    int minTime(Node* root, int target)   {
+        int a=0;
+        ans(root,target,a);
+        return a;
+    }
+};
