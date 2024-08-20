@@ -1,0 +1,36 @@
+// User Template For C++
+
+class Solution {
+  public:
+    vector<int> shortestPath(vector<vector<int>>& edge, int n,int m, int src){
+        vector<int> adj[n];
+        for(auto it:edge){
+            if(it[0]!=it[1]){
+                adj[it[0]].push_back(it[1]);
+                adj[it[1]].push_back(it[0]);
+            }
+        }
+        int dist=0;
+        vector<int> ans(n,-1);
+        queue<int> q;
+        q.push(src);
+        vector<int> vis(n,0);
+        vis[src]=1;
+        while(!q.empty()){
+            int sz=q.size();
+            for(int i=0;i<sz;i++){
+                int cur=q.front();
+                q.pop();
+                ans[cur]=dist;
+                for(auto it:adj[cur]){
+                    if(!vis[it]){
+                        vis[it]=1;
+                        q.push(it);
+                    }
+                }
+            }
+            dist++;
+        }
+        return ans;
+    }
+};
