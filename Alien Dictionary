@@ -1,0 +1,45 @@
+// User Template For C++
+
+class Solution{
+    public:
+    string findOrder(string dict[], int N, int K) {
+        map<int,vector<int>>mp;
+        for(int i = 0; i < N-1; i++){
+            for(int j = 0; j < min(dict[i].size(),dict[i+1].size()); j++){
+                if(dict[i][j] != dict[i+1][j]){
+                    mp[dict[i][j]-'a'].push_back(dict[i+1][j]-'a');
+                    break;
+                }
+            }
+        }
+        queue<int>q;
+        vector<int>in(K,0);
+        for(int i = 0; i < K; i++){
+            for(int j = 0; j < mp[i].size(); j++){
+                in[mp[i][j]]++;
+            }
+        }
+        for(int i = 0; i < K; i++){
+            if(in[i] == 0){
+                q.push(i);
+            }
+        }
+        vector<int>v;
+        while(!q.empty()){
+            auto x = q.front();
+            q.pop();
+            v.push_back(x);
+            for(int i = 0; i < mp[x].size(); i++){
+                in[mp[x][i]]--;
+                if(in[mp[x][i]] == 0){
+                    q.push(mp[x][i]);
+                }
+            }
+        }
+        string ans = "";
+        for(auto i : v){
+            ans+=char(i+'a');
+        }
+        return ans;
+    }
+};
