@@ -1,0 +1,39 @@
+// User Template For Java
+
+class Solution {
+  public int findComplement(int num) {
+    if (num == 0) return 1;
+    int bitLength = Integer.toBinaryString(num).length(); 
+    int mask = (1 << bitLength) - 1; 
+    return num ^ mask;
+  }
+}
+
+
+
+
+
+// User Template For C++
+class Solution {
+public:
+    int findComplement(int num) {
+        if (num == 0) return 1;
+        unsigned int mask = ~0;
+        while (num & mask) {
+            mask <<= 1;
+        }
+        return ~mask & ~num;
+    }
+};
+
+
+
+
+// User Template For Python
+class Solution:
+    def findComplement(self, num: int) -> int:
+        bit_length = num.bit_length()
+        mask = (1 << bit_length) - 1
+        return num ^ mask
+
+
