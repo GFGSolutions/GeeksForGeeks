@@ -1,0 +1,21 @@
+// User Template For C++
+
+vector<int>ans;
+void solve(Node*root,int &Level,int curr_level){
+    if(root==NULL){
+        return;
+    }
+    if(Level<curr_level){
+        ans.push_back(root->data);
+        Level = curr_level;
+    }
+    solve(root->left,Level,curr_level+1);
+    solve(root->right,Level,curr_level+1);
+}
+vector<int> leftView(Node *root)
+{
+   ans.clear();
+   int level = 0;
+   solve(root,level,1);
+   return ans;
+}
