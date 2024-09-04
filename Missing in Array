@@ -1,0 +1,10 @@
+// User Template For C++
+
+class Solution {
+  public:
+  int missingNumber(int n, vector<int>& arr) {
+        int sum=(n*(n+1))/2;
+        int sum1=accumulate(arr.begin(),arr.end(),0);
+        return sum-sum1;
+    }
+};
