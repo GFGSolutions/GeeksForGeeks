@@ -1,0 +1,24 @@
+// User Template For C++
+
+class Solution {
+  public:
+    void sort012(vector<int>& arr) {
+        int n = arr.size();
+        int i = 0;
+        int j = n - 1;
+        int idx = 0;
+        while(idx <= j){
+            if(arr[idx] == 0){
+                swap(arr[idx], arr[i]);
+                i++;
+                idx++;
+            }else if(arr[idx] == 2){
+                swap(arr[idx], arr[j]);
+                j--;
+            }else{
+                idx++;
+            }
+        }
+        return;
+    }
+};
