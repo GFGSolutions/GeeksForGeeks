@@ -1,0 +1,14 @@
+// User Template For C++
+
+class Solution {
+  public:
+    void mirror(Node* node) {
+        if(!node)
+        return;
+        Node * left = node->left;
+        node->left = node->right;
+        node->right = left;
+        mirror(node->left);
+        mirror(node->right);
+    }
+};
