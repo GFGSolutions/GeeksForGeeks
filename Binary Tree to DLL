@@ -1,0 +1,33 @@
+// User Template For C++
+
+class Solution{
+    public: 
+    void inorder(Node* root, vector<int>& res){
+        if(root==NULL){
+            return; }
+        inorder(root->left, res);
+        res.push_back(root->data);
+        inorder(root->right, res);  }
+        void solve(Node*& head, vector<int> res){
+        Node* tail= NULL;
+        Node* prev= NULL;
+        for(int i=0; i< res.size(); i++){
+            Node* newnode= new Node(res[i]);
+            if(head==NULL){
+                head= newnode;
+                tail= newnode;  }
+            else{
+                newnode->left= tail;
+                tail->right= newnode;
+                tail= newnode;
+            }
+        }
+    }
+    Node * bToDLL(Node *root)  {
+        Node* head=NULL;
+        vector<int> res;
+        inorder(root, res);
+        solve( head, res);
+        return head;
+    }
+};
