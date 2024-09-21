@@ -1,0 +1,8 @@
+// User Template For C++
+
+class Solution {
+  public:
+    Node *copyList(Node *head) {
+        return head;
+    }
+};
