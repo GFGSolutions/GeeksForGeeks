@@ -1,0 +1,26 @@
+// User Template For C++
+
+class Solution {
+  public:
+    bool isPalindrome(Node *head) {
+        vector<int> nodevalues;
+        Node *temp=head;
+        while(temp!=NULL){
+            nodevalues.push_back(temp->data);
+            temp=temp->next;}
+        int i=0;
+        int j=nodevalues.size()-1;
+        int flag=0;
+        while(i<j){
+            if(nodevalues[i]==nodevalues[j]){
+                i++;
+                j--; }
+            else{
+                flag=1;
+                break;
+            }
+        }
+        if(flag==1) return false;
+        else return true;
+    }
+};
