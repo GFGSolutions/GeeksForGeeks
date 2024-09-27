@@ -1,0 +1,19 @@
+// User Template For C++
+
+class Solution {
+  public:
+    int minimizeCost(int k, vector<int>& arr) {
+        int n = arr.size();
+        vector<int> minCost(n,10001);
+        minCost[0] = 0;
+        for(int i=0; i<n-1; i++)
+        {
+            for(int j=i+1; j < n && j<i+1+k; j++)
+            {
+                int cost = abs(arr[i] - arr[j]);
+                minCost[j] = min(minCost[j], minCost[i] + cost);
+            }
+        }
+        return minCost[n-1];
+    }
+};
