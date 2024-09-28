@@ -1,0 +1,14 @@
+// User Template For C++
+
+class Solution {
+  public:
+    int totalCount(int k, vector<int>& arr) {
+        int ans = 0;
+       for(auto it: arr)
+       {
+             div_t res = div(it,k);
+             ans +=res.quot + (res.rem!=0);
+       }     
+         return ans;
+    }
+};
