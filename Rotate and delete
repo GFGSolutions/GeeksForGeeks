@@ -1,0 +1,16 @@
+// User Template For C++
+
+class Solution {
+public:
+    int rotateDelete(vector<int> &arr) {
+        int k = 1;
+        while (arr.size() > 1) {
+            rotate(arr.begin(), arr.end() - 1, arr.end());
+            int deleteIdx = arr.size() - k;
+            if (deleteIdx < 0) deleteIdx = 0;
+            arr.erase(arr.begin() + deleteIdx);
+            k++;
+        }
+        return arr[0];
+    }
+};
