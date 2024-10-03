@@ -1,0 +1,34 @@
+// User Template For C++
+
+class Solution {
+    Node reverse(Node head) {
+        if(head == null || head.next == head)
+            return head;
+        Node curr = head;
+        Node prev = null;
+        do {
+            Node next = curr.next;
+            curr.next = prev;
+            prev = curr;
+            curr = next;
+        } while(curr != head);
+        curr.next = prev;
+        return prev; }
+    Node deleteNode(Node head, int key) {
+        if(head == null || head.next == head && head.data == key)
+            return null;
+        if(head.data == key) {
+            head.data = head.next.data;
+            head.next = head.next.next;
+            return head; }
+        Node ptr = head.next;
+        Node prev = head;
+        while(ptr != head) {
+            if(ptr.data == key) {
+                prev.next = ptr.next;
+                return head;}
+            prev = ptr;
+            ptr = ptr.next;}
+        return head;
+    }
+}
