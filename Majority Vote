@@ -2,21 +2,29 @@
 
 class Solution {
   public:
-    vector<int> findMajority(vector<int>& nums) {
-        unordered_map<int, int> mp;
-        for(int i:nums){
-            mp[i]++;
+     vector<int> findMajority(vector<int>& nums) {
+        // Your code goes here.
+        int n = nums.size();
+        map<int, int> mp;
+        for(auto it : nums)
+        {
+            mp[it]++;
         }
         vector<int> ans;
-        for(auto i:nums){
-            if(mp[i]>nums.size()/3){
-                ans.push_back(i);
-                mp[i]=0;
+        for(auto it : mp)
+        {
+            if(it.second > n/3)
+            {
+                ans.push_back(it.first);
             }
         }
-        if(ans.size()==0){
-            ans.push_back(-1);
+        if(ans.size())
+        {
+            return ans;
         }
-        return ans;
+        else
+        {
+            return {-1};
+        }
     }
 };
