@@ -1,0 +1,25 @@
+// User Template For C++
+
+struct Node *insert(struct Node *head, int data) {
+    Node* newNode = new Node(data);
+    newNode->npx = head;
+    if(head)
+    {
+        head->npx = XOR(head->npx, newNode);
+    }
+    return newNode;
+}
+vector<int> getList(struct Node *head) {
+    vector<int> theList;
+    while(head)
+    {
+        theList.push_back(head->data);
+        Node* next = head->npx;
+        if(next)
+        {
+            next->npx = XOR(next->npx, head);
+        }
+        head = next;
+    }
+    return theList;
+}
