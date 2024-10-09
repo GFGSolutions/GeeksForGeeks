@@ -1,0 +1,18 @@
+// User Template For C++
+
+class Solution {
+  public:
+    int maxDistance(vector<int> &arr) {
+        unordered_map<int, int>m;
+        int ans = 0;
+        for(int i=0; i<arr.size(); i++){
+            if(!m.count(arr[i])){
+                m[arr[i]] = i;
+            }
+            else{
+                ans = max(ans, i - m[arr[i]]);
+            }
+        }
+        return ans;
+    }
+};
