@@ -1,0 +1,17 @@
+// User Template For C++
+
+class Solution {
+  public:
+    void deleteAlt(struct Node *head) {
+        Node* p=head;
+        Node* q=NULL;
+        while(p && p->next){
+            q=p->next;
+            p->next=p->next->next;
+            q->next=NULL;
+            delete q;
+            p=p->next;
+        }
+        return;
+    }
+};
