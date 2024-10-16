@@ -1,0 +1,33 @@
+// User Template For C++
+
+class Solution {
+  public:
+    vector<Node*> alternatingSplitList(struct Node* head) {
+        vector<Node*> vc;
+        if(!head->next){
+            vc.push_back(head);
+            return vc;}
+        Node* h1 = head;
+        vc.push_back(h1);
+        Node* h2 = head->next;
+        vc.push_back(h2);
+        Node* h = h2->next;
+        bool odd = false;
+        while(h) {
+            if(!odd) {
+                h1->next = h;
+                h1 = h;
+                h = h1->next;
+                odd = true; }
+            else{
+                h2->next = h;
+                h2 = h;
+                h = h2->next;
+                odd = false;
+            }
+        }
+        h1->next = NULL;
+        h2->next = NULL;
+        return vc;
+    }
+};
