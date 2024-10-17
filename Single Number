@@ -1,0 +1,8 @@
+// User Template For C++
+
+class Solution {
+  public:
+    int getSingle(vector<int>& arr) {
+    return accumulate(arr.begin(), arr.end(), 0, std::bit_xor<int>());
+    }
+};
