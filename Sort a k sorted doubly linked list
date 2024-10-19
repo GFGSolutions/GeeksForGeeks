@@ -1,0 +1,37 @@
+// User Template For C++
+
+class Solution {
+  private:
+    class DLLNodeCompare {
+      public:
+        bool operator()(DLLNode* a, DLLNode* b) {
+            return a->data > b->data;
+        }
+    };
+  public:
+    DLLNode* sortAKSortedDLL(DLLNode* head, int k) {
+        if (head == nullptr) {
+            return head;}
+        std::priority_queue<DLLNode*, std::vector<DLLNode*>, DLLNodeCompare> pq;
+        DLLNode* node = new DLLNode(-1);
+        DLLNode* tmp = node;
+        for (int i = 0; i < k and head != nullptr; ++i) {
+            pq.push(head);
+            head = head->next;}
+        while (head != nullptr) {
+            pq.push(head);
+            head = head->next;
+            tmp->next = pq.top();
+            pq.pop();
+            tmp->next->prev = tmp;
+            tmp = tmp->next;}
+        while (!pq.empty()) {
+            tmp->next = pq.top();
+            pq.pop();
+            tmp->next->prev = tmp;
+            tmp = tmp->next;}
+        tmp->next = nullptr;
+        node->next->prev = nullptr;
+        return node->next;
+    }
+};
