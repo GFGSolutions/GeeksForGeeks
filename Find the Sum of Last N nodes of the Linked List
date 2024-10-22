@@ -1,0 +1,21 @@
+// User Template For C++
+
+class Solution {
+  public:
+    int sumOfLastN_Nodes(struct Node* head, int n) {
+        Node *node1 = head,*node2 = head;
+        int ans = 0;
+        while(node2){
+            if(!n)
+                node1 = node1->next;
+            else
+                n--;
+            node2 = node2->next;
+        }
+        while(node1){
+            ans += node1->data;
+            node1 = node1->next;
+        }
+        return ans;
+    }
+};
