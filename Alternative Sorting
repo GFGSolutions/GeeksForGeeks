@@ -1,0 +1,17 @@
+// User Template For C++
+
+class Solution {
+  public:
+    vector<int> alternateSort(vector<int>& arr) {
+        vector<int>sortedArray=arr;
+        sort(sortedArray.begin(),sortedArray.end());
+        int i=0;
+        int j=sortedArray.size()-1;
+        int index=0;
+        while(i<=j){
+            arr[index++]=sortedArray[j--];
+            arr[index++]=sortedArray[i++];
+        }
+        return arr;
+    }
+};
