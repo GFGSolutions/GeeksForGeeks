@@ -1,0 +1,14 @@
+// User Template For C++
+
+class Solution {
+  public:
+    int count(struct Node* head, int key) {
+        int count = 0;
+        Node* cur = head;
+        while(cur){
+            if(cur->data == key) count++;
+            cur = cur->next;
+        }
+        return count;
+    }
+};
