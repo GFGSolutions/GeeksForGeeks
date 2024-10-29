@@ -1,0 +1,16 @@
+// User Template For C++
+
+class Solution {
+  public:
+    int countPairsWithDiffK(vector<int>& arr, int k) {
+       map<int,int>m;
+       for(auto &i:arr)m[i]++;
+       int ans=0;
+       for(auto &i:arr){
+           if(m[(i-k)]!=0){
+               ans+=m[(i-k)];
+           }
+       }
+       return ans;
+    }
+};
