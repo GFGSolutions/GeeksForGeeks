@@ -1,0 +1,14 @@
+// User Template For C++
+
+class Solution {
+public:
+    bool isLengthEven(struct Node** head) {
+        int n = 0;
+        struct Node* current = *head;
+        while (current) {
+            n++;
+            current = current->next;
+        }
+        return n % 2 == 0;
+    }
+};
