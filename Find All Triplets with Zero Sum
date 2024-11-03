@@ -1,0 +1,21 @@
+// User Template For Java
+
+class Solution {
+  public:
+    vector<vector<int>> findTriplets(vector<int> &arr) {
+        vector<vector<int>> ans;
+        unordered_map<int, vector<pair<int, int>>> mp;
+        for (int i = 1; i < arr.size(); i++) {
+            if (mp.count(-arr[i])) {
+                for (auto &p : mp[-arr[i]]) {
+                    vector<int> curr = {p.first, p.second, i};
+                    ans.push_back(curr);
+                }
+            }
+            for (int j = 0; j < i; j++) {
+                mp[arr[i] + arr[j]].push_back({j, i});
+            }
+        }
+        return ans;
+    }
+};
