@@ -1,0 +1,18 @@
+// User Template For C++
+
+void rotate(vector<vector<int> >& matrix) {
+    vector<vector<int>> tt ;
+    int n = matrix.size();
+    int m = matrix[0].size();
+    for(int j= 0 ; j < m ; j++){
+       vector<int> temp;
+        for(int i = 0 ; i < n ; i++){
+           temp.push_back(matrix[i][j]);
+        }
+        tt.push_back(temp);
+    }
+    for(int i = 0  ; i <n ; i++){
+        reverse(begin(tt[i]), end(tt[i]));
+    }
+    matrix = tt;
+}
