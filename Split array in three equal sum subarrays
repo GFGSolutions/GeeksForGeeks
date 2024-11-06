@@ -1,0 +1,25 @@
+// User Template For C++
+
+class Solution {
+  public:
+    vector<int> findSplit(vector<int>& arr) {
+        int sm= accumulate(arr.begin(),arr.end(),0); 
+        if(sm%3!=0) return {-1,-1};
+        sm= sm/3; 
+        int cur=0;
+        vector<int>ans;
+        for(int i=0;i<arr.size();i++){
+            if(cur+arr[i]<=sm){
+                
+                cur+=arr[i];
+                if(cur==sm){
+                    ans.push_back(i);
+                cur=0;
+                }
+            }
+            else return {-1,-1};
+        }
+        ans.pop_back();  
+        return ans;
+    }
+};
