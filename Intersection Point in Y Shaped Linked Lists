@@ -1,0 +1,20 @@
+// User Template For C++
+
+class Solution {
+  public:
+    int intersectPoint(Node* head1, Node* head2) {
+        set<Node*>hashset;
+        Node *temp = head1;
+        while(temp){
+         hashset.insert(temp->next);
+         temp = temp->next;
+        }
+        Node *temp2 = head2;
+        while(temp2){
+            if(hashset.find(temp2) != hashset.end())
+             return temp2->data;
+             temp2 = temp2->next;
+        }
+        return -1;
+    } 
+};
