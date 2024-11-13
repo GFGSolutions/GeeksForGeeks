@@ -1,0 +1,24 @@
+// User Template For C++
+
+class Solution {
+  public:
+    void nearlySorted(vector<int>& arr, int k) {
+        priority_queue<int, vector<int>, greater<int>> pq;
+        int i=0, j=0;
+        int n = arr.size();
+        while(j < n)
+        {
+            if(i<n)
+            {
+                pq.push(arr[i]);
+                i++;
+            }
+            if(i>k)
+            {
+                arr[j] = pq.top();
+                pq.pop();
+                j++;
+            }
+        }
+    }
+};
