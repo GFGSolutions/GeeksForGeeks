@@ -1,0 +1,20 @@
+// User Template For C++
+
+class Solution {
+public:
+    int maximumProfit(vector<int> &prices) {
+        int i=0;
+        int res = 0;
+        while(i<prices.size())
+        {
+            while((i<prices.size()-1) && (prices[i+1]<prices[i]))
+            i++;
+            int j=i+1;
+            while((j<prices.size()) && (prices[j-1]<=prices[j]) )
+            j++;
+            res += (prices[j-1] - prices[i]);
+            i=j;
+        }
+        return res;
+    }
+};
