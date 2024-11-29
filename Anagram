@@ -1,0 +1,12 @@
+// User Template For C++
+
+class Solution {
+  public:
+    bool areAnagrams(string& s1, string& s2) {
+        unordered_map<char, int> m;
+        for(auto i:s1) m[i]++;
+        for(auto i:s2) m[i]--;
+        for(auto i:m) if(i.second!=0) return false;
+        return true;
+    }
+};
