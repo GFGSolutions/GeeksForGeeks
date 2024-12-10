@@ -1,0 +1,24 @@
+// User Template For C++
+
+class Solution {
+  public:
+    void mergeArrays(vector<int>& a, vector<int>& b) {
+        priority_queue<int,vector<int>,greater<int>>pq;
+        for(auto it:a){
+            pq.push(it);
+        }
+        for(auto it:b){
+            pq.push(it);
+        }
+        int i=0;
+        while(i<a.size()){
+            a[i++]=pq.top();
+            pq.pop();
+        }
+        i=0;
+        while(i<b.size()){
+            b[i++]=pq.top();
+            pq.pop();
+        }
+    }
+};
