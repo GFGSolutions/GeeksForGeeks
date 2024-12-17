@@ -1,0 +1,39 @@
+// User Template For Java
+
+class Solution {
+public:
+    bool isValid(vector<int>& arr, int n, int m, int maxAllowed) {
+        int s = 1, p = 0;
+        for (int i = 0; i < n; i++) {
+            if (arr[i] > maxAllowed)
+                return false;
+            if (p + arr[i] <= maxAllowed) {
+                p += arr[i];
+            } else {
+                s++;
+                p = arr[i];
+            }
+        }
+        return s <= m;
+    }
+    int findPages(vector<int>& arr, int m) {
+        int n = arr.size();
+        if (m > n)
+            return -1;
+        int sum = 0;
+        for (int i = 0; i < n; i++) {
+            sum += arr[i];
+        }
+        int ans = -1, st = 0, end = sum;
+        while (st <= end) {
+            int mid = st + (end - st) / 2;
+            if (isValid(arr, n, m, mid)) {
+                ans = mid;
+                end = mid - 1;
+            } else {
+                st = mid + 1;
+            }
+        }
+        return ans;
+    }
+};
