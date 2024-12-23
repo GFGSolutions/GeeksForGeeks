@@ -1,0 +1,22 @@
+// User Template For Java
+
+class Solution {
+  public:
+    bool searchMatrix(vector<vector<int>> &mat, int x) {
+         int i=0;
+         int j=(mat.size() * mat[0].size())-1;
+         int cols=mat[0].size();
+         while(i<=j){
+             int mid=i+(j-i)/2;
+             int r=mid/cols;
+             int c=mid%cols;
+             if(mat[r][c]==x)return true;
+             else if(mat[r][c]<x){
+                 i=mid+1;
+             }else{
+                 j=mid-1;
+             }
+         }
+         return false;
+    }
+};
