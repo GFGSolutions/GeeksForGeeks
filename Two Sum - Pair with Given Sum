@@ -1,0 +1,15 @@
+// User Template For Java
+
+class Solution {
+  public:
+    bool twoSum(vector<int>& arr, int target) {
+        unordered_set<int> st;
+        for(auto it : arr)
+        {
+            if(st.find(target-it)!=st.end())
+            return true;
+            st.insert(it);
+        }
+        return false;
+    }
+};
