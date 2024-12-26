@@ -1,0 +1,14 @@
+// User Template For Java
+
+class Solution {
+    int countPairs(int arr[], int target) {
+        HashMap<Integer,Integer> map=new HashMap<>();
+        int count=0;
+        for(int i:arr){
+            if(map.get(target-i)!=null) count+=map.get(target-i);
+            if(map.get(i)!=null) map.put(i,map.get(i)+1);
+            else map.put(i,1);
+        }
+        return count;
+    }
+}
