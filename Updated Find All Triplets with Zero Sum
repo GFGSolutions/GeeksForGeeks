@@ -1,0 +1,21 @@
+// User Template For Java
+
+class Solution {
+  public:
+    std::vector<std::vector<int>> findTriplets(std::vector<int>& arr) {
+        std::vector<std::vector<int>> res;
+        for (int i {0}; i < arr.size(); ++i) {
+            std::unordered_map<int, std::vector<int>> umap;
+            int target = -arr[i];
+            for (int j {i + 1}; j < arr.size(); ++j) {
+                if (umap.find(target - arr[j]) != umap.end()) {
+                    for (int index : umap[target - arr[j]]) {
+                        res.push_back({i, index, j});
+                    }
+                }
+                umap[arr[j]].push_back(j);
+            }
+        }
+        return res;
+    }
+};
