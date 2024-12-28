@@ -1,0 +1,16 @@
+// User Template For Java
+
+class Solution {
+  public:
+    vector<int> intersectionWithDuplicates(vector<int>& a, vector<int>& b) {
+        vector<int> result;
+        unordered_set<int> s1(a.begin(), a.end());
+        for(int i=0;i<b.size();i++) {
+            if(s1.count(b[i])) {
+                result.push_back(b[i]);
+                s1.erase(b[i]);
+            }
+        }
+        return result;
+    }
+};
