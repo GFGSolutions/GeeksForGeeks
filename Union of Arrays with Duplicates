@@ -1,0 +1,11 @@
+// User Template For Java
+
+class Solution {
+  public:
+    int findUnion(vector<int>& a, vector<int>& b) {
+    unordered_set<int> st;
+    st.insert(a.begin(), a.end());
+    st.insert(b.begin(), b.end());
+    return st.size();
+    }
+};
