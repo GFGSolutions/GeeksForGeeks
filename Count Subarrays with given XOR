@@ -1,0 +1,22 @@
+// User Template For C++
+
+class Solution {
+public:
+    long subarrayXor(vector<int> &arr, int k) {
+        long ans = 0;  
+        map<int, int> mpp; 
+        int xo = 0;  
+        for (auto it : arr) {
+            xo = xo ^ it;  
+            if (xo == k) {
+                ans++;
+            }
+            int req = k ^ xo;
+            if (mpp.find(req) != mpp.end()) {
+                ans += mpp[req];
+            }
+            mpp[xo]++;
+        }
+        return ans;
+    }
+};
