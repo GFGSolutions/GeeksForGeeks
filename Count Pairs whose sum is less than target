@@ -1,0 +1,20 @@
+// User Template For C++
+
+class Solution {
+  public:
+    int countPairs(vector<int> &arr, int target) {
+        sort(arr.begin(), arr.end());
+        int s = 0, e = arr.size()-1;
+        int ans = 0;
+        while (s <= e) {
+            int sum = arr[s] + arr[e];
+            if (sum >= target) {
+                e--;
+            } else {
+                ans += (e - s);
+                s++;
+            }
+        }
+        return ans;
+    }
+};
