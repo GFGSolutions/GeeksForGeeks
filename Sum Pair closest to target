@@ -1,0 +1,25 @@
+// User Template For C++
+
+class Solution {
+public:
+    vector<int> sumClosest(vector<int>& arr, int tgt) {
+        if (arr.size() < 2) return {};
+        sort(arr.begin(), arr.end());
+        int l = 0, r = arr.size() - 1, closest = INT_MAX;
+        vector<int> res;
+        while (l < r) {
+            int sum = arr[l] + arr[r];
+            int diff = abs(sum - tgt);
+            int range = abs(arr[r] - arr[l]);
+            if (diff < abs(closest - tgt) || 
+                (diff == abs(closest - tgt) && 
+                 (res.empty() || range > abs(res[1] - res[0])))) {
+                closest = sum;
+                res = {arr[l], arr[r]};
+            }
+            if (sum < tgt) l++;
+            else r--;
+        }
+        return res;
+    }
+};
