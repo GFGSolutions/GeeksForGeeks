@@ -1,0 +1,16 @@
+// User Template For C++
+
+class Solution {
+  public:
+    int findEquilibrium(vector<int> &arr) {
+        int sum = 0;
+        for (auto i:arr) sum+=i;
+        int temp = 0;
+        int n =arr.size();
+        for (int i =1; i < n;i++) {
+            temp += arr[i-1];
+            if (temp == sum-temp-arr[i]) return i;
+        }
+        return -1;
+    }
+};
