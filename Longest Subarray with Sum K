@@ -1,0 +1,25 @@
+// User Template For C++
+
+class Solution {
+  public:
+    int longestSubarray(vector<int>& arr, int k) {
+     int preSum = 0;
+        int maxlen = 0;
+        unordered_map<int, int> mpp;
+        for (int i = 0; i < arr.size(); i++) {
+            preSum += arr[i];
+            if (preSum == k) {
+                maxlen = max(maxlen, i + 1);
+            }
+            int remove = preSum - k;
+            if (mpp.find(remove) != mpp.end()) {
+                int len = i - mpp[remove];
+                maxlen = max(maxlen, len);
+            }
+            if (mpp.find(preSum) == mpp.end()) {
+                mpp[preSum] = i;
+            }
+        }
+        return maxlen;
+    }
+};
