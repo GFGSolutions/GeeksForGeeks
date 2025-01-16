@@ -1,0 +1,21 @@
+// User Template For C++
+
+class Solution {
+  public:
+    int maxLen(vector<int> &arr) {
+        unordered_map<int,int>um;
+        int maxLength=0;
+        int cumulativeSum=0;
+        for(int i=0;i<arr.size();i++){
+            cumulativeSum+=(arr[i]==0?-1:1);
+            if(cumulativeSum==0)
+              maxLength=i+1;
+            if(um.find(cumulativeSum)!=um.end()){
+                maxLength=max(maxLength,i-um[cumulativeSum]);
+            }
+            else
+               um[cumulativeSum]=i;
+        }
+        return maxLength;
+    }
+};
