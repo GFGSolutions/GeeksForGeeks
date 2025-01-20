@@ -1,0 +1,22 @@
+// User Template For C++
+
+class Solution {
+  public:
+    Node *reverseKGroup(Node *head, int k) {
+        vector<Node *>arr;
+        while(head){
+            arr.push_back(head);
+            head=head->next;  }
+        int n=arr.size(),s=0;
+        while(s<arr.size()) {
+            reverse(arr.begin()+s,arr.begin()+min(s+k,n));
+            s+= k; }
+        head=arr[0];
+        Node *temp=head;
+        for(int i=1;i<n;++i) {
+            temp->next=arr[i];
+            temp= temp->next;  }
+        temp->next=nullptr;
+        return head;
+    }
+};
