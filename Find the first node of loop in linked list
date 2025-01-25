@@ -1,0 +1,20 @@
+// User Template For C++
+
+class Solution {
+  public:
+    Node* findFirstNode(Node* head) {
+        unordered_map<Node*,Node*> mp;
+        Node*curr = head;
+        while(curr!=NULL)
+        {
+            if(mp.find(curr)!=mp.end())
+            {
+                return curr;
+            }
+            mp[curr]=curr;
+            curr=curr->next;
+        }
+        Node* res = new Node(-1);
+        return res;
+    }
+};
