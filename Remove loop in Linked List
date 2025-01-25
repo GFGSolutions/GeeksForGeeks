@@ -1,0 +1,25 @@
+// User Template For C++
+
+class Solution {
+  public:
+    void removeLoop(Node* head) {
+        Node *fast = head;
+        Node* slow = head;
+        while(fast!= NULL and fast->next != NULL)
+        {
+            slow = slow->next;
+            fast = fast->next->next;
+            if(slow == fast)
+            {slow = head;
+                while(slow!=fast)
+                {fast = fast->next;
+                slow = slow->next;}
+                while(fast->next != slow)
+                {
+                    fast= fast->next;
+                }
+                fast->next = NULL;
+            }
+        }
+    }
+};
