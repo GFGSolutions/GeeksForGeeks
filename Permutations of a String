@@ -1,0 +1,26 @@
+// User Template For C++
+
+class Solution {
+  public:
+    void generate(int l,int n,string &s,unordered_set<string> &st){
+        if(l==n){
+            st.insert(s);
+            return;
+        }
+        for(int i=l;i<=n;i++){
+            swap(s[l],s[i]);
+            generate(l+1,n,s,st);
+            swap(s[l],s[i]);
+        }
+        return;
+    }
+    vector<string> findPermutation(string &s) {
+        vector<string> ans;
+        unordered_set<string> st;
+        generate(0,s.size()-1,s,st);
+        for(auto ele : st){
+            ans.push_back(ele);
+        }
+        return ans;
+    }
+};
