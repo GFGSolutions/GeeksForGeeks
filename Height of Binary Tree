@@ -1,0 +1,11 @@
+// User Template For C++
+
+class Solution {
+  public:
+    int height(Node* node) {
+        if(node==NULL)return -1;
+        int l=height(node->left);
+        int r=height(node->right);
+        return 1+max(l,r);
+    }
+};
