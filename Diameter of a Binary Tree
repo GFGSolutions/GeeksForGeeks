@@ -1,0 +1,18 @@
+// User Template For C++
+
+class Solution {
+  public:
+    int height(Node* root,int &ans){
+        if(root==NULL) return 0;
+        int left=height(root->left,ans);
+        int right=height(root->right,ans);
+        ans=max(ans,left+right);
+        return max(left,right)+1;
+    }
+    int diameter(Node* root) {
+        int ans=0;
+        if(root==NULL) return -1;
+        height(root,ans);
+        return ans;
+    }
+};
