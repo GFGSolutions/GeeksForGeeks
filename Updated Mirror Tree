@@ -1,0 +1,17 @@
+// User Template For C++
+
+class Solution {
+  public:
+    void mirror(Node* root) {
+        if(!root)return ;
+         queue<Node*> q;
+         q.push(root);
+    while (!q.empty()) {
+        Node* node = q.front();
+        q.pop();
+        swap(node->left,node->right);
+        if (node->left) q.push(node->left);
+        if (node->right) q.push(node->right);
+    }
+    }
+};
