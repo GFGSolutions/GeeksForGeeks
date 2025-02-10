@@ -1,0 +1,20 @@
+// User Template For C++
+
+class Solution {
+  public:
+    bool isBST(Node* root) {
+        return isBST(root, nullptr, nullptr);
+    }
+    bool static isBST(Node *root, Node *minNode, Node *maxNode)
+    {
+        if (root == nullptr)
+        {
+            return true;
+        }
+        if ((minNode && root->data <= minNode->data) || (maxNode && root->data >= maxNode->data))
+        {
+            return false;
+        }
+        return isBST(root->left, minNode, root) && isBST(root->right, root, maxNode);
+    }
+};
