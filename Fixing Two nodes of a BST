@@ -1,0 +1,26 @@
+// User Template For C++
+
+class Solution {
+  public:
+  void fixed(Node *root,Node* &prev,Node* &first,Node* &second){
+     if(root==NULL)
+     return;
+     fixed(root->left,prev,first,second);
+     if(prev!=NULL && prev->data > root->data){
+        if(first==NULL){
+            first=prev;
+        }
+            second=root;
+     }
+     prev=root;
+     fixed(root->right,prev,first,second);
+  }
+    void correctBST( struct Node* root )
+    {
+        Node *prev=NULL;
+         Node *first=NULL;
+          Node *second=NULL;
+        fixed(root,prev,first,second);
+        swap(first->data,second->data);
+    }
+};
