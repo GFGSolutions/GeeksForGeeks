@@ -1,0 +1,17 @@
+// User Template For C++
+
+class Solution{
+    public:
+    Node* ancestor(Node* root,Node* n1, Node* n2){
+        if(!root)
+        return root;
+        if(root->data>n1->data && root->data>n2->data)
+         return ancestor(root->left,n1,n2);
+        if(root->data<n1->data && root->data<n2->data )
+         return ancestor(root->right,n1,n2);
+        return root;
+    }
+    Node* LCA(Node* root, Node* n1, Node* n2) {
+        return ancestor(root,n1,n2);
+    }
+};
