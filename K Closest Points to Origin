@@ -1,0 +1,26 @@
+// User Template For C++
+
+class Solution {
+  public:
+    vector<vector<int>> kClosest(vector<vector<int>>& points, int k) {
+        vector<vector<int>> ans;
+        priority_queue<pair<int,vector<int>>> pq;
+        for(auto it: points){
+            int dist=pow(it[0],2)+pow(it[1],2);
+            if(pq.size()<k){
+                pq.push({dist,{it[0],it[1]}});
+            }
+            else if(pq.size()==k){
+                if(pq.top().first>dist){
+                    pq.pop();
+                    pq.push({dist,{it[0],it[1]}});
+                }
+            }
+        }
+        while(!pq.empty()){
+            ans.push_back(pq.top().second);
+            pq.pop();
+        }
+        return ans;
+    }
+};
