@@ -1,0 +1,36 @@
+// User Template For C++
+
+class Solution {
+  public:
+    void sortLinkedList(Node* head) {
+        if (!head) return;
+        vector<int> values;
+        Node* current = head;
+        while (current != NULL) {
+            values.push_back(current->data);
+            current = current->next;
+        }
+        sort(values.begin(), values.end());
+        current = head;
+        for (int value : values) {
+            current->data = value;
+            current = current->next;
+        }
+    }
+    Node*FindLast(Node*root){
+        Node*temp = root;
+        while(temp->next != NULL){
+            temp=temp->next;
+        }
+        return temp;
+    }
+    Node* mergeKLists(vector<Node*>& arr) {
+        int n=arr.size();
+        for(int i=0;i<n - 1;i++){
+            Node*lastNode=FindLast(arr[i]);
+            lastNode->next=arr[i + 1];
+        }
+        sortLinkedList(arr[0]);
+        return arr[0];
+    }
+};
