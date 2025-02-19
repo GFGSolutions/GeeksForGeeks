@@ -1,0 +1,26 @@
+// User Template For C++
+
+class Solution {
+  public:
+    vector<double> getMedian(vector<int> &arr) {
+        vector<double> ans;
+        priority_queue<int> leftHeap;
+        priority_queue<int, vector<int>, greater<int>> rightHeap;
+        double median;
+        for(int i=0;i<arr.size();i++){
+            leftHeap.push(arr[i]);
+            int t = leftHeap.top();
+            leftHeap.pop();
+            rightHeap.push(t);
+            if(rightHeap.size() > leftHeap.size()){
+                int t = rightHeap.top();
+                rightHeap.pop();
+                leftHeap.push(t);
+            }
+            if(leftHeap.size()>rightHeap.size()) median = leftHeap.top();
+            else median = (double)(leftHeap.top()+rightHeap.top())/2.0;
+            ans.push_back(median);
+        }
+        return ans;
+    }
+};
