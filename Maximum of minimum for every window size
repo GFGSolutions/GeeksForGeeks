@@ -1,43 +1,39 @@
 // User Template For C++
 
 class Solution {
-  public:
-     void calculateLeftSmaller(vector<int> &leftSmaller, int arr[], int n){
-        stack<int> st;
-        st.push(n - 1);
-        for(int i = n - 2; i >= 0 ; i--){
-            while(st.empty() == false && arr[st.top()] > arr[i]){
-                leftSmaller[st.top()] = i;
-                st.pop();
-            } 
-            st.push(i);
-        }
-        return; }
-    void calculateRightSmaller(vector<int> &rightSmaller, int arr[], int n){
-        stack<int> st;
-        st.push(0);
-        for(int i = 1; i < n; i++){
-            while(st.empty() == false && arr[st.top()] > arr[i]){
-                rightSmaller[st.top()] = i;
-                st.pop();
+public:
+    vector<int> maxOfMins(vector<int>& arr) {
+        int n = arr.size();
+        vector<int> result(n, 0);
+        vector<int> left(n, -1);
+        vector<int> right(n, n);
+        stack<int> s;
+        for (int i = 0; i < n; ++i) {
+            while (!s.empty() && arr[s.top()] >= arr[i]) {
+                s.pop();
             }
-            st.push(i);
+            if (!s.empty()) {
+                left[i] = s.top();
+            }
+            s.push(i);
         }
-        return;
-    }
-    vector <int> maxOfMin(int arr[], int n){
-        vector<int> leftSmaller (n, -1);
-        vector<int> rightSmaller (n, n);
-        calculateLeftSmaller(leftSmaller, arr, n);
-        calculateRightSmaller(rightSmaller, arr, n);
-        vector<int> ans (n, 0);
-        for(int i = 0; i < n; i++){
-            int val = rightSmaller[i] - leftSmaller[i] - 1;
-            ans[val - 1] = max(ans[val - 1], arr[i]);
+        while (!s.empty()) s.pop();
+        for (int i = n - 1; i >= 0; --i) {
+            while (!s.empty() && arr[s.top()] >= arr[i]) {
+                s.pop();
+            }
+            if (!s.empty()) {
+                right[i] = s.top();
+            }
+            s.push(i);
         }
-        for(int i = n - 2; i >= 0; i--){
-            ans[i] = max(ans[i + 1], ans[i]);
+        for (int i = 0; i < n; ++i) {
+            int window_size = right[i] - left[i] - 1;
+            result[window_size - 1] = max(result[window_size - 1], arr[i]);
         }
-        return ans;
+        for (int i = n - 2; i >= 0; --i) {
+            result[i] = max(result[i], result[i + 1]);
+        }
+        return result;
     }
 };
