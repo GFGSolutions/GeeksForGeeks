@@ -1,0 +1,43 @@
+// User Template For C++
+
+class Solution {
+  public:
+     void calculateLeftSmaller(vector<int> &leftSmaller, int arr[], int n){
+        stack<int> st;
+        st.push(n - 1);
+        for(int i = n - 2; i >= 0 ; i--){
+            while(st.empty() == false && arr[st.top()] > arr[i]){
+                leftSmaller[st.top()] = i;
+                st.pop();
+            } 
+            st.push(i);
+        }
+        return; }
+    void calculateRightSmaller(vector<int> &rightSmaller, int arr[], int n){
+        stack<int> st;
+        st.push(0);
+        for(int i = 1; i < n; i++){
+            while(st.empty() == false && arr[st.top()] > arr[i]){
+                rightSmaller[st.top()] = i;
+                st.pop();
+            }
+            st.push(i);
+        }
+        return;
+    }
+    vector <int> maxOfMin(int arr[], int n){
+        vector<int> leftSmaller (n, -1);
+        vector<int> rightSmaller (n, n);
+        calculateLeftSmaller(leftSmaller, arr, n);
+        calculateRightSmaller(rightSmaller, arr, n);
+        vector<int> ans (n, 0);
+        for(int i = 0; i < n; i++){
+            int val = rightSmaller[i] - leftSmaller[i] - 1;
+            ans[val - 1] = max(ans[val - 1], arr[i]);
+        }
+        for(int i = n - 2; i >= 0; i--){
+            ans[i] = max(ans[i + 1], ans[i]);
+        }
+        return ans;
+    }
+};
