@@ -1,0 +1,29 @@
+// User Template For C++
+
+class Solution {
+  public:
+    int minEle;
+    stack<pair<int, int>> s;
+    Solution() {
+    }
+    void push(int x) {
+        if(s.size()==0) {
+            s.push({x, x});
+        } else {
+            s.push({x, min(x, s.top().second)});
+        }
+    }
+    void pop() {
+        if(s.empty()) return;
+        pair<int, int> p = s.top();
+        s.pop();
+    }
+    int peek() {
+        if(s.empty()) return -1;
+        return s.top().first;
+    }
+    int getMin() {
+        if(s.empty()) return -1;
+        return s.top().second;
+    }
+};
