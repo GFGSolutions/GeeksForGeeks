@@ -1,0 +1,30 @@
+// User Template For C++
+
+class Solution {
+  public:
+    int calllis(vector<int>&arr,vector<int>&dp,int idx)
+    {
+        if(idx==0)return 1;
+        if(dp[idx]!=-1)return dp[idx];
+        
+        int ansmx=1;
+        for(int i=0;i<idx;i++)
+        {
+            if(arr[i]<arr[idx])
+            {
+                ansmx=max(ansmx,calllis(arr,dp,i)+1);
+            }
+        }
+        return dp[idx]=ansmx;
+    }
+    int lis(vector<int>& arr) {
+        int n=arr.size();
+        int res=1;
+        vector<int>dp(n+1,-1);
+        for(int i=1;i<n;i++)
+        {
+            res=max(res,calllis(arr,dp,i));
+        }
+        return res;
+    }
+};
