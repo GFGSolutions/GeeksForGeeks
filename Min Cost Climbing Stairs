@@ -1,0 +1,17 @@
+// User Template For C++
+
+class Solution {
+  public:
+    int dp[100001];
+    int solve(int i, vector<int>& cost){
+        if (i >= cost.size()) return 0;
+        if (dp[i] != -1) return dp[i];
+        int take1 = solve(i + 1, cost) + cost[i];
+        int take2 = solve(i + 2, cost) + cost[i];
+        return dp[i] = min(take1, take2);
+    }
+    int minCostClimbingStairs(vector<int>& cost) {
+        memset(dp, -1, sizeof(dp));
+        return min(solve(0, cost), solve(1, cost));
+    }
+};
