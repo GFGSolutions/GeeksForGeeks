@@ -1,0 +1,20 @@
+// User Template For C++
+
+class Solution {
+public:
+    vector<vector<int>> dp;
+    int fn(vector<int> &coins, int sum, int i) {
+        if (sum == 0) return 0;
+        if (i >= coins.size()) return 1e5;
+        if (dp[i][sum] != -1) return dp[i][sum];
+        int ans = 1e5;
+        ans = min(ans, fn(coins, sum, i + 1)); 
+        if (coins[i] <= sum) ans = min(ans, fn(coins, sum - coins[i], i) + 1); 
+        return dp[i][sum] = ans;
+    }
+    int minCoins(vector<int> &coins, int sum) {
+        dp.resize(coins.size(), vector<int>(sum + 1, -1));
+        int ans = fn(coins, sum, 0);
+        return ans == 1e5 ? -1 : ans;
+    }
+};
