@@ -1,0 +1,11 @@
+// User Template For C++
+
+class Solution {
+  public:
+    int findMaxSum(vector<int>& arr) {
+        int n=arr.size();
+        if(n>1) arr[n-2]=max(arr[n-2],arr[n-1]);
+        for(int i=n-3;i>-1;i--)arr[i]=max(arr[i+1],arr[i]+arr[i+2]);
+        return arr[0];
+    }
+};
