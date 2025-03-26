@@ -1,0 +1,31 @@
+// User Template For C++
+
+class Solution {
+public:
+    int help(int idx, int maxLimit, string &s, set<string> &st, vector<int> &dp){
+        if(idx >= s.length()) return true;
+        if(dp[idx]!=-1) return dp[idx];
+        bool ans = false;
+        string temp = "";
+        for(int i = idx; i < min(idx + maxLimit, (int)s.length()); ++i){
+            temp += s[i];
+            if(st.find(temp) != st.end()){
+                ans = ans | help(i+1, maxLimit, s, st, dp);
+                if(ans) return dp[idx] = true;
+            }
+        }
+        return dp[idx] = ans;
+    }
+    
+    bool wordBreak(string &s, vector<string> &dict) {
+        set<string> st;
+        int maxLimit = 0;
+        for(string &word : dict){
+            st.insert(word);
+            maxLimit = max(maxLimit, (int)word.size());
+        }
+        int n = s.length();
+        vector<int> dp(n+2, -1);
+        return help(0, maxLimit, s, st, dp);
+    }
+};
