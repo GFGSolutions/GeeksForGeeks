@@ -1,0 +1,15 @@
+// User Template For C++
+
+class Solution {
+  public:
+    int maxPartitions(string &s) {
+        vector<int>v(26);
+        for(int i=0;i<(int)s.size();i++) v[s[i]-'a']=i;
+        int ans=0,max_ind=-1;
+        for(int i=0;i<(int)s.size();i++){
+            max_ind=max(max_ind,v[s[i]-'a']);
+            if(max_ind==i) ans++;
+        }
+        return ans;
+    }
+};
