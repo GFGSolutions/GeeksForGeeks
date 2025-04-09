@@ -1,6 +1,6 @@
 // User Template For C++
 
-cclass Solution {
+class Solution {
   public:
     void dfs(int u, int parent, vector<int> adj[], vector<int>& tin, vector<int>& low,
              vector<bool>& vis, vector<bool>& isArticulation, int& timer) {
