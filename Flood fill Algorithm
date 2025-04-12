@@ -1,0 +1,37 @@
+// User Template For C++
+
+class Solution {
+  public:
+    vector<vector<int>> floodFill(vector<vector<int>>& image, int sr, int sc, int newColor) {
+        int n=image.size();
+        int m=image[0].size();
+        vector<vector<int>>adj(image.begin(),image.end());
+        vector<vector<int>>vis(n,vector<int>(m,0));
+        queue<pair<int,int>>q;
+        vector<vector<int>>dir={{-1,0},{0,+1},{+1,0},{0,-1}};
+        q.push({sr,sc});
+        int ans=image[sr][sc];
+        adj[sr][sc]=newColor;
+        vis[sr][sc]=1;
+        while(!q.empty())
+        {
+            auto it=q.front();
+            int row=it.first;
+            int col=it.second;
+            q.pop();
+            for(auto it:dir)
+            {
+                int nr=row+it[0];
+                int nc=col+it[1];
+                if(nr>=0 && nc>=0 && nr<n && nc<m && !vis[nr][nc] &&
+                adj[nr][nc]==ans)
+                {
+                    q.push({nr,nc});
+                    adj[nr][nc]=newColor;
+                    vis[nr][nc]=1;
+                }
+            }
+        }
+        return adj;
+    }
+};
