@@ -1,0 +1,31 @@
+// User Template For C++
+
+class Solution {
+  public:
+    unordered_map<int,Node*>mp;
+    unordered_set<Node*>visited;
+    void cloneRemainingNodes(Node* node,Node* parent){
+        if(visited.count(node)){
+            return ;
+        }
+        visited.insert(node);
+        for(auto it:node->neighbors){
+           Node *newNode=mp[it->val]!=NULL ? mp[it->val] : new Node(it->val);
+           mp[it->val]=newNode;
+           parent->neighbors.push_back(newNode);
+           cloneRemainingNodes(it,newNode);
+        }
+    }
+    Node* cloneGraph(Node* node) {
+       Node*firstNode=new Node(node->val);
+       mp[node->val]=firstNode;
+       visited.insert(node);
+       for(auto it:node->neighbors){
+           Node *newNode = mp[it->val]!=NULL ? mp[it->val] : new Node(it->val);
+           mp[it->val]=newNode;
+           firstNode->neighbors.push_back(newNode);
+           cloneRemainingNodes(it,newNode);
+       }
+       return firstNode;
+    }
+};
