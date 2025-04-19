@@ -1,0 +1,16 @@
+// User Template For C++
+
+class Solution {
+  public:
+      int findDuplicate(vector<int>& arr) {
+        int sumOfArray = 0;
+        int actualSum = 0;
+        for(int i =0; i< arr.size();i++)
+        {
+            sumOfArray +=arr[i];
+        }
+        actualSum = (arr.size() * (arr.size()+1)) / 2;
+        int diff = actualSum - sumOfArray;
+        return arr.size() - diff;
+    }
+};
