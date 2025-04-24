@@ -1,0 +1,31 @@
+// User Template For C++
+
+class Solution {
+   public:
+    int majorityElement(vector<int>& arr) {
+        int element=-1;
+        int cnt= 0;
+        for (int i=0; i<arr.size(); i++){
+            if(cnt==0){
+                cnt++;
+                element=arr[i];
+                continue;
+            }
+            else if(arr[i]== element){
+                cnt++;
+            }
+            else{
+                cnt--;
+            }
+        }
+        int count= 0;
+        for (int i=0; i<arr.size(); i++){
+            if(arr[i]==element){
+                count++;
+            }
+        }
+        if(count> arr.size()/2)
+        return element;
+        return -1;
+    }
+};
