@@ -1,0 +1,32 @@
+// User Template For C++
+
+class Solution {
+  public:
+    Node* segregate(Node* head) {
+        int i=0,j=0,k=0;
+        Node* ptr = head;
+        while(ptr!=NULL){
+            if(ptr->data==0) i++;
+            else if(ptr->data==1) j++;
+            else k++;
+            ptr = ptr->next;
+        }
+        ptr = head;
+        while(ptr!=NULL && i!=0){
+            ptr->data = 0;
+            ptr = ptr->next;
+            i--;
+        }
+        while(ptr!=NULL && j!=0){
+            ptr->data = 1;
+            ptr = ptr->next;
+            j--;
+        }
+        while(ptr!=NULL && k!=0){
+            ptr->data = 2;
+            ptr = ptr->next;
+            k--;
+        }
+        return head;
+    }
+};
