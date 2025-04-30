@@ -1,0 +1,23 @@
+// User Template For C++
+
+class Solution {
+  public:
+    vector<int> nthRowOfPascalTriangle(int n) {
+        int dp[100][100];
+        for(int i = 1; i <= n; i++){
+            for(int j = 1; j <= i; j++){
+                if(j == 1 || j == i){
+                    dp[i][j] = 1;
+                }
+                else{
+                    dp[i][j] = dp[i-1][j] + dp[i-1][j-1];
+                }
+            }
+        }
+        vector<int> res;
+        for(int i = 1; i <= n; i++){
+            res.push_back(dp[n][i]);
+        }
+        return res;
+    }
+};
