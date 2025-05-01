@@ -1,0 +1,23 @@
+// User Template For C++
+
+class Solution {
+  public:
+    int findMaximum(vector<int> &arr) {
+        int n = arr.size();
+        vector<int> lMax(n, 0);
+        lMax[0] = arr[0];
+        for(int i=1;i<n;i++){
+            lMax[i] = max(lMax[i-1],  arr[i]);     
+        }
+        vector<int> rMax(n, 0);
+        rMax[n-1] = arr[n-1];
+        for(int i=n-2;i>=0;i--){
+            rMax[i] = max(rMax[i+1], arr[i]);
+        }
+        for(int i=0;i<n;i++){
+            if(lMax[i] == rMax[i])
+                return lMax[i];
+        }
+        return -1;
+    }
+};
