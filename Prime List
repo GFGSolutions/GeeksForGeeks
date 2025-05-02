@@ -1,0 +1,42 @@
+// User Template For C++
+
+class Solution {
+public:
+    vector<int> primes;
+    vector<int> nearest;
+    void generatePrimes(int maxVal) {
+        vector<bool> is_prime(maxVal + 300, true);
+        is_prime[0] = is_prime[1] = false;
+        for (int i = 2; i * i <= maxVal + 300; ++i) {
+            if (is_prime[i]) {
+                for (int j = i * i; j <= maxVal + 300; j += i)
+                    is_prime[j] = false;
+            }
+        }
+        for (int i = 2; i <= maxVal + 300; ++i)
+            if (is_prime[i])
+                primes.push_back(i);
+    }
+    void computeNearest() {
+        nearest.resize(10001);
+        for (int num = 1; num <= 10000; ++num) {
+            auto it = lower_bound(primes.begin(), primes.end(), num);
+            int higher = (it != primes.end()) ? *it : INT_MAX;
+            int lower = (it != primes.begin()) ? *(it - 1) : INT_MAX;
+            if (abs(num - lower) <= abs(higher - num))
+                nearest[num] = lower;
+            else
+                nearest[num] = higher;
+        }
+    }
+    Node* primeList(Node* head) {
+        generatePrimes(10000);
+        computeNearest();
+        Node* current = head;
+        while (current) {
+            current->val = nearest[current->val];
+            current = current->next;
+        }
+        return head;
+    }
+};
