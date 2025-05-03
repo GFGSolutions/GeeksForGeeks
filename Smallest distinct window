@@ -1,0 +1,24 @@
+// User Template For C++
+
+class Solution {
+  public:
+    int findSubString(string& s) {
+        int i=0;
+        int j=0;
+        int ans=s.size();
+        set<char>st(s.begin(),s.end());
+     unordered_map<char,int>mpp;
+        while(j<s.size()){
+            mpp[s[j]]++;
+                if(mpp.size()==st.size()){
+                       while(mpp[s[i]]>1 && i<j){
+                    mpp[s[i]]--;
+                     i++;
+                }
+                ans=min(ans,j-i+1);
+                }
+            j++;
+        }
+        return ans;
+    }
+};
