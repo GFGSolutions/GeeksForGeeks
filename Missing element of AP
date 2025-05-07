@@ -1,0 +1,23 @@
+// User Template For C++
+
+class Solution {
+  public:
+    int findMissing(vector<int> &arr) {
+        int a = arr[0];
+        int d = arr[1] - arr[0];
+        int n = arr.size();
+        int i = n;
+        int s = 0, e = n-1;
+        while(s <= e) {
+            int mid = s + ((e - s)/2);
+            int element = a + (mid * d);
+            if(element == arr[mid]) {
+                s = mid + 1;
+            } else {
+                i = mid;
+                e = mid - 1;
+            }
+        }
+        return a + (i * d);
+    }
+};
