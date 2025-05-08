@@ -1,23 +1,27 @@
-// User Template For C++
-
+// User function template for C++
 class Solution {
   public:
     int findMissing(vector<int> &arr) {
-        int a = arr[0];
-        int d = arr[1] - arr[0];
         int n = arr.size();
-        int i = n;
-        int s = 0, e = n-1;
-        while(s <= e) {
-            int mid = s + ((e - s)/2);
-            int element = a + (mid * d);
-            if(element == arr[mid]) {
-                s = mid + 1;
-            } else {
-                i = mid;
-                e = mid - 1;
+        int temp = INT_MAX;
+        for(int i = 1; i < n; i++){
+            if(temp == INT_MAX) temp = abs(arr[i]-arr[i-1]);
+            else{
+                if(temp != abs(arr[i]-arr[i-1])){
+                    if(temp < arr[i]-arr[i-1]){
+                      
+                      if(arr[0] < arr[1]) return arr[i-1]+temp;
+                      else return arr[i-1]-temp;
+                    } 
+                    else{
+                        if(arr[0] < arr[1]) return arr[i-2]+(arr[i]-arr[i-1]);
+                      else return arr[i-2]-abs(arr[i]-arr[i-1]);
+                    }
+                }
             }
         }
-        return a + (i * d);
+        if(arr[0] < arr[1])
+        return arr[n-1]+temp;
+        else return arr[n-1]-temp;
     }
 };
