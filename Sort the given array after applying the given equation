@@ -1,0 +1,11 @@
+class Solution {
+  public:
+    vector<int> sortArray(vector<int> &arr, int A, int B, int C) {
+        vector<int> v;
+        for(int i: arr){
+            v.push_back(A*(i*i) + B*i + C);
+        }
+        sort(v.begin(), v.end());
+        return v;
+    }
+};
