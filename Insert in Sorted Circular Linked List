@@ -1,0 +1,30 @@
+// User Template For C++
+
+class Solution {
+  public:
+    Node* sortedInsert(Node* head, int data) {
+        Node* newNode = new Node(data);
+        if (!head) {
+            newNode->next = newNode;
+            return newNode;
+        }
+        Node* curr = head;
+        if (data <= head->data) {
+            while (curr->next != head) {
+                curr = curr->next;
+            }
+            curr->next = newNode;
+            newNode->next = head;
+            return newNode; 
+        }
+        Node* prev = head;
+        curr = head->next;
+        while (curr != head && curr->data < data) {
+            prev = curr;
+            curr = curr->next;
+        }
+        prev->next = newNode;
+        newNode->next = curr;
+        return head;
+    }
+};
