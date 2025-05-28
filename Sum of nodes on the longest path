@@ -1,0 +1,22 @@
+// User Template For C++
+
+class Solution {
+  public:
+    pair<int,int> solve(Node* root){
+        if(!root){
+            return {0,0};
+        }
+        pair<int,int> left = solve(root->left);
+        pair<int,int> right = solve(root->right);
+        if(left.first>right.first){
+            return {1+left.first,root->data+left.second};
+        }
+        else if(left.first==right.first){
+            return {1+left.first,root->data+max(left.second,right.second)};
+        }
+        return {1+right.first,root->data+right.second};
+    }
+    int sumOfLongRootToLeafPath(Node *root) {
+        return solve(root).second;
+    }
+};
