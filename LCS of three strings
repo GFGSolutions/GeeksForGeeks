@@ -1,0 +1,33 @@
+// User Template For C++
+
+class Solution {
+  public:
+    int lcs(string& s1, string& s2, string& s3, int s1size, int s2size, int s3size, 
+        vector<vector<vector<int>>> &dp){
+        if (s1size == 0 || s2size == 0 || s3size == 0) return dp[s1size][s2size][s3size] = 0;
+        if(dp[s1size][s2size][s3size]!=-1) return dp[s1size][s2size][s3size];
+        if(s1[s1size-1] == s2[s2size-1] && s2[s2size-1] == s3[s3size-1]){
+            return dp[s1size][s2size][s3size] = 1 + lcs(s1,s2,s3,s1size-1,s2size-1,s3size-1, dp);
+        }
+        else{
+            return dp[s1size][s2size][s3size] = max(
+                lcs(s1,s2,s3,s1size-1,s2size,s3size, dp),
+                max(lcs(s1,s2,s3,s1size,s2size-1,s3size, dp),
+                lcs(s1,s2,s3,s1size,s2size,s3size-1, dp)
+                ));
+        }
+    }
+    int lcsOf3(string& s1, string& s2, string& s3) {
+        vector<vector<vector<int>>> dp(
+            s1.size() + 1,
+            vector<vector<int>>(
+                s2.size() + 1,
+                vector<int>(
+                    s3.size() + 1, -1
+                )
+            )
+        );
+        int ans = lcs(s1,s2,s3,(int)s1.size(),(int)s2.size(),(int)s3.size(), dp);
+        return ans;
+    }
+};
