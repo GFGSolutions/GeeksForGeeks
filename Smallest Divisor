@@ -1,0 +1,22 @@
+// User Template For C++
+
+class Solution {
+  public:
+    int smallestDivisor(vector<int>& arr, int k) {
+        int s=1,e=*max_element(arr.begin(),arr.end());
+        int result=0;
+        while(s<=e){
+            int mid=s+(e-s)/2;
+            int cnt=0;
+            for(auto&val:arr){
+                cnt+=val/mid;
+                if(val%mid)cnt++;
+            }
+            if(cnt<=k){
+                result=mid;
+                e=mid-1;
+            }else s=mid+1;
+        }
+        return result;
+    }
+};
