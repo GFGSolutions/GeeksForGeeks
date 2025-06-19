@@ -1,0 +1,27 @@
+// User Template For C++
+
+class Solution {
+  public:
+    bool validgroup(vector<int> &arr, int k) {
+        int n=arr.size();
+        map<int,int>mp;
+        for(int i=0; i<n; i++){
+            mp[arr[i]]++;
+        }
+        for(auto &it:mp){
+            int p=it.first;
+            int cnt=it.second;
+            int l=k;
+            if(cnt==0) continue;
+            p++;
+            l--;
+            while(mp.find(p)!=mp.end() && l>0){
+                 mp[p]-=min(mp[p],cnt);
+                 p+=1;
+                 l--;
+            }
+            if(l>0) return false;
+        }
+      return true; 
+    }
+};
