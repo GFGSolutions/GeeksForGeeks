@@ -1,0 +1,37 @@
+// User Template For C++
+
+class Solution {
+  public:  
+     string func(string &num1,string &num2){
+         int i=num1.size()-1,j=num2.size()-1;
+         int carry=0;
+         string ans;
+         while(i>=0 || j>=0 || carry){
+             int a=i>=0?num1[i]-'0':0;
+             int b=j>=0?num2[j]-'0':0;
+            int sum=carry+a+b;
+            carry=sum/10;
+            ans+=(sum%10+'0');
+            i--;
+            j--;
+         }
+         reverse(ans.begin(),ans.end());
+         return ans;
+     }
+    string minSum(vector<int> &arr) {
+        int n=arr.size();
+        sort(arr.begin(),arr.end());
+        string num1="",num2="";
+        for(int i=0;i<n;i++){
+            if(i%2==0) {
+                if(num1=="" && arr[i]==0)continue;
+                num1+=to_string(arr[i]);
+            }
+            else {
+                if(num2=="" && arr[i]==0) continue;
+                num2+=to_string(arr[i]);
+            }
+        }
+        return func(num1,num2);
+    }
+};
