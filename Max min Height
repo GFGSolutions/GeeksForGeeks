@@ -1,0 +1,38 @@
+// User Template For C++
+
+class Solution {
+  public:
+    int maxMinHeight(vector<int> &arr, int k, int w) {
+        int n = arr.size();
+        int low = *min_element(arr.begin(), arr.end());
+        int high = *max_element(arr.begin(), arr.end()) + k;  
+        int ans = low;
+        while (low <= high) {
+            int mid = low + (high - low) / 2;
+            vector<int> diff(n + 1, 0);
+            long long ops = 0, curr = 0;
+            bool possible = true;
+            for (int i = 0; i < n; ++i) {
+                curr += diff[i];
+                int effective = arr[i] + curr;
+                if (effective < mid) {
+                    int need = mid - effective;
+                    ops += need;
+                    if (ops > k) {
+                        possible = false;
+                        break;
+                    }
+                    curr += need;
+                    if (i + w <= n) diff[i + w] -= need;
+                }
+            }
+            if (possible) {
+                ans = mid;
+                low = mid + 1;
+            } else {
+                high = mid - 1;
+            }
+        }
+        return ans;
+    }
+};
