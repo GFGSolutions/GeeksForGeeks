@@ -1,0 +1,23 @@
+class Solution {
+  public:
+    int substrCount(string &s, int k) {
+        unordered_map<char,int>mp;
+        int i=0;
+        int j=0;
+        int ans=0;
+        int n=s.size();
+        while(j<n){
+            mp[s[j]]++;
+            while(mp.size()>k-1 || (j-i+1)>k ){
+                mp[s[i]]--;
+                if(mp[s[i]]==0)mp.erase(s[i]);
+                i++;
+            }
+            if(mp.size()==k-1 && (j-i+1)==k){
+                ans++;
+            }
+            j++;
+        }
+        return ans;
+    }
+};
