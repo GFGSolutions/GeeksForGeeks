@@ -1,0 +1,21 @@
+// User Template For C++
+
+class Solution {
+  public:
+    int countAtMostK(vector<int> &s, int k) {
+        unordered_map<int,int> m;
+        int end=0,ans=0;
+        int start=0;
+        while(end<s.size()){
+            m[s[end]]++;
+            while(start<=end && m.size()>k){
+                m[s[start]]--;
+                if(m[s[start]]==0)m.erase(s[start]);
+                start++;
+            }
+            ans+=end-start+1;
+            end++;
+        }
+        return ans; 
+    }
+};
