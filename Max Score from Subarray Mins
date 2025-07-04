@@ -1,0 +1,14 @@
+// User Template For C++
+
+class Solution {
+  public:
+    int fun(int i, vector<int>& arr){
+        if(i==1)
+          return arr[i]+arr[i-1];
+        int t = arr[i]+arr[i-1];
+        return max(t, fun(i-1, arr));
+    }
+    int maxSum(vector<int> &arr) {
+        return fun(arr.size()-1, arr);
+    }
+};
