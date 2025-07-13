@@ -1,0 +1,35 @@
+// User Template For C++
+
+class Solution {
+  public:
+    int nonLisMaxSum(vector<int>& arr) {
+        vector<int>temp(arr.size(),0);
+        vector<int>dp(arr.size(),1);
+        for(int i = 0;i<arr.size();i++){
+            for(int j = 0;j<i;j++){
+                if(arr[j] < arr[i] && dp[i] <= dp[j]+1){
+                    dp[i] = dp[j]+1;
+                    temp[i] = j;
+                }
+            }
+        }
+        int total = 0;
+        int index = -1,maxi = 0,size = 0;
+        for(int i = 0;i<arr.size();i++){
+            if(maxi <= dp[i]){
+                maxi = dp[i];
+                index = i;
+            }
+            total += arr[i];
+        }
+        size = maxi;
+        int sum = arr[index];
+        maxi--;
+        while(maxi > 0){
+            sum += arr[temp[index]];
+            index = temp[index];
+            maxi--;
+        }
+        return total-sum;
+    }
+};
