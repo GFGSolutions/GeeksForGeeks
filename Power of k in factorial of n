@@ -1,0 +1,37 @@
+// User Template For C++
+
+class Solution {
+  public:
+    map<int, int> primeFactorize(int k){
+        map<int, int> factors;
+        for (int i = 2; i * i <= k; ++i){
+            while (k % i == 0) {
+                factors[i]++;
+                k /= i;
+            }
+        }
+        if(k > 1){
+            factors[k]++;
+        }
+        return factors;
+    }
+    int countInFactorial(int n, int p) {
+        int count = 0;
+        while(n){
+            n /= p;
+            count += n;
+        }
+        return count;
+    }
+    int maxKPower(int n, int k) {
+        map<int, int> factors = primeFactorize(k);
+        int result = INT_MAX;
+        for (map<int, int>::iterator it = factors.begin(); it != factors.end(); ++it) {
+            int prime = it->first;
+            int exp = it->second;
+            int cnt = countInFactorial(n, prime);
+            result = min(result, cnt / exp);
+        }
+        return result;
+    }
+};
