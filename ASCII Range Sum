@@ -1,0 +1,29 @@
+// User Template For C++
+
+class Solution {
+  public:
+    vector<int> asciirange(string& s) {
+        unordered_map<char, vector<int>> map;
+    vector<int> prefixAscii(s.length(), 0);
+    vector<int> ans;
+    for (int i = 0; i < s.length(); i++) {
+        map[s[i]].push_back(i);
+    }
+    prefixAscii[0] = s[0];
+    for (int i = 1; i < s.length(); i++) {
+        prefixAscii[i] = prefixAscii[i - 1] + s[i];
+    }
+    for (auto& entry : map) {
+        const vector<int>& indices = entry.second;
+        if (indices.size() > 1) {
+            int l = indices[0];
+            int r = indices.back();
+            if (r > l + 1) {
+                int sum = prefixAscii[r - 1] - prefixAscii[l];
+                ans.push_back(sum);
+            }
+        }
+    }
+    return ans;
+    }
+};
