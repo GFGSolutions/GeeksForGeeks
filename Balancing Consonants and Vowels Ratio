@@ -1,26 +1,31 @@
-// User Template For C++
-
 class Solution {
   public:
     int countBalanced(vector<string>& arr) {
-        unordered_map<int,int>mp;
-        int vowel=0,cons=0;
-        mp[0]=1;
-        int n=arr.size();
-        int count=0;
-        for(int i=0;i<n;i++){
-            string s=arr[i];
-            for(int j=0;j<s.size();j++){
-                if(s[j]=='a' || s[j]=='e' || s[j]=='i' || s[j]=='o' || s[j]=='u'){
-                    vowel++;
-                }
-                else{
-                    cons++;
+        vector<int>sample;
+        unordered_map<int,int>omap;
+        for(int i=0;i<arr.size();i++) {
+            string temp=arr[i];
+            int cntV=0;
+            int cntC=0;
+            for(int j=0;j<temp.length();j++) {
+                if(temp.at(j)=='a'||temp.at(j)=='o'||temp.at(j)=='e'||temp.at(j)=='i'||temp.at(j)=='u') {
+                    cntV++;
+                } else {
+                    cntC++;
                 }
             }
-            int diff=vowel-cons;
-            count+=mp[diff];
-            mp[diff]++;
+            sample.push_back(cntV-cntC);
         }
-    return count;
+        int count =0 ;
+        int total=0;
+        omap[0]=1;
+        for(int i=0;i<sample.size();i++) {
+            total+=sample[i];
+            if(omap.find(total)!=omap.end()) {
+                count+=omap[total];
+            }
+            omap[total]++;
+        }
+        return count;
+    }
 };
