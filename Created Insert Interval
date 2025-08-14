@@ -1,0 +1,21 @@
+// User Template For C++
+
+class Solution {
+  public:
+    vector<vector<int>> insertInterval(vector<vector<int>> &intervals,vector<int> &newInterval) {
+        intervals.push_back(newInterval);
+        sort(intervals.begin(), intervals.end());
+        vector<vector<int>>ans;
+        for(auto it : intervals){
+            if(!ans.size() || it[0] > ans.back()[1]){
+                ans.push_back(it);
+                continue;
+            }
+            auto elem = ans.back();
+            ans.pop_back();
+            elem[1] = fmax(elem[1], it[1]);
+            ans.push_back(elem);
+        }
+        return ans;
+    }
+};
