@@ -1,0 +1,19 @@
+// User Template For C++
+
+class Solution {
+  public:
+    void rearrange(vector<int> &arr, int x) {
+        vector<pair<int,int>>temp;
+        for(int i=0;i<arr.size();i++)temp.push_back({arr[i],i});
+        auto comp=[&](auto&v1,auto&v2){
+            if(abs(v1.first-x)==abs(v2.first-x)){
+                return v1.second<v2.second;
+            }
+          return abs(v1.first-x)<abs(v2.first-x);  
+        };
+        sort(temp.begin(),temp.end(),comp);
+        for(int i=0;i<arr.size();i++){
+            arr[i]=temp[i].first;
+        }
+    }
+};
