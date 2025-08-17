@@ -1,0 +1,26 @@
+// User Template For C++
+
+class Solution {
+  public:
+    int BS(vector<int> &a,int t)
+    {
+        int b=0,e=a.size()-1;
+        while(b<=e)
+        {
+            int mid=(e&b)+((e^b)>>1);
+            if(a[mid]>=t) e=mid-1;
+            else b=mid+1;
+        }
+        return b;
+    }
+    int hIndex(vector<int>& c) {
+        sort(c.begin(),c.end());
+        int maxi=0,n=c.size();
+        for(int i=1;i<=n;++i)
+        {
+            if((n-BS(c,i))>=i) maxi=i;
+            else break;
+        }
+        return  maxi;
+    }
+};
