@@ -1,0 +1,31 @@
+// User Template For C++
+
+class Solution {
+public:
+    bool searchMatrix(vector<vector<int>> &mat, int x) {
+        ios::sync_with_stdio(false);
+        cin.tie(nullptr);
+        int n = mat.size(), m = mat[0].size();
+        int low = 0, high = n * m - 1;
+        while (low <= high) {
+            int mid = (low + high) >> 1;
+            int row = mid / m, col = mid % m;
+            int val = mat[row][col];
+            if (val == x) return true;
+            int lowVal = mat[low / m][low % m];
+            int highVal = mat[high / m][high % m];
+            if (lowVal <= val) {
+                if (lowVal <= x && x < val)
+                    high = mid - 1;
+                else
+                    low = mid + 1;
+            } else {
+                if (val < x && x <= highVal)
+                    low = mid + 1;
+                else
+                    high = mid - 1;
+            }
+        }
+        return false;
+    }
+};
