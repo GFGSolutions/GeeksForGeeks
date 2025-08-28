@@ -1,0 +1,37 @@
+// User Template For C++
+
+class Solution {
+  public:
+    string smallestWindow(string &s, string &p) {
+        vector<int>mp(256,0);
+        int sIndex=-1;
+        int minLen=INT_MAX;
+        for(int i=0;i<p.size();i++)
+        {
+            mp[p[i]]++;
+        }
+        int c=0;
+        int m=p.size();
+        for(int j=0,i=0;j<s.size();j++)
+        {
+            if(mp[s[j]]>0)
+            c++;
+            mp[s[j]]--;
+            while(c==m)
+            {
+                if(j-i+1<minLen)
+                {
+                    sIndex=i;
+                    minLen=j-i+1;
+                }
+                mp[s[i]]++;
+                if(mp[s[i]]>0)
+                c--;
+                i++;
+            }
+        }
+    if(sIndex==-1) return "";
+    else
+    return s.substr(sIndex,minLen);
+    }
+};
