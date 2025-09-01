@@ -1,0 +1,36 @@
+// User Template For C++
+
+class Solution {
+  public:
+    Node* swapKth(Node* head, int k) {
+        if (!head || !head->next) return head;
+        int n = 0;
+        Node* temp = head;
+        while (temp) {
+            n++;
+            temp = temp->next;
+        }
+        if (k > n) return head;
+        int pos1 = k;
+        int pos2 = n - k + 1;
+        if (pos1 == pos2) return head;
+        Node* prev1 = nullptr, *node1 = head;
+        for (int i = 1; i < pos1; i++) {
+            prev1 = node1;
+            node1 = node1->next;
+        }
+        Node* prev2 = nullptr, *node2 = head;
+        for (int i = 1; i < pos2; i++) {
+            prev2 = node2;
+            node2 = node2->next;
+        }
+        if (prev1) prev1->next = node2;
+        else head = node2;
+        if (prev2) prev2->next = node1;
+        else head = node1;
+        Node* tmp = node1->next;
+        node1->next = node2->next;
+        node2->next = tmp;
+        return head;
+    }
+};
