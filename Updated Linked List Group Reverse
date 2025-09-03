@@ -1,0 +1,28 @@
+// User Template For C++
+
+class Solution {
+  public:
+  void reversee(vector<int> &vec, int i , int j ){
+      reverse(begin(vec) + i , begin(vec) + j);
+  }
+    Node *reverseKGroup(Node *head, int k) {
+        vector<int>vec; 
+        Node* temp = head; 
+        while(temp){
+            vec.push_back(temp->data);
+            temp = temp->next; 
+        }
+        int n = vec.size();
+        int i =0 ; 
+        while(i < n ){
+            reversee(vec, i , min(i+ k, n));
+            i+=k;
+        }
+        temp =  head; 
+        for(int i = 0 ; i < n; i++){
+            temp->data = vec[i];
+            temp = temp->next; 
+        }
+        return head; 
+    }
+}; 
