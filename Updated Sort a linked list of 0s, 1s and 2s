@@ -1,0 +1,54 @@
+// User Template For C++
+
+class Solution {
+  public:
+    Node* segregate(Node* head) {
+        Node *zero, *zeroPrev, *one, *onePrev, *two, *twoPrev;
+        zero = zeroPrev = one =  onePrev = two = twoPrev = NULL;
+        Node* tr = head;
+        while(tr){
+            if(tr->data == 0){
+                if(zero==NULL){
+                    zero = tr;
+                    zeroPrev = zero;
+                }else{
+                    zeroPrev->next = tr;
+                    zeroPrev = zeroPrev->next;
+                }
+            }
+            else if(tr->data == 1){
+                if(one==NULL){
+                    one = tr;
+                    onePrev = one;
+                }else{
+                    onePrev->next = tr;
+                    onePrev = onePrev->next;
+                }
+            }
+            else if(tr->data == 2){
+                if(two==NULL){
+                    two = tr;
+                    twoPrev = two;
+                }else{
+                    twoPrev->next = tr;
+                    twoPrev = twoPrev->next;
+                }
+            }
+            tr = tr->next;
+        }
+        if(twoPrev){
+            twoPrev->next = NULL;
+        }
+        if(onePrev){
+            onePrev->next = two;
+        }else{
+            one = two;
+        }
+        if(zeroPrev){
+            zeroPrev->next = one;
+        }else{
+            zero = one;
+        }
+        return zero;
+    }
+}; 
