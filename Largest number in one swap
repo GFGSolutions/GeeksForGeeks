@@ -1,0 +1,20 @@
+// User Template For C++
+
+class Solution {
+  public:
+    string largestSwap(string &s) {
+        vector<bool>exist(10,0);
+        for(char ch : s)
+            exist[ch-'0']=1;
+        for(int i=0;i<s.size()-1;i++)
+            for(int k=9;k>s[i]-'0';k--)
+                if(exist[k])
+                    for(int j=s.size()-1;j>i;j--)
+                        if(s[j]==k+'0')
+                        {
+                            swap(s[j],s[i]);
+                            return s;
+                        }
+        return s;
+    }
+};
