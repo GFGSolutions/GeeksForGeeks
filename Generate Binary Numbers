@@ -1,0 +1,21 @@
+// User Template For C++
+
+class Solution {
+  public:
+string tobinary(int i) {
+    string res = "";
+    while (i > 0) {
+        res += (i % 2 == 0 ? '0' : '1');
+        i /= 2;
+    }
+    reverse(res.begin(), res.end());
+    return res;
+}
+    vector<string> generateBinary(int n) {
+        vector<string> ans(n);
+        for(int i = 1;i<=n;i++){
+            ans[i-1] = tobinary(i);
+        }
+        return ans;
+    }
+};
