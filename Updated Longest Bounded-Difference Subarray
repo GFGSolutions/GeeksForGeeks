@@ -1,0 +1,25 @@
+// User Template For C++
+
+class Solution {
+  public:
+    vector<int> longestSubarray(vector<int>& arr, int x) {
+        map<int, int> store;
+        int i=0, st=0, end=0, ans=0;
+        int n = arr.size();
+        for(int j=0;j<n;j++){
+            store[arr[j]]++;
+            while(((store.rbegin()->first) - (store.begin()->first)) > x){
+                store[arr[i]]--;
+                if(store[arr[i]] == 0)
+                  store.erase(arr[i]);
+                i++;  
+            }
+            if((j-i+1) > ans){
+                ans = j-i+1;
+                st = i;
+                end = j;
+            }
+        }
+    return vector<int>(arr.begin()+st, arr.begin()+end+1);
+    }
+};
