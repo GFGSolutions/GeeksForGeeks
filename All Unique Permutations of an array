@@ -1,0 +1,27 @@
+// User Template For C++
+
+class Solution {
+  public:
+    void helper(vector<int>&arr, vector<bool>&visited, vector<int>&temp, set<vector<int>>&ans){
+        bool flag = true;
+        for(int i = 0;i<visited.size();i++){
+            if(visited[i])continue;
+            flag = false;
+            temp.push_back(arr[i]);
+            visited[i] = true;
+            helper(arr, visited, temp, ans);
+            temp.pop_back();
+            visited[i] = false;
+        }
+        if(flag)ans.insert(temp);
+    }
+    vector<vector<int>> uniquePerms(vector<int>& arr) {
+        vector<bool>visited(arr.size(), false);
+        set<vector<int>>ans;
+        vector<int>temp;
+        helper(arr, visited, temp, ans);
+        vector<vector<int>>res;
+        for(auto it : ans)res.push_back(it);
+        return res;
+    }
+};
