@@ -1,0 +1,23 @@
+// User Template For C++
+
+class Solution {
+  public:
+    void backtrack(int start, int n, int k, vector<int>& temp, vector<vector<int>>& result) {
+        if (n == 0 && k == 0) {
+            result.push_back(temp);
+            return;
+        }
+        if (n < 0 || k < 0) return;
+        for (int i = start; i <= 9; i++) {
+            temp.push_back(i);   
+            backtrack(i + 1, n - i, k - 1, temp, result); 
+            temp.pop_back();          
+        }
+    }
+    vector<vector<int>> combinationSum(int n, int k) {
+         vector<vector<int>> result;
+        vector<int> temp;
+        backtrack(1, n, k, temp, result);
+        return result;
+    }
+};
