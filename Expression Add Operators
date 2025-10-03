@@ -1,0 +1,36 @@
+// User Template For C++
+
+class Solution {
+  public:
+     void backtrack(vector<string>& result, string& s, int target, int pos,
+                   long currVal, long prevVal, string expr) {
+        if (pos == s.size()) {
+            if (currVal == target) {
+                result.push_back(expr);
+            }
+            return;
+        }
+        
+        for (int i = pos; i < s.size(); i++) {
+            if (i != pos && s[pos] == '0') break;
+
+            string part = s.substr(pos, i - pos + 1);
+            long num = stol(part);
+
+            if (pos == 0) {
+                backtrack(result, s, target, i + 1, num, num, part);
+            } else {
+                backtrack(result, s, target, i + 1, currVal + num, num, expr + "+" + part);
+                backtrack(result, s, target, i + 1, currVal - num, -num, expr + "-" + part);
+                backtrack(result, s, target, i + 1, currVal - prevVal + prevVal * num, prevVal * num, expr + "*" + part);
+            }
+        }
+    }
+
+    vector<string> findExpr(string &s, int target) {
+        vector<string> result;
+        backtrack(result, s, target, 0, 0, 0, "");
+        sort(result.begin(), result.end());
+        return result;
+    }
+};
