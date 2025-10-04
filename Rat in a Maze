@@ -1,0 +1,33 @@
+// User Template For C++
+
+class Solution {
+  public:
+    void helper(int i, int j, vector<vector<int>>&maze, vector<string>&ans, string &temp, vector<vector<bool>>&visited){
+        if(i == maze.size()-1 && j == maze[0].size()-1){
+            ans.push_back(temp);
+            return;
+        }
+        if(i<0 || j<0 || i>=maze.size() || j>=maze[0].size() || visited[i][j] || !maze[i][j])return;
+        visited[i][j] = true;
+        temp += 'D';
+        helper(i+1, j, maze, ans, temp, visited);
+        temp.pop_back();
+        temp+='L';
+        helper(i, j-1, maze, ans, temp, visited);
+        temp.pop_back();
+        temp+='R';
+        helper(i, j+1, maze, ans, temp, visited);
+        temp.pop_back();
+        temp+='U';
+        helper(i-1, j, maze, ans, temp, visited);
+        temp.pop_back();
+        visited[i][j] = false;
+    }
+    vector<string> ratInMaze(vector<vector<int>>& maze) {
+        vector<string>ans;
+        vector<vector<bool>>visited(maze.size(), vector<bool>(maze[0].size(), false));
+        string temp = "";
+        helper(0, 0, maze, ans, temp, visited);
+        return ans;
+    }
+};
