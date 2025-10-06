@@ -1,0 +1,27 @@
+// User Template For C++
+
+class Solution {
+  public:
+    vector<int> bottomView(Node *root) {
+        vector<int> ans;
+        map<int, int> mp;
+        queue<pair<Node*, int>> q;
+        q.push({root,0});
+        while(!q.empty()){
+            Node* cur=q.front().first;
+            int col=q.front().second;
+            q.pop();
+            mp[col]=cur->data;
+            if(cur->left){
+                q.push({cur->left, col-1});
+            }
+            if(cur->right){
+                q.push({cur->right, col+1});
+            }
+        }
+        for(auto& it:mp){
+            ans.push_back(it.second);
+        }
+        return ans;
+    }
+};
