@@ -1,29 +1,41 @@
 // User Template For C++
 
 class Solution {
-public:
-    vector<vector<int>> knightTour(int n) {
-        vector<vector<int>> board(n, vector<int>(n, -1));
-        int dx[8] = {2, 1, -1, -2, -2, -1, 1, 2};
-        int dy[8] = {1, 2, 2, 1, -1, -2, -2, -1};
-        function<bool(int, int, int)> isSafe = [&](int x, int y, int n) {
-            return (x >= 0 && y >= 0 && x < n && y < n && board[x][y] == -1);
-        };
-        function<bool(int, int, int)> solve = [&](int x, int y, int step) {
-            if (step == n * n) return true;
-            for (int i = 0; i < 8; i++) {
-                int nx = x + dx[i];
-                int ny = y + dy[i];
-                if (isSafe(nx, ny, n)) {
-                    board[nx][ny] = step;
-                    if (solve(nx, ny, step + 1)) return true;
-                    board[nx][ny] = -1;
+  public:
+    bool dfs(int i,int j,int n,vector<vector<int>>& ans,int &cnt)
+    {
+        if(cnt == n*n)
+        {
+            return true;
+        }
+        for(int r=i-2;r<=i+2;r++)
+        {
+            for(int c=j-2;c<=j+2;c++)
+            {
+                int rDistance = abs(r-i); 
+                int cDistance = abs(c-j); 
+                if(r>=0 and r<n and c>=0 and c<n and ans[r][c]==-1 and rDistance+cDistance == 3)    // 2.5 jump
+                {
+                    ans[r][c] = ans[i][j]+1;
+                    cnt++;
+                    if(dfs(r,c,n,ans,cnt))
+                        return true;
+                    else
+                    {
+                        ans[r][c] = -1;
+                        cnt--;
+                    }
                 }
             }
-            return false;
-        };
-        board[0][0] = 0;
-        if (solve(0, 0, 1)) return board;
-        return {{-1}};
+        }
+        return false;
+    }
+    vector<vector<int>> knightTour(int n) {
+        vector<vector<int>> answer(n,vector<int>(n,-1));
+        answer[0][0] = 0;
+        int cnt = 1;
+        if(dfs(0, 0, n, answer, cnt))
+            return answer;
+        return {};
     }
 };
