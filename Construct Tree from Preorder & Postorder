@@ -1,0 +1,43 @@
+// User Template For C++
+
+class Solution {
+  public:
+    Node *build(vector<int>& pre, vector<int>& post, int &preIndex, int start, int end, int n)
+    {
+        Node* root = new Node(pre[preIndex]);
+        preIndex++;
+        if (start == end || preIndex >= n)
+            return root;
+        int leftChild = pre[preIndex];
+        int pos = start;
+        while (pos <= end && post[pos] != leftChild)
+            pos++;
+        if (pos <= end) {
+            root->left = build(pre, post, preIndex, start, pos, n);
+            root->right = build(pre, post, preIndex, pos + 1, end - 1, n);
+        }
+        return root;
+    }
+    Node *constructTree(vector<int> &pre, vector<int> &post) {
+        int n = pre.size();
+        int preIndex = 0;
+        return build(pre, post, preIndex, 0, n - 1, n);
+    }
+    void printLevel(Node* root)
+    {
+        if (!root)
+            return;
+        queue<Node*> q;
+        q.push(root); 
+        while (!q.empty())
+        {
+            Node* curr = q.front();
+            q.pop();
+            cout << curr->data << " ";
+            if (curr->left)
+                q.push(curr->left);
+            if (curr->right)
+                q.push(curr->right);
+        }
+    }
+};
