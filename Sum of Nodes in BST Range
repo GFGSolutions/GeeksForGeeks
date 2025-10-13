@@ -1,0 +1,18 @@
+// User Template For C++
+
+class Solution {
+  public:
+    virtual int fun(Node *root, int &l, int &r){
+        if(!root)
+          return 0;
+        int lCall = fun(root->left, l, r);  
+        int rCall = fun(root->right, l, r);  
+        int t = root->data;
+        if((l<=t) && (t<=r))
+          return t + lCall + rCall;
+        return lCall + rCall;
+    }
+    int nodeSum(Node* root, int l, int r) {
+        return fun(root, l, r);
+    }
+};
