@@ -1,0 +1,16 @@
+// User Template For C++
+
+class Solution {
+  public:
+    int sum = 0;
+    void transformTree(struct Node *root) {
+        if(!root){
+            return;
+        }
+        transformTree(root->right);
+        int rootData = root->data;
+        root->data = sum;
+        sum += rootData;
+        transformTree(root->left);
+    }
+};
