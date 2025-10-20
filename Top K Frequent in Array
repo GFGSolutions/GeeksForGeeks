@@ -1,0 +1,21 @@
+// User Template For C++
+
+class Solution {
+  public:
+    vector<int> topKFreq(vector<int> &arr, int k) {
+        unordered_map<int,int>mp;
+        for(auto&v:arr)mp[v]++;
+        priority_queue<pair<int,int>,vector<pair<int,int>>,greater<>>pq;
+        for(auto&p:mp){
+            pq.push({p.second,p.first});
+            if(pq.size()>k)pq.pop();
+        }
+        vector<int>result;
+        while(!pq.empty()){
+            result.push_back(pq.top().second);
+            pq.pop();
+        }
+        reverse(result.begin(),result.end());
+        return result;
+    }
+};
