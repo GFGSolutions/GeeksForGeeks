@@ -1,0 +1,22 @@
+// User Template For C++
+
+class Solution {
+  public:
+    void nearlySorted(vector<int>& arr, int k) {
+        priority_queue<int,vector<int>,greater<int>>minheap;
+        for(int i=0;i<=k;i++){
+            minheap.push(arr[i]);
+        }
+        int index=0;
+        int n=arr.size();
+        for(int i=k+1;i<n;i++){
+            arr[index++]=minheap.top();
+            minheap.pop();
+        minheap.push(arr[i]);
+        }
+        while(!minheap.empty()){
+            arr[index++]=minheap.top();
+            minheap.pop();
+        }
+    }
+};
