@@ -1,0 +1,24 @@
+// User Template For C++
+
+class Solution {
+  public:
+    vector<vector<int>> kSmallestPair(vector<int> &arr1, vector<int> &arr2, int k) {
+    vector<vector<int>> ans;
+    int n1 = arr1.size(), n2 = arr2.size();
+    if (n1 == 0 || n2 == 0 || k <= 0) return ans;
+    using T = tuple<long long,int,int>;
+    priority_queue<T, vector<T>, greater<T>> pq;
+    int initial = min(n1, k);
+    for (int i = 0; i < initial; ++i) {
+        pq.emplace((long long)arr1[i] + arr2[0], i, 0);
+    }
+    while (!pq.empty() && (int)ans.size() < k) {
+        auto [sum, i, j] = pq.top(); pq.pop();
+        ans.push_back({arr1[i], arr2[j]});
+        if (j + 1 < n2) {
+            pq.emplace((long long)arr1[i] + arr2[j + 1], i, j + 1);
+        }
+    }
+    return ans;
+    }
+};
