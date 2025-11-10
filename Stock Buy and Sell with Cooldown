@@ -1,0 +1,23 @@
+// User Template For C++
+
+class Solution {
+  public:
+    int recur(vector<int>& arr, int n, int day, int canBuy, int cool, vector<vector<int>>& dp){
+        if(day>=n) return 0;
+        if(dp[day][canBuy]!=-1) return dp[day][canBuy];
+        int take=0, nott=0;
+        if(canBuy){
+            take=-arr[day]+recur(arr,n,day+1,!canBuy,cool,dp);
+            nott=recur(arr,n,day+1,canBuy,cool,dp);
+        } else{
+            take=arr[day]+recur(arr,n,day+cool+1,!canBuy,cool,dp);
+            nott=recur(arr,n,day+1,canBuy,cool,dp);
+        }
+        return dp[day][canBuy]=max(take, nott);
+    }
+    int maxProfit(vector<int>& arr) {
+        int n=arr.size();
+        vector<vector<int>> dp(n,vector<int>(2,-1));
+        return recur(arr,n,0,1,1,dp);
+    }
+};
