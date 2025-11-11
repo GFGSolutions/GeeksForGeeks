@@ -1,0 +1,38 @@
+// User Template For C++
+
+class Solution {
+public:
+    bool wildCard(string &txt, string &pat) {
+        int n = txt.size(), m = pat.size();
+        string newPat;
+        for (int i = 0; i < m; i++) {
+            if (pat[i] == '*' && !newPat.empty() && newPat.back() == '*')
+                continue;
+            newPat.push_back(pat[i]);
+        }
+        pat = newPat;
+        m = pat.size();
+        int i = 0, j = 0;   
+        int starIdx = -1, iIdx = -1;
+        while (i < n) {
+            if (j < m && (pat[j] == txt[i] || pat[j] == '?')) {
+                i++; j++; 
+            } 
+            else if (j < m && pat[j] == '*') {
+                starIdx = j;
+                iIdx = i;
+                j++; 
+            }
+            else if (starIdx != -1) {
+                j = starIdx + 1;  
+                iIdx++;
+                i = iIdx;
+            }
+            else {
+                return false;
+            }
+        }
+        while (j < m && pat[j] == '*') j++;
+        return j == m;
+    }
+};
