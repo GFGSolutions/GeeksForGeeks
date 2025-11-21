@@ -1,0 +1,49 @@
+// User Template For C++
+
+class Solution {
+  public:
+    int shortestPath(int V, int a, int b, vector<vector<int>> &edges) {
+    vector<vector<tuple<int, int, int>>> adj(V);
+    for (const auto& edge : edges) {
+        int u = edge[0];
+        int v = edge[1];
+        int w1 = edge[2];
+        int w2 = edge[3];
+        adj[u].emplace_back(v, w1, w2);
+        adj[v].emplace_back(u, w1, w2);
+    }
+    const int INF = INT_MAX;
+    vector<vector<int>> dist(V, vector<int>(2, INF));
+    priority_queue<tuple<int, int, int>, vector<tuple<int, int, int>>, greater<tuple<int, int, int>>> pq;
+    dist[a][0] = 0;
+    pq.emplace(0, a, 0);
+    while (!pq.empty()) {
+        auto [d, u, curved_count] = pq.top();
+        pq.pop();
+        if (d > dist[u][curved_count]) {
+            continue;
+        }
+        for (const auto& edge : adj[u]) {
+            int v = get<0>(edge);
+            int w1 = get<1>(edge);
+            int w2 = get<2>(edge);
+            int new_d1 = d + w1;
+            int new_c1 = curved_count;
+            if (new_d1 < dist[v][new_c1]) {
+                dist[v][new_c1] = new_d1;
+                pq.emplace(new_d1, v, new_c1);
+            }
+            if (curved_count == 0) {
+                int new_d2 = d + w2;
+                int new_c2 = 1;
+                if (new_d2 < dist[v][new_c2]) {
+                    dist[v][new_c2] = new_d2;
+                    pq.emplace(new_d2, v, new_c2);
+                }
+            }
+        }
+    }
+    int result = min(dist[b][0], dist[b][1]);
+    return (result == INF) ? -1 : result;
+    }
+};
