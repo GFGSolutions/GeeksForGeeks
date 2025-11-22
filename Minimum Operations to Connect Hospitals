@@ -1,3 +1,5 @@
+// User Template For C++
+
 class DisjointSet{
     vector<int> parent, size;
     public:
