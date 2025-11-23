@@ -1,1 +1,57 @@
+// User Template For C++
 
+#include <bits/stdc++.h>
+using namespace std;
+struct DSU {
+    vector<int> p, r;
+    DSU(int n): p(n), r(n,0) { iota(p.begin(), p.end(), 0); }
+    int find(int x){ return x == p[x] ? x : p[x] = find(p[x]); }
+    bool unite(int a, int b){
+        a = find(a); b = find(b);
+        if(a == b) return false;
+        if(r[a] < r[b]) swap(a,b);
+        p[b] = a;
+        if(r[a] == r[b]) r[a]++;
+        return true;
+    }
+};
+class Solution {
+public:
+    int secondMST(int V, vector<vector<int>>& edges) {
+        int E = edges.size();
+        struct EData { int u,v,w; };
+        vector<EData> e(E);
+        for(int i=0;i<E;i++)
+            e[i] = {edges[i][0], edges[i][1], edges[i][2]};
+        sort(e.begin(), e.end(), [](auto &a, auto &b){
+            return a.w < b.w;
+        });
+        DSU d1(V);
+        vector<int> mstIndex;
+        int mstWeight = 0;
+        for(int i=0;i<E;i++){
+            if(d1.unite(e[i].u, e[i].v)){
+                mstWeight += e[i].w;
+                mstIndex.push_back(i);
+            }
+        }
+        if((int)mstIndex.size() != V-1) return -1;
+        int answer = INT_MAX;
+        for(int skip : mstIndex){
+            DSU d2(V);
+            int curWeight = 0;
+            int used = 0;
+            for(int i=0;i<E;i++){
+                if(i == skip) continue;
+                if(d2.unite(e[i].u, e[i].v)){
+                    curWeight += e[i].w;
+                    used++;
+                    if(curWeight >= answer) break;
+                }
+            }
+            if(used == V-1 && curWeight > mstWeight)
+                answer = min(answer, curWeight);
+        }
+        return answer == INT_MAX ? -1 : answer;
+    }
+};
