@@ -1,0 +1,14 @@
+// User Template For C++
+
+class Solution {
+  public:
+    virtual int andInRange(int l, int r) {
+      int c=0;
+      while(l != r){
+        c++;
+        l>>=1;
+        r>>=1;
+      }
+      return (l<<c);
+    }
+};
