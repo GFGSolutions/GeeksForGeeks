@@ -1,0 +1,31 @@
+// User Template For C++
+
+class Solution {
+  public:
+    vector<int> subsetXOR(int n) {
+        int maxxor =0;
+        for(int i=1;i<=n;i++){
+            maxxor ^=i;
+        }
+        vector<int>ans(n);
+        if (maxxor==n){
+                    for(int i=1;i<=n;i++){
+                        ans[i-1]=i;
+                    }
+                    return ans;
+        }
+       vector<int>a;
+       for(int i=n;i>0;i--){
+            int curr = maxxor^i;
+            if ((maxxor!=n) && (curr==n)){
+                maxxor^=i;
+                continue;
+            }
+            else{
+                a.push_back(i);
+             }
+        } 
+        reverse(a.begin(),a.end());
+        return a;
+    }
+};
