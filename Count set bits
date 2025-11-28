@@ -1,0 +1,19 @@
+// User Template For C++
+
+class Solution{
+    public:
+    int countSetBits(int n){
+        int totaln = n+1;
+        int ones = 1; 
+        int count = 0;
+        while(n!=0){
+            int temp = totaln / (ones*2);
+            count += (temp*ones);
+            temp = totaln/ones;
+            if(temp%2==1) count += (totaln % ones);
+            n>>=1;
+            ones*=2;
+        }
+        return count;
+    }
+};
