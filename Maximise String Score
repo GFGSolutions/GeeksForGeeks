@@ -1,0 +1,49 @@
+// User Template For C++
+
+class Solution {
+public:
+    int n;
+    vector<int> dp;
+    int solve(int i,
+              const string &s,
+              vector<vector<int>> &adj,
+              vector<int> &pre,
+              vector<vector<int>> &nxt) {
+        if (i == n - 1) return 0;
+        if (dp[i] != -1) return dp[i];
+        int best = 0;
+        int cur = s[i] - 'a';
+        for (int ch : adj[cur]) {
+            int j = nxt[i][ch];
+            if (j == -1) continue;
+            int gain;
+            if (ch == cur) {
+                gain = pre[j] - pre[i + 1];
+            } else {
+                gain = pre[j] - pre[i];
+            }
+            best = max(best, gain + solve(j, s, adj, pre, nxt));
+        }
+        return dp[i] = best;
+    }
+    int maxScore(string s, vector<vector<char>> &jumps) {
+        n = s.size();
+        vector<int> pre(n + 1, 0);
+        for (int i = 1; i <= n; i++)
+            pre[i] = pre[i - 1] + int(s[i - 1]);
+        vector<vector<int>> nxt(n, vector<int>(26, -1));
+        vector<int> last(26, -1);
+        for (int i = n - 1; i >= 0; i--) {
+            for (int c = 0; c < 26; c++)
+                nxt[i][c] = last[c];
+            last[s[i] - 'a'] = i;
+        }
+        vector<vector<int>> adj(26);
+        for (auto &j : jumps)
+            adj[j[0] - 'a'].push_back(j[1] - 'a');
+        for (int c = 0; c < 26; c++)
+            adj[c].push_back(c);
+        dp.assign(n, -1);
+        return solve(0, s, adj, pre, nxt);
+    }
+};
