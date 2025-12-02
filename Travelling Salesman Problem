@@ -1,0 +1,26 @@
+// User Template For C++
+
+class Solution {
+  public:
+    int solve(vector<vector<int>>& cost, int mask , int pos,vector<vector<int>> &dp ){
+        int n= cost.size();
+        if(mask== (1<<n)-1){
+            return cost[pos][0];
+        }
+        if(dp[mask][pos]!=-1) return dp[mask][pos];
+        int ans = 1e9;
+        for(int i =0 ;i<n;i++){
+            if(!((1<<i)&mask)){
+                int num = cost[pos][i]  + solve(cost,(mask|(1<<i)),i,dp);
+                ans = min(ans,num);
+            }
+        }
+        return dp[mask][pos] =  ans;
+    }
+    int tsp(vector<vector<int>>& cost) {
+        int n = cost.size();
+        vector<vector<int>> dp(1<<n,vector<int> (n+1,-1));
+        int ans = solve(cost,1,0,dp);
+        return ans;
+    }
+};
