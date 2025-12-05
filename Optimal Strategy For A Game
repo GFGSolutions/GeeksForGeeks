@@ -1,0 +1,18 @@
+// User Template For C++
+
+class Solution {
+public:
+    int maximumAmount(vector<int> &arr) {
+        int n=arr.size();
+        vector<vector<long long>> dp(n,vector<long long>(n,0));
+        for(int i=0;i<n;i++){
+            for (int l=0,r=i;r<n;l++,r++){
+                long long x=(l+2<=r) ? dp[l+2][r] : 0;
+                long long y=(l+1<=r-1) ? dp[l+1][r-1] : 0;
+                long long z=(l<=r-2) ? dp[l][r-2] : 0;
+                dp[l][r]=max(arr[l]+min(x,y),arr[r]+min(y,z));
+            }
+        }
+        return dp[0][n-1];
+    }
+};
