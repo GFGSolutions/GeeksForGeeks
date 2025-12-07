@@ -1,0 +1,21 @@
+// User Template For C++
+
+class Solution{
+  public:
+  int MOD = 1e9 + 7;
+    int distinctSubseq(string &str) {
+        int n = str.length();
+        vector <int> dp(n+1);
+        vector <int> prev(26, -1);
+        dp[0] = 1;
+        for(int i = 1; i <= n; i++){
+            int curr = str[i-1] - 'a';
+            dp[i] = (2LL * dp[i-1]) % MOD;
+            if(prev[curr] != -1){
+                dp[i] = (dp[i] - dp[prev[curr]] + MOD) % MOD;
+            }
+            prev[curr] = i - 1;
+        }
+        return dp[n];
+    }
+};
