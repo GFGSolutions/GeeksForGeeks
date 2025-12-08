@@ -1,0 +1,23 @@
+// User Template For C++
+
+class Solution {
+  public:
+    vector<int> findDuplicates(vector<int>& arr) {
+       unordered_map<int,int> hashset;
+       vector<int> res;
+       for(auto x:arr){
+           hashset[x]++;
+       }
+       for(auto pair:hashset){
+           if(pair.second==2){
+              res.push_back(pair.first);
+           }
+       }
+       if(!res.empty()){
+           return res;
+       }
+       else{
+           return {};
+       }
+    }
+};
