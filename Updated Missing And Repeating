@@ -1,0 +1,19 @@
+// User Template For C++
+
+class Solution {
+  public:
+    vector<int> findTwoElement(vector<int>& nums) {
+        int n = size(nums);
+        vector<int> vis(n + 1, 0);
+        vector<int> ans(2, 0); 
+        for (int i = 0; i < n; ++i)
+            vis[nums[i]]++;
+        for (int num = 1; num < vis.size(); ++num) {
+            if (vis[num] == 2)
+                ans[0] = num;
+            if (vis[num] == 0)
+                ans[1] = num;
+        }
+        return ans;
+    }
+};
