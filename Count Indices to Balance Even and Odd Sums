@@ -1,0 +1,29 @@
+// User Template For C++
+
+class Solution {
+  public:
+    int cntWays(vector<int>& arr) {
+        int total_odd_sum=0,total_even_sum=0,n=arr.size();
+        for(int i=0;i<n;i++){
+            if(i%2)
+                total_odd_sum+=arr[i];
+            else
+                total_even_sum+=arr[i];
+        }
+        int odd_sum_before=0,even_sum_before=0,ans=0;
+        for(int i=0;i<n;i++){
+            int odd_sum_after=total_odd_sum-odd_sum_before,even_sum_after=total_even_sum-even_sum_before;
+            if(i%2)
+                odd_sum_after-=arr[i];
+            else
+                even_sum_after-=arr[i];
+            if(odd_sum_before+even_sum_after==even_sum_before+odd_sum_after)
+                ans++;
+            if(i%2)
+                odd_sum_before+=arr[i];
+            else
+                even_sum_before+=arr[i];
+        }
+        return ans;
+    }
+};
