@@ -1,0 +1,15 @@
+// User Template For C++
+
+class Solution {
+  public:
+    vector<vector<int>> mergeOverlap(vector<vector<int>>& arr) {
+        int n = arr.size();
+        vector<vector<int>> ans;
+        sort(arr.begin(), arr.end());
+        for(auto it : arr){
+            if(ans.empty() || ans.back()[1] < it[0]) ans.push_back(it);
+            else ans.back()[1] = max(ans.back()[1], it[1]);
+        }
+        return ans;
+    }
+};
