@@ -1,0 +1,19 @@
+// User Template For C++
+
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+class Solution {
+  public:
+    vector<int> countXInRange(vector<int>& arr, vector<vector<int>>& queries) {
+        vector<int> result;
+        for (const auto& q : queries) {
+            int l = q[0], r = q[1], x = q[2];
+            auto low = lower_bound(arr.begin() + l, arr.begin() + r + 1, x);
+            auto up = upper_bound(arr.begin() + l, arr.begin() + r + 1, x);
+            result.push_back(up - low);
+        }
+        return result;
+    }
+};
