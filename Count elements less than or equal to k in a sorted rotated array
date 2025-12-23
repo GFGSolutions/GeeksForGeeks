@@ -1,0 +1,23 @@
+// User Template For C++
+
+class Solution {
+public:
+    int countLessEqual(vector<int>& arr, int x) {
+        int n = arr.size();
+        int low = 0, high = n - 1;
+        while (low < high) {
+            int mid = low + (high - low) / 2;
+            if (arr[mid] > arr[high])
+                low = mid + 1;
+            else
+                high = mid;
+        }
+        int pivot = low;
+        int count = 0;
+        if (pivot > 0) {
+            count += upper_bound(arr.begin(), arr.begin() + pivot, x) - arr.begin();
+        }
+        count += upper_bound(arr.begin() + pivot, arr.end(), x) - (arr.begin() + pivot);
+        return count;
+    }
+};
