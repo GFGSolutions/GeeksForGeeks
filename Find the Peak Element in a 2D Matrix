@@ -1,0 +1,42 @@
+// User Template For C++
+
+class Solution{
+  public:
+    int findMax(vector<vector<int>>& mat,int col){
+        int maxi=INT_MIN;
+        int row=-1;
+        for(int i=0;i<mat.size();i++){
+            if(mat[i][col]>maxi){
+                maxi=mat[i][col];
+                row=i;
+            }
+        }
+        return row;
+    }
+    vector<int> findPeakGrid(vector<vector<int>>& mat){
+        int n=mat.size();
+        int m=mat[0].size();
+        if(m==1) return {findMax(mat,0),0};
+        if(n==1){
+            int maxCol=0;
+            for(int i=0;i<m;i++){
+                if(mat[0][i]>mat[0][maxCol]) maxCol=i;
+            }
+            return {0,maxCol};
+        }
+        int left=0;
+        int right=m-1;
+        while(left<=right){
+            int mid=(left+right)/2;
+            int maxRow=findMax(mat,mid);
+            int leftel=mid-1>=0 ? mat[maxRow][mid-1]:-INFINITY;
+            int rightel=mid+1<m ? mat[maxRow][mid+1]:-INFINITY;
+            if(mat[maxRow][mid]>=leftel && mat[maxRow][mid]>=rightel){
+                return {maxRow,mid};
+            }
+            else if(mat[maxRow][mid]<rightel) left=mid+1;
+            else right=mid-1;
+        }
+        return {-1,-1};
+    }
+};
