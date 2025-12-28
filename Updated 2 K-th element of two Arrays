@@ -1,0 +1,31 @@
+// User Template For C++
+
+class Solution {
+  public:
+    bool check(int mid  , vector<int> & arr1 , vector<int> & arr2 , int k)
+    {
+        int x = upper_bound(arr1.begin() , arr1.end() , mid) - arr1.begin();
+        int y = upper_bound(arr2.begin() , arr2.end() , mid) - arr2.begin();
+        return (x + y < k);
+    }
+    int kthElement(vector<int>& arr1, vector<int>& arr2, int k) 
+    {
+        int start = 0;
+        int end = max(arr1.back() , arr2.back());
+        int ans = 0;
+        while(start <= end)
+        {
+            int mid = (start + end) >> 1;
+            if(check(mid , arr1 , arr2 , k))
+            {
+                ans = mid;
+                start = mid + 1;
+            }
+            else
+            {
+                end = mid - 1;
+            }
+        }
+            return (ans == 0 ? ans : ans + 1);
+    }
+};
