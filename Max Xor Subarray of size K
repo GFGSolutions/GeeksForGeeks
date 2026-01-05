@@ -1,0 +1,21 @@
+// User Template For C++
+
+class Solution {
+  public:
+    int maxSubarrayXOR(vector<int>& arr, int k) {
+         int ans=0;
+        int init=0,last=0;
+        int curr=0,cnt=0;
+        for(int i=0;i<arr.size();i++){
+            last=i;
+            cnt=last-init+1;
+            curr^=arr[i];
+            if(cnt==k){
+                ans=max(curr,ans);
+                curr^=arr[init];
+                init++;
+            }
+        }
+        return ans;
+    }
+};
