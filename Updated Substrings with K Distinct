@@ -1,0 +1,32 @@
+// User Template For C++
+
+class Solution {
+  public:
+    int atmostK(string &s, int k){
+        int i = 0;
+        int j = 0;
+        int n = s.size();
+        int count = 0;
+        vector<int>m(26,0);
+        int unique = 0;
+        while(j<n){
+            if(m[s[j] - 'a'] == 0){
+                unique++;
+            }       
+            m[s[j]-'a']++;
+            while(unique > k){
+                m[s[i]-'a']--;
+                if(m[s[i]-'a'] == 0){
+                    unique--;
+                }
+                i++;
+            }
+            count += (j-i+1);
+            ++j;
+        }
+        return count;
+    }
+    int countSubstr(string& s, int k) {
+        return atmostK(s,k) - atmostK(s,k-1);
+    }
+};
