@@ -1,0 +1,22 @@
+// User Template For C++
+
+class Solution {
+  public:
+    vector<int> maxOfSubarrays(vector<int>& arr, int k) {
+        int n=arr.size();
+        int i=0, j=0;
+        deque<int>dq;
+        vector<int>ans;
+        for(; j<n; j++){
+            while(!dq.empty() && dq.back()<arr[j]){
+                dq.pop_back();
+            }
+            dq.push_back(arr[j]);
+            for(; i<n && (j-i+1>k); i++){
+                if(dq.front()==arr[i]) dq.pop_front();
+            }
+            if(j-i+1==k) ans.push_back(dq.front());
+        }
+        return ans;
+    }
+};
