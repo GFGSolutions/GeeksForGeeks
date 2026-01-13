@@ -1,0 +1,41 @@
+// User Template For C++
+
+class Solution {
+  public:
+    int catchThieves(vector<char> &arr, int k) {
+         int n=arr.size();
+        int i=0,j=0;
+        vector<int>policePos,thiefPos;
+        for(int i=0;i<n;i++)
+        {
+            if(arr[i]=='P')
+            {
+                policePos.push_back(i);
+            }
+            else if(arr[i]=='T')
+            {
+                thiefPos.push_back(i);
+            }
+        }
+        int cnt=0;
+        i=0,j=0;
+        while(i<policePos.size() && j<thiefPos.size())
+        {
+            if(abs(policePos[i]-thiefPos[j])<=k)
+            {
+                cnt++;
+                i++;
+                j++;
+            }
+            else if(policePos[i]<thiefPos[j])
+            {
+                i++;
+            }
+            else
+            {
+                j++;
+            }
+        }
+        return cnt;
+    }
+};
