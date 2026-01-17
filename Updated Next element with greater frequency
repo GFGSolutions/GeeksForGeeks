@@ -1,0 +1,19 @@
+// User Template For C++
+
+class Solution {
+  public:
+    vector<int> nextFreqGreater(vector<int>& arr) {
+        unordered_map<int,int> mp;
+        int n = arr.size();
+        vector<int> ans(n,-1);
+        for(int i : arr) mp[i]++;
+        stack<int> st;
+        for(int i = n - 1 ; i >= 0 ; i--){
+            while(!st.empty() && mp[st.top()] <= mp[arr[i]]) st.pop();
+            if(st.empty()) ans[i] = -1;
+            else ans[i] = st.top();
+            st.push(arr[i]);
+        }
+        return ans;
+    }
+};
