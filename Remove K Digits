@@ -1,0 +1,24 @@
+// User Template For C++
+
+class Solution {
+  public:
+    virtual string removeKdig(string &s, int k){
+      string ans;
+      stack<char> st;
+      for(char &ch: s){
+        while(k>0 && (!st.empty()) && (ch<st.top())){
+            st.pop();
+            k--;
+        }
+        if(st.empty() && ch=='0') continue;
+        st.push(ch);
+      }
+      while(k>0 && (!st.empty())) {st.pop(); k--;}
+      while(!st.empty()){
+        ans.push_back(st.top()); st.pop();      
+      }
+      if(ans=="") return "0";
+      reverse(ans.begin(), ans.end());
+      return ans;
+    }
+};
