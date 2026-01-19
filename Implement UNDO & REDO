@@ -1,0 +1,21 @@
+// User Template For C++
+
+class Solution {
+  public:
+    string s;
+    stack<char> st1,st2;
+    void append(char x) {
+        st1.push(x);  s.push_back(x);
+    }
+    void undo() {
+        st2.push(st1.top()); st1.pop(); s.pop_back();
+    }
+    void redo() {
+        s.push_back(st2.top()); 
+        st1.push(st2.top()); 
+        st2.pop();
+    }
+    string read() {
+        return s;
+    }
+};
