@@ -1,0 +1,48 @@
+// User Template For C++
+
+class Solution {
+  public:
+    int subarrayRanges(vector<int>& arr) {
+        int n = arr.size();
+        if (n == 0) return 0;
+        long long sumMax = 0, sumMin = 0;
+        vector<int> prevGreater(n), nextGreater(n);
+        stack<int> st;
+        while (!st.empty()) st.pop();
+        for (int i = 0; i < n; ++i) {
+            while (!st.empty() && arr[st.top()] <= arr[i]) st.pop();
+            prevGreater[i] = st.empty() ? -1 : st.top();
+            st.push(i);
+        }
+        while (!st.empty()) st.pop();
+        for (int i = n - 1; i >= 0; --i) {
+            while (!st.empty() && arr[st.top()] < arr[i]) st.pop();
+            nextGreater[i] = st.empty() ? n : st.top();
+            st.push(i);
+        }
+        for (int i = 0; i < n; ++i) {
+            long long leftCount = i - prevGreater[i];
+            long long rightCount = nextGreater[i] - i;
+            sumMax += (long long)arr[i] * leftCount * rightCount;
+        }
+        vector<int> prevSmaller(n), nextSmaller(n);
+        while (!st.empty()) st.pop();
+        for (int i = 0; i < n; ++i) {
+            while (!st.empty() && arr[st.top()] >= arr[i]) st.pop();
+            prevSmaller[i] = st.empty() ? -1 : st.top();
+            st.push(i);
+        }
+        while (!st.empty()) st.pop();
+        for (int i = n - 1; i >= 0; --i) {
+            while (!st.empty() && arr[st.top()] > arr[i]) st.pop();
+            nextSmaller[i] = st.empty() ? n : st.top();
+            st.push(i);
+        }
+        for (int i = 0; i < n; ++i) {
+            long long leftCount = i - prevSmaller[i];
+            long long rightCount = nextSmaller[i] - i;
+            sumMin += (long long)arr[i] * leftCount * rightCount;
+        }
+        return (int)(sumMax - sumMin);
+    }
+};
