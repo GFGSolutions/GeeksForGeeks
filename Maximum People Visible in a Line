@@ -1,0 +1,34 @@
+class Solution {
+  public:
+    int maxPeople(vector<int> &arr) {
+        stack<int> st;
+        int n=arr.size();
+        int ans=0;
+        for(int i=0;i<n;i++){
+            while(!st.empty()&&arr[st.top()]<arr[i]){
+                int ind=st.top();
+                st.pop();
+                int l_people=st.empty()?ind+1:ind-st.top();
+                int r_people=i-ind-1;
+                ans=max(ans,l_people+r_people);
+            }
+            st.push(i);
+        }
+        int last=n;
+        while(!st.empty()){
+            int ind=st.top();
+            st.pop();
+            int l_people=st.empty()?ind+1:ind-st.top();
+            int r_people;
+            if(last<n&&arr[last]==arr[ind]){
+                r_people=last-ind-1;
+            }
+            else{                                     
+               r_people=n-ind-1; 
+            }
+            ans=max(ans,l_people+r_people);
+            last = ind;
+        }
+        return ans;
+    }
+};
