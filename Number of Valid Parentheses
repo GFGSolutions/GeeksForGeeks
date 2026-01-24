@@ -1,0 +1,25 @@
+// User Template For C++
+
+class Solution {
+  public:
+    int find(int i,int j,int n,int count){
+        if(j>i||i>(n/2)){
+            return 0;
+        }
+        if(count==n){
+            return 1;
+        }
+        int k=find(i+1,j,n,count+1);
+        int l=0;
+        if(j<i){
+            l=find(i,j+1,n,count+1);
+        }
+        return k+l;
+    }
+    int findWays(int n) {
+        if(n%2) return 0;
+        int i=0;
+        int j=0;
+        return find(i,j,n,0);
+    }
+};
