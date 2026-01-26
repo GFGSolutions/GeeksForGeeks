@@ -1,0 +1,32 @@
+// User Template For C++
+
+class Solution {
+  public:
+   int dx[4]={-1,1, 0,0};
+   int dy[4]={0,0, -1,1};
+   bool wordmatch(int i, int j,int idx, string &word, vector<vector<char>>& mat){
+       int n=mat.size(), m=mat[0].size();
+       if(i<0 || i>=n || j<0 || j>=m || mat[i][j]!=word[idx]) return 0;
+       if(idx==word.size()-1) return 1;
+       char tmp=mat[i][j];
+       mat[i][j]='#';
+       for(int d=0; d<4; d++){
+          int nx=i+dx[d], ny=j+dy[d];
+          if(wordmatch(nx,ny,idx+1,word,mat)){
+              mat[i][j]=tmp; 
+              return 1;
+          }
+      }
+       mat[i][j]=tmp;
+       return 0;
+   }
+    bool isWordExist(vector<vector<char>>& mat, string& word) {
+        int n=mat.size(), m=mat[0].size();
+        for(int i=0; i<n; i++){
+            for(int j=0; j<m; j++){
+                if(wordmatch(i,j,0,word,mat)) return 1; 
+            }
+        }
+        return  0;
+    }
+};
