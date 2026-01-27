@@ -1,0 +1,26 @@
+// User Template For C++
+
+class Solution {
+  public:
+   unordered_map<string, int>dp;
+    int solve(int i,int n, int k, vector<int>&arr){
+        if(i==n){return (k==0)?1:0;}
+        string key=to_string(i)+"_"+to_string(k);
+        if(dp.count(key)){
+            return dp[key];
+        }
+        int inc=solve(i+1, n,k-arr[i],arr);
+        int exc=solve(i+1,n,k,arr);
+        return dp[key]=inc+exc;
+    }
+    int countSubset(vector<int> &arr, int k) {
+        int n=arr.size();
+        int psum = 0, nsum = 0;
+        for(auto& num : arr){
+            if(num > 0) psum += num;
+            else nsum += num;
+        }
+        if(k > psum || k < nsum) return 0;
+        return solve(0,n ,k,arr);
+    }
+};
