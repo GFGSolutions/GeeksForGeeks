@@ -1,0 +1,25 @@
+// User Template For C++
+
+class Solution {
+  public:
+    string firstNonRepeating(string &s) {
+        int n = s.length();
+        vector<pair<int , int>>freq(26,{0,0});
+        string result = "";
+        for(int i = 0 ; i  < n; i++){
+            if(freq[s[i] - 'a'].first == 0 ){
+                freq[s[i] -'a'] = {1,i};
+            }
+            else freq[s[i] - 'a'].first++;
+            int minIdx = n;
+            for(int j = 0 ; j < 26; j++){
+                if(freq[j].first == 1 ){
+                    minIdx = min(minIdx, freq[j].second);
+                }
+            }
+           if(minIdx == n ) result += "#";
+           else result += s[minIdx];
+        }
+        return result; 
+    }
+};
