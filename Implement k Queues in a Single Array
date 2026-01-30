@@ -1,0 +1,57 @@
+// User Template For C++
+
+#include <bits/stdc++.h>
+using namespace std;
+class kQueues {
+private:
+    int n, k;
+    vector<int> arr;    
+    vector<int> front;   
+    vector<int> rear;    
+    vector<int> next;    
+    int free;     
+public:
+    kQueues(int n, int k) {
+        this->n = n;
+        this->k = k;
+        arr.resize(n);
+        front.assign(k, -1);
+        rear.assign(k, -1);
+        next.resize(n);
+        for (int i = 0; i < n - 1; i++) {
+            next[i] = i + 1;
+        }
+        next[n - 1] = -1;
+        free = 0;
+    }
+    bool enqueue(int x, int i) {
+        if (isFull())
+            return false;
+        int idx = free;
+        free = next[idx];
+        if (isEmpty(i)) {
+            front[i] = idx;
+        } else {
+            next[rear[i]] = idx;
+        }
+        next[idx] = -1;
+        rear[i] = idx;
+        arr[idx] = x;
+        return true;
+    }
+    int dequeue(int i) {
+        if (isEmpty(i))
+            return -1;
+        int idx = front[i];
+        front[i] = next[idx];
+        next[idx] = free;
+        free = idx;
+        return arr[idx];
+    }
+    bool isEmpty(int i) {
+        return front[i] == -1;
+    }
+    bool isFull() {
+        return free == -1;
+    }
+};
