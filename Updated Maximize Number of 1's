@@ -1,0 +1,25 @@
+// User Template For C++
+
+class Solution {
+public:
+    int maxOnes(vector<int>& arr, int k) {
+        int count[2] = {0};
+        int maxi = INT_MIN;
+        int i = 0;
+        int j = 0;
+        while(j<arr.size()){
+            count[arr[j]]++;
+            if(count[0] > k){
+                maxi = max(maxi,j-i);
+                while(arr[i] == 1){
+                    i++;
+                }
+                count[arr[i]]--;
+                i++;
+            }
+            j++;
+        }
+        maxi = max(maxi,j-i);
+        return maxi;
+    }
+};
