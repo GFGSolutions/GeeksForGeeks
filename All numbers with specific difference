@@ -1,0 +1,31 @@
+// User Template For C++
+
+class Solution {
+  public:
+    int sumDigits(int x) {
+        int s=0;
+        while(x){
+            s+=x%10;
+            x/=10;
+        }
+        return s;
+    }
+    int getCount(int n, int d) {
+        int low=1;
+        int high=n;
+        int ans=-1;
+        while(low<=high){
+            int mid=low + (high-low)/2;
+            long long val=mid-sumDigits(mid);
+            if(val>=d){
+                ans=mid;
+                high=mid-1;   
+            } 
+            else{
+                low=mid+1;
+            }
+        }
+        if (ans==-1) return 0;
+        return n-ans+1;
+    }
+};
