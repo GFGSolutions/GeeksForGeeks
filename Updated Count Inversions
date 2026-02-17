@@ -1,0 +1,38 @@
+// User Template For C++
+
+class Solution {
+  public:
+    int inversionCount(vector<int> &a) {
+        int n=a.size();
+        vector<int> v=a;
+        sort(v.begin(),v.end());
+        v.erase(unique(v.begin(), v.end()), v.end());
+        auto getId = [&](int x) {
+        return int(lower_bound(v.begin(), v.end(), x) - v.begin()) + 1;
+    };
+        int inv = 0;
+        int maxi=0;
+        int N=v.size();
+         vector<int> bit(N+1,0);
+        auto update=[&](int idx,int val){
+            for( ; idx<=N ; idx+=(idx & -idx)){
+                bit[idx]+=val;
+            }
+        };
+        auto query=[&](int idx){
+            int sum =0;
+            for( ;idx >0 ; idx-=(idx & -idx)){
+                sum +=bit[idx];
+            }
+            return sum;
+        };
+        for(auto &it:a){
+              int x=getId(it);
+              int curr=query(x);
+              inv +=maxi-curr;
+              update(x,1);
+              maxi++;
+        }
+        return  inv;
+    }
+};
