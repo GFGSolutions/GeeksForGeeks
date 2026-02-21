@@ -1,0 +1,17 @@
+// User Template For C++
+
+class Solution {
+  public:
+    long subarrayXor(vector<int> &arr, int k) {
+        unordered_map<long long, long long>m;
+        long long sum=0;
+        long long ans=0;
+        m[0]++;
+        for(int i=0;i<arr.size();i++){
+            sum^=arr[i];
+            if(m.find(sum^(long long)k)!=m.end())ans+=m[sum^k];
+            m[sum]++;
+        }
+        return ans;
+    }
+};
