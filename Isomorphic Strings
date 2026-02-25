@@ -1,0 +1,29 @@
+// User Template For C++
+
+class Solution {
+  public:
+    bool areIsomorphic(string &s1, string &s2) {
+        if(s1.length()!=s2.length())
+            return 0;
+        map<char,set<char>>mp1,mp2;
+        for(int i=0;i<s1.length();i++){
+            mp1[s1[i]].insert(s2[i]);
+            mp2[s2[i]].insert(s1[i]);
+        }
+        bool ans1=true;
+        for(auto i:mp1){
+            if(i.second.size()>1){
+                ans1=false;
+                break;
+            }
+        }
+        bool ans2=true;
+        for(auto i:mp2){
+            if(i.second.size()>1){
+                ans2=false;
+                break;
+            }
+        }
+        return ans1 && ans2;
+    }
+};
