@@ -1,0 +1,31 @@
+// User Template For C++
+
+class Solution {
+  public:
+  vector<vector<int>> dp;
+  int solve(int m,int n,int total)
+  {
+      if(n == 0 && total == 0)
+      {
+          return 1;
+      }
+      if(total < 0 || n < 0)
+      {
+          return 0;
+      }
+      if(dp[n][total]!=-1)
+      {
+          return dp[n][total];
+      }
+      int ans = 0;
+      for(int i = 1;i<=m;i++)
+      {
+          ans+=solve(m,n-1,total-i);
+      }
+      return dp[n][total] = ans;
+  }
+    int noOfWays(int m, int n, int x) {
+        dp.resize(n+1,vector<int>(x+1,-1));
+        return solve(m,n,x);
+    }
+};
