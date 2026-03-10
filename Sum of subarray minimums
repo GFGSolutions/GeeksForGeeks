@@ -1,0 +1,26 @@
+// User Template For C++
+
+class Solution {
+  public:
+    int sumSubMins(vector<int> &arr) {
+        stack<int> s;
+        int ans=0;
+        const int n=arr.size();
+        for(int i=0;i<n;i++){
+            while(!s.empty()&&arr[i]<arr[s.top()]){
+                int temp=s.top();
+                s.pop();
+                int left=s.empty()?-1:s.top();
+                ans+=(arr[temp]*(temp-left)*(i-temp));
+            }
+            s.push(i);
+        }
+        while(!s.empty()){
+            int temp=s.top();
+            s.pop();
+            int left=s.empty()?-1:s.top();
+            ans+=(arr[temp]*(temp-left)*(n-temp));
+        }
+        return ans;
+    }
+};
