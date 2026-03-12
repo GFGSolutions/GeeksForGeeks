@@ -1,0 +1,46 @@
+// User Template For C++
+
+class Solution {
+    public:
+    bool isValid(string s){
+        if(s.length()>1 and s[0]=='0' and (s[1]!=0 or s[1]=='0')){
+            return false;
+        }
+        if(s.length()<1){
+            return false;
+        }
+        if(s.length()>3){
+            return false;
+        }
+        int number= stoi(s);
+        if(number>=0 and number<=255){
+            return true;
+        }
+        return false;
+    }
+    string generate_string(int  i, int j, int k, string &s){
+        string s1= s.substr(0, i+1);
+        string s2= s.substr(i+1, j-i);
+        string s3= s.substr(j+1, k-j);
+        string s4= s.substr(k+1, s.length() - k- 1);
+        if(isValid(s1) and isValid(s2) and isValid(s3) and isValid(s4)){
+            return s1 + "." + s2 + "." + s3 + "." + s4;
+        }
+        return "";
+    }
+    vector<string> generateIp(string s) {
+        vector<string> ans;
+        for(int i=0; i<s.length(); i++){
+            for(int j= i+1; j<s.length();j++){
+                for(int k= j+1; k<s.length(); k++){
+                    string gen_string= generate_string(i, j, k, s);
+                    if(gen_string.size()>=1){
+                        ans.push_back(gen_string);
+                    }
+                   
+                }
+            }
+        }
+        return ans;
+    }
+};
