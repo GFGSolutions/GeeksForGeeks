@@ -1,0 +1,29 @@
+// User Template For C++
+
+class Solution {
+  public:
+    vector<int> topView(Node *root) {
+        if(root==NULL) return {};
+        unordered_map<int,int> mp;
+        queue<pair<Node*, int>> q;
+        q.push({root, 0});
+        while(!q.empty()){
+            auto it=q.front();
+            q.pop();
+            Node* node = it.first;
+            int curr = it.second;
+            if(mp.find(curr)==mp.end()) mp[curr]=node->data;
+            if(node->left) q.push({node->left, curr-1});
+            if(node->right) q.push({node->right, curr+1});
+        }
+        vector<int>ans(mp.size());
+        int mini=(mp.begin())->first;
+        for(auto it:mp){
+            mini=min(mini, it.first);
+        }
+        for(auto it:mp){
+            ans[it.first-mini]=it.second;
+        }
+        return ans;
+    }
+};
