@@ -1,0 +1,26 @@
+class Solution {
+  public:
+    vector<vector<int>> verticalOrder(Node *root) {
+        queue<pair<Node*,int>>q;
+        unordered_map<int, vector<int>>mp;
+        int idx=0;
+        q.push({root, 0});
+        while(!q.empty()){
+                Node* node= q.front().first;
+                int level= q.front().second;
+                idx= min(idx, level);
+                q.pop();
+                mp[level].push_back(node->data);
+                if(node->left) q.push({node->left, level-1});
+                if(node->right) q.push({node->right, level+1});
+        }
+        vector<vector<int>>vec(mp.size());
+        if(idx < 0) idx=-idx;
+        for(auto &x: mp){
+            for(auto &y:x.second){
+                vec[idx+x.first].push_back(y);
+            }
+        }
+        return vec;
+    }
+};
