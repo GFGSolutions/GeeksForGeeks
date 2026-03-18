@@ -1,0 +1,40 @@
+// User Template For C++
+
+class info{
+public:
+     int maxi;
+     int mini;
+     bool isBST;
+     int size;
+};
+class Solution {
+public:
+    info solve(Node* root,int &a){
+        if(root == NULL){
+            return {INT_MIN,INT_MAX,true,0};
+        }
+        info left = solve(root->left,a);
+        info right = solve(root->right,a);
+        
+        info currentNode;
+        currentNode.size = left.size + right.size + 1;
+        currentNode.maxi = max(root->data,right.maxi);
+        currentNode.mini = min(root->data,left.mini);
+        
+        if(left.isBST && right.isBST && (root->data>left.maxi) && (root->data < right.mini)){
+            currentNode.isBST = true;
+        }
+        else{
+            currentNode.isBST = false;
+        }
+        if(currentNode.isBST){
+            a = max(a,currentNode.size);
+        }
+        return currentNode;
+    }
+    int largestBst(Node *root) {
+        int a = 1;
+        solve(root,a);
+        return a;
+    }
+};
