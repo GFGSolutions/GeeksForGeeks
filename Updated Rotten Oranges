@@ -1,0 +1,70 @@
+// User Template For C++
+
+class Solution 
+{
+  public:
+    int orangesRot(vector<vector<int>>& mat) 
+    {
+        int n = mat.size();
+        int m = mat[0].size();
+        queue<pair<int,int>> q;
+        int fresh = 0;
+        for(int i = 0; i < n; i++)
+        {
+            for(int j = 0; j < m; j++)
+            {
+                if(mat[i][j] == 2)
+                    q.push({i, j});
+                else if(mat[i][j] == 1)
+                    fresh++;
+            }
+        }
+        
+        if(fresh == 0)
+            return 0;
+        int time = 0;
+        while(!q.empty())
+        {
+            int curr_rotten = q.size();
+            bool rotten_this_round = false;
+            while(curr_rotten--)
+            {
+                pair<int,int> p = q.front();
+                q.pop();
+                int x = p.first;
+                int y = p.second;
+                if(x-1 >= 0 && mat[x-1][y] == 1)
+                {
+                    mat[x-1][y] = 2;
+                    fresh--;
+                    q.push({x-1, y});
+                    rotten_this_round = true;
+                }
+                if(x+1 < n && mat[x+1][y] == 1)
+                {
+                    mat[x+1][y] = 2;
+                    fresh--;
+                    q.push({x+1, y});
+                    rotten_this_round = true;
+                }
+                if(y-1 >= 0 && mat[x][y-1] == 1)
+                {
+                    mat[x][y-1] = 2;
+                    fresh--;
+                    q.push({x, y-1});
+                    rotten_this_round = true;
+                }
+                if(y+1 < m && mat[x][y+1] == 1)
+                {
+                    mat[x][y+1] = 2;
+                    fresh--;
+                    q.push({x, y+1});
+                    rotten_this_round = true;
+                }
+            }
+            if(rotten_this_round)
+            time++;
+        }
+        return (fresh == 0) ? time : -1;
+    }
+};
