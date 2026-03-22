@@ -1,0 +1,40 @@
+// User Template For C++
+
+class Solution {
+  public:
+    int longestCycle(int V, vector<vector<int>>& edges) {
+        vector<int> adj(V, -1);
+        for(auto &e : edges){
+            adj[e[0]] = e[1];
+        }
+        vector<int> vis(V, 0);
+        vector<int> pathVis(V, 0);
+        vector<int> time(V, 0);
+        int ans = -1;
+        for(int i = 0; i < V; i++){
+            if(vis[i]) continue;
+            int node = i;
+            int t = 0;
+            while(node != -1){
+                if(!vis[node]){
+                    vis[node] = 1;
+                    pathVis[node] = 1;
+                    time[node] = t++;
+                    node = adj[node];
+                }
+                else{
+                    if(pathVis[node]){
+                        ans = max(ans, t - time[node]);
+                    }
+                    break;
+                }
+            }
+            node = i;
+            while(node != -1 && pathVis[node]){
+                pathVis[node] = 0;
+                node = adj[node];
+            }
+        }
+        return ans;
+    }
+};
