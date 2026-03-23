@@ -1,0 +1,30 @@
+// User Template For C++
+
+class Solution {
+  public:
+    bool canFinish(int n, vector<vector<int>>& prerequisites) {
+        vector<vector<int>> edges(n);
+        vector<int> dep(n, 0);
+        for (auto i: prerequisites) {
+            edges[i[1]].push_back(i[0]);
+            dep[i[0]]++;
+        }
+        queue<int> q;
+        for (int i = 0; i < n; i++) {
+            if (dep[i] == 0) q.push(i);
+        }
+        int total = 0;
+        while (!q.empty()) {
+            int cur = q.front();
+            q.pop();
+            total++;
+            if (total == n) return true;
+            
+            for (auto i: edges[cur]) {
+                dep[i]--;
+                if (dep[i] == 0) q.push(i);
+            }
+        }
+        return total == n;
+    }
+};
