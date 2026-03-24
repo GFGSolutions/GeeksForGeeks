@@ -1,0 +1,35 @@
+// User Template For C++
+
+class Solution {
+  public:
+    virtual vector<int> minHeightRoot(int V, vector<vector<int>>& edges){
+      vector<vector<int>> adj(V+1);
+      vector<int> inDegree(V+1, 0);
+      for(vector<int> &v: edges){
+        adj[v[0]].push_back(v[1]);  
+        adj[v[1]].push_back(v[0]);
+        inDegree[v[0]]++; inDegree[v[1]]++;
+      }
+      queue<int> q;
+      int nonLeaf=0;
+      for(int i=0; i<=V; i++){
+        if(inDegree[i]==1) q.push(i);
+      }
+      int left=V;
+      vector<int> ans;
+      while(left>2){
+        int n=q.size();
+        left -= n;
+        
+        while(n--){
+            int x=q.front(); q.pop();
+            for(int z: adj[x]){
+              inDegree[z]--;
+              if(inDegree[z]==1) { q.push(z);}
+            }
+        }
+      }
+      while(!q.empty()) { ans.push_back(q.front()); q.pop(); }
+      return ans;
+    }
+};
