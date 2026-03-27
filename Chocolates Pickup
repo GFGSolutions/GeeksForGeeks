@@ -1,0 +1,28 @@
+// User Template For C++
+
+class Solution {
+public:
+    vector<int> moves = {-1, 0, 1};
+    vector<vector<vector<int>>> vec;
+    int solve(vector<vector<int>>& grid, int row, int r1c, int r2c) {
+        if (r1c < 0 || r1c >= grid[0].size() || r2c < 0 || r2c >= grid[0].size())
+            return INT_MIN;
+        int curr = grid[row][r1c];
+        if (r1c != r2c)
+            curr += grid[row][r2c];
+        if (row == grid.size() - 1)
+            return curr;
+        if (vec[row][r1c][r2c] != -1)
+            return vec[row][r1c][r2c];
+        int res = INT_MIN;
+        for (int i = 0; i < moves.size(); i++)
+            for (int j = 0; j < moves.size(); j++)
+                res = max(res, solve(grid, row + 1, r1c + moves[i], r2c + moves[j]));
+        return vec[row][r1c][r2c] = res + curr;
+    }
+    int maxChocolate(vector<vector<int>>& grid) {
+        vec = vector<vector<vector<int>>>(
+            grid.size(), vector<vector<int>>(grid[0].size(), vector<int>(grid[0].size(), -1)));
+        return solve(grid, 0, 0, grid[0].size() - 1);
+    }
+};
