@@ -1,0 +1,26 @@
+// User Template For C++
+
+class Solution {
+  public:
+    virtual int fun(int i, int opt, vector<int> &arr, int &n, int k, vector<vector<int>> &dp){
+      if(i==n) return 0;
+      if(dp[i][opt]!=-1) return dp[i][opt];
+      int buy=0, sell=0;
+      if(opt==0){
+        int t=(-1*arr[i])+fun(i+1, 1, arr, n, k, dp);  
+        int nt=fun(i+1, 0, arr, n, k, dp);
+        return dp[i][opt]=max(t, nt);
+      }
+      else if(opt==1){
+        int t=(arr[i]-k)+fun(i+1, 0, arr, n, k, dp);  
+        int nt=fun(i+1, 1, arr, n, k, dp);
+        return dp[i][opt]=max(t, nt);          
+      }
+      return dp[i][opt];
+    }
+    virtual int maxProfit(vector<int>& arr, int k){
+      int n=arr.size();
+      vector<vector<int>> dp(n+1, vector<int>(2, -1));
+      return fun(0, 0, arr, n, k, dp);
+    }
+};
