@@ -1,0 +1,22 @@
+// User Template For C++
+
+class Solution {
+public:
+    int dp[1001][3]; 
+    int recur(int pos, int prev, int n) {
+        if (pos == n) return 1;
+        if (dp[pos][prev] != -1) return dp[pos][prev];
+        int count = 0;
+        if (prev == 0 || prev == 2) {
+            count += recur(pos + 1, 0, n); 
+            count += recur(pos + 1, 1, n); 
+        } else {
+            count += recur(pos + 1, 0, n);
+        }
+        return dp[pos][prev] = count;
+    }
+    int countStrings(int n) {
+        memset(dp, -1, sizeof(dp));
+        return recur(0, 2, n); 
+    }
+};
