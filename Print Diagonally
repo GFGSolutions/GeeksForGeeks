@@ -1,0 +1,32 @@
+// User Template For C++
+
+class Solution {
+  public:
+    vector<int> diagView(vector<vector<int>> mat) {
+        int n = mat.size();
+        int m = mat[0].size();
+        queue<pair<int,int>> q;
+        q.push({0 , 0});
+        vector<int> ans;
+        vector<int> vis(n * m + 1 , 0);
+        vis[0] = 1;
+        while(!q.empty()){
+            int size = q.size();
+            for(int i = 0; i < size; i++){
+                auto [r , c] = q.front();
+                q.pop();
+                ans.push_back(mat[r][c]);
+                
+                if(c + 1 < m && !vis[r * m + (c + 1)]) {
+                    q.push({r , c + 1});
+                    vis[r*m + (c + 1)] = 1;
+                }
+                if(r + 1 < n && !vis[(r + 1) * m + c]){
+                    q.push({r + 1 , c});
+                    vis[(r + 1)*m + c] = 1;
+                }
+            }
+        }
+        return ans;
+    }
+};
