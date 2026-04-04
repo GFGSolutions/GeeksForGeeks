@@ -1,0 +1,19 @@
+// User Template For C++
+
+class Solution {
+  public:
+    virtual int dfs(int i, int sum, vector<int> &arr, int tar, map<pair<int, int>, int> &dp){
+      if(i==arr.size()){
+        if(sum==tar) return 1;
+        return 0;
+      }
+      if(dp.find({i, sum}) != dp.end()) return dp[{i, sum}];
+      int op1=dfs(i+1, sum+arr[i], arr, tar, dp);
+      int op2=dfs(i+1, sum-arr[i], arr, tar, dp);
+      return dp[{i, sum}] = op1+op2;
+    }
+    virtual int totalWays(vector<int>& arr, int target){
+      map<pair<int, int>, int> dp;
+      return dfs(0, 0, arr, target, dp);
+    }
+};
