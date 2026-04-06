@@ -1,0 +1,32 @@
+// User Template For C++
+
+class Solution {
+public:
+    vector<int> stableMarriage(vector<vector<int>> &men, vector<vector<int>> &women) {
+        int n = men.size();
+        vector<int> rank(n * n);
+        for (int w = 0; w < n; w++) {
+            for (int i = 0; i < n; i++) {
+                rank[w * n + women[w][i]] = i;
+            }
+        }
+        vector<int> manPartner(n, -1), womanPartner(n, -1), next(n, 0);
+        vector<int> freeMen(n);
+        int top = n;
+        for (int i = 0; i < n; i++) freeMen[i] = i;
+        while (top) {
+            int m = freeMen[--top];
+            int w = men[m][next[m]++];
+            int current = womanPartner[w];
+            if (current == -1 || rank[w * n + m] < rank[w * n + current]) {
+                womanPartner[w] = m;
+                manPartner[m] = w;
+                if (current != -1)
+                    freeMen[top++] = current;
+            } else {
+                freeMen[top++] = m;
+            }
+        }
+        return manPartner;
+    }
+};
