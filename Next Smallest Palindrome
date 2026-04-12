@@ -1,0 +1,46 @@
+// User Template For C++
+
+class Solution {
+  public:
+    vector<int> nextPalindrome(vector<int> &a) {
+        int n = a.size();
+        bool all9 = true;
+        for (int i = 0; i < n; i++) {
+            if (a[i] != 9) {
+                all9 = false;
+                break;
+            }
+        }
+        if (all9) {
+            vector<int> ans(n + 1, 0);
+            ans[0] = ans[n] = 1;
+            return ans;
+        }
+        vector<int> ans = a;
+        for (int i = 0; i < n / 2; i++) {
+            ans[n - 1 - i] = ans[i];
+        }
+        if (ans > a) return ans;
+        int carry = 1;
+        int mid = n / 2;
+        if (n % 2 == 1) {
+            ans[mid] += carry;
+            carry = ans[mid] / 10;
+            ans[mid] %= 10;
+            mid--;
+        } else {
+            mid--;
+        }
+        while (mid >= 0 && carry) {
+            ans[mid] += carry;
+            carry = ans[mid] / 10;
+            ans[mid] %= 10;
+            ans[n - 1 - mid] = ans[mid];
+            mid--;
+        }
+        for (int i = 0; i < n / 2; i++) {
+            ans[n - 1 - i] = ans[i];
+        }
+        return ans;
+    }
+};
