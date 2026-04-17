@@ -1,0 +1,20 @@
+// User template for Java
+
+class Solution {
+  public:
+    int maxOnes(vector<int>& arr) {
+        int onecount = 0;
+        transform(arr.begin(), arr.end(),arr.begin(),[](int a){
+           return (a==1)?-1:1;
+        });
+        int sum = 0, ans = 0;
+        for(int i =0;i<arr.size();i++)
+        {
+            sum+=arr[i];
+            ans = max(sum,ans);
+            if(sum<0) sum = 0;
+            onecount += (arr[i] == -1);
+        }
+        return onecount + ans;
+    }
+};
