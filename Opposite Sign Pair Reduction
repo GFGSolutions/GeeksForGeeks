@@ -1,0 +1,29 @@
+// User template for Java
+
+class Solution {
+  public:
+    virtual vector<int> reducePairs(vector<int>& arr){
+      int n=arr.size();
+      stack<int> st;
+      for(int i=0; i<n; i++){
+        st.push(arr[i]);
+        while((st.size())>=2){
+          int t1=st.top(); st.pop();    
+          int t2=st.top(); st.pop();
+          if((t1<0 && t2>0) || (t2<0 && t1>0)){
+             if(abs(t1) > abs(t2)) st.push(t1); 
+             if(abs(t2) > abs(t1)) st.push(t2); 
+          }
+          else{
+            st.push(t2); st.push(t1); break;  
+          }
+        }
+      }
+      vector<int> ans;
+      while(!st.empty()){
+        ans.push_back(st.top()); st.pop();  
+      }
+      reverse(ans.begin(), ans.end());
+      return ans;
+    }
+};
