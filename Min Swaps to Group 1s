@@ -1,0 +1,24 @@
+// User template for Java
+
+class Solution {
+  public:
+    virtual int minSwaps(vector<int>& arr){
+      int ans=INT_MAX;
+      int c1=0;
+      for(int x: arr) if(x) c1++;
+      if(!c1) return -1;
+      int n=arr.size();
+      int c0=0;
+      int i=0, j=0;
+      while(j<n){
+        if(arr[j]==0) c0++;
+        if((j-i+1) > c1){
+          if(arr[i]==0) c0--;
+          i++;
+        }
+        if((j-i+1) == c1) ans=min(ans, c0);
+        j++;
+      }
+      return ans;
+    }
+};
