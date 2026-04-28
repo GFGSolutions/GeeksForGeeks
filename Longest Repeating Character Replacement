@@ -1,0 +1,22 @@
+// User template for Java
+
+class Solution {
+  public:
+    int longestSubstr(string& s, int k) {
+        int ans = 0, n = s.size();
+        for(char c='A'; c<='Z'; c++) {
+            int i=0, j=0, temp = k;
+            while(j<n && i<=j) {
+                if(s[j]!=c && temp==0) {
+                    while(s[i]==c) i++;
+                    i++;
+                    temp++;
+                }
+                if(s[j]!=c && temp>0) temp--;
+                j++;
+                ans = max(ans, j-i);
+            }
+        }
+        return ans;
+    }
+};
