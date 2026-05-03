@@ -1,0 +1,26 @@
+// User template for Java
+
+class Solution {
+  public:
+    virtual vector<int> bitsStore(long long int N){
+      vector<int> ans;
+      while(N>0){
+        ans.push_back(N%2);
+        N>>=1;
+      }
+      reverse(ans.begin(), ans.end());
+      return ans;
+    }
+    virtual bool checkPalinSvc(vector<int> &bs){
+      int i=0, j=bs.size()-1;
+      while(j>i){
+        if(bs[i] != bs[j]) return false;
+        i++; j--;
+      }
+      return true;
+    }
+    virtual int isPallindrome(long long int N){
+      vector<int> bs = bitsStore(N);
+      return checkPalinSvc(bs)? 1: 0;
+    }
+};
