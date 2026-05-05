@@ -1,0 +1,17 @@
+// User template for Java
+
+class Solution {
+  public:
+    virtual long long sumXOR(vector<int> &arr){
+      long long ans=0LL;
+      for(int i=0; i<32; i++){
+        int c1=0, c0=0;
+        for(int x: arr){
+          if(x&(1<<i)) c1++;
+          else c0++;
+        }
+        ans+=(1LL*c1*c0*(1<<i));
+      }
+      return ans;
+    }
+};
