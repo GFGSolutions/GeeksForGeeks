@@ -1,0 +1,44 @@
+// User template for Java
+
+class Solution {
+  public:
+    string lvl(Node* root){
+        string ans="";
+        queue<Node*>q;
+        q.push(root);
+        ans+=to_string(root->data);
+        while(!q.empty()){
+            Node* node=q.front();
+            q.pop();
+            if(node->left){
+                ans+=to_string(node->left->data);
+                q.push(node->left);
+            }else ans+='N';
+            if(node->right){
+                ans+=to_string(node->right->data);
+                q.push(node->right);
+            }else ans+='N';
+        }
+        return ans;
+    }
+    bool isSubTree(Node *root1, Node *root2) {
+        queue<Node*>q;
+        q.push(root1);
+        while(!q.empty()){
+            Node* node=q.front();
+            q.pop();
+            if(node->data==root2->data){
+                string s1=lvl(node);
+                string s2=lvl(root2);
+                if(s1==s2) return true;
+            }
+            if(node->left){
+                q.push(node->left);
+            }
+            if(node->right){
+                q.push(node->right);
+            }
+        }
+        return false;        
+    }
+};
