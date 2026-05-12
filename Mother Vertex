@@ -1,0 +1,77 @@
+// User template for Java
+
+class Solution {
+    void dfs1(int node, vector<vector<int>>& adj, vector<int>& vis, stack<int>& st) {
+        vis[node] = 1;
+        for (auto it : adj[node]) {
+            if (!vis[it]) {
+                dfs1(it, adj, vis, st);
+            }
+        }
+        st.push(node);
+    }
+    void dfs2(int node, vector<vector<int>>& rev, vector<int>& vis, vector<int>& comp, int cid, int& mn) {
+        vis[node] = 1;
+        comp[node] = cid;
+        mn = min(mn, node);
+        for (auto it : rev[node]) {
+            if (!vis[it]) {
+                dfs2(it, rev, vis, comp, cid, mn);
+            }
+        }
+    }
+public:
+    int findMotherVertex(int V, vector<vector<int>>& edges) {
+        vector<vector<int>> adj(V);
+        for (auto &e : edges) {
+            adj[e[0]].push_back(e[1]);
+        }
+        stack<int> st;
+        vector<int> vis(V, 0);
+        for (int i = 0; i < V; i++) {
+            if (!vis[i]) {
+                dfs1(i, adj, vis, st);
+            }
+        }
+        vector<vector<int>> rev(V);
+        for (int u = 0; u < V; u++) {
+            for (auto v : adj[u]) {
+                rev[v].push_back(u);
+            }
+        }
+        fill(vis.begin(), vis.end(), 0);
+        vector<int> comp(V, -1);
+        vector<int> compMin;
+        int cid = 0;
+        while (!st.empty()) {
+            int node = st.top();
+            st.pop();
+            if (!vis[node]) {
+                int mn = node;
+                dfs2(node, rev, vis, comp, cid, mn);
+                compMin.push_back(mn);
+                cid++;
+            }
+        }
+        vector<int> indeg(cid, 0);
+        for (int u = 0; u < V; u++) {
+            for (auto v : adj[u]) {
+                if (comp[u] != comp[v]) {
+                    indeg[comp[v]]++;
+                }
+            }
+        }
+        int source = -1;
+        int cnt = 0;
+        for (int i = 0; i < cid; i++) {
+            if (indeg[i] == 0) {
+                source = i;
+                cnt++;
+            }
+        }
+        if (cnt != 1) {
+            return -1;
+        }
+        return compMin[source];
+    }
+};
