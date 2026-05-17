@@ -1,0 +1,13 @@
+// User template for Java
+
+class Solution {
+  public:
+    unordered_map<int,int> mp;
+    int maxSum(int n) {
+        if(!n)
+        return 0;
+        if(mp.find(n)!=mp.end())
+        return mp[n];
+        return mp[n] = max(n, maxSum(n/2)+maxSum(n/3)+maxSum(n/4));
+    }
+};
