@@ -1,0 +1,24 @@
+// User template for Java
+
+class Solution {
+  public:
+    virtual int minSteps(vector<int>& arr, int start, int end){
+      if(start==end) return 0;
+      queue<int> q;
+      vector<int> dist(1001, INT_MAX);
+      q.push(start); dist[start]=0;
+      while(!q.empty()){
+        int t=q.front(); q.pop();
+        for(int ch: arr){
+          int x=(t*ch)%1000;
+          if(dist[x] > dist[t]+1) {
+            dist[x]=dist[t]+1;
+            if(x==end) return dist[x];
+            q.push(x);
+              
+          }
+        }
+      }
+      return -1;
+    }
+};
