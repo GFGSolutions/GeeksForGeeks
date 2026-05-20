@@ -1,0 +1,16 @@
+// User template for Java
+
+class Solution {
+  public:
+    bool isBitSet(int n) {
+        if (n == 0)
+            return false;
+        while (n) {
+            int r = n % 2;
+            if (r == 0)
+                return false;
+            n /= 2;
+        }
+        return true;
+    }
+};
