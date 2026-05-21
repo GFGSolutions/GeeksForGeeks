@@ -1,0 +1,31 @@
+// User template for Java
+
+class Solution {
+  public:
+    virtual void svc(int i, int j, vector<vector<int>> &g){
+      if(i<0 || j<0 || (i>=(g.size())) || (j>=(g[0].size())) || g[i][j]!=1) return;
+      g[i][j]=2;
+      svc(i-1, j, g);
+      svc(i, j+1, g);
+      svc(i+1, j, g);
+      svc(i, j-1, g);
+      return;
+    }
+    virtual int cntOnes(vector<vector<int>>& g){
+      int n=g.size();
+      int m=g[0].size();
+      for(int j=0; j<m; j++){
+        if(g[0][j]==1) svc(0, j, g); 
+        if(g[n-1][j]==1) svc(n-1, j, g); 
+      }    
+      for(int i=0; i<n; i++){
+        if(g[i][0]==1) svc(i, 0, g); 
+        if(g[i][m-1]==1) svc(i, m-1, g); 
+      }
+      int ans=0;
+      for(vector<int> x: g){
+        for(int ch: x) if(ch==1) ans++;  
+      }
+      return ans;
+    }
+};
