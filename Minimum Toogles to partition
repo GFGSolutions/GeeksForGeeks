@@ -1,0 +1,26 @@
+// User template for Java
+
+class Solution {
+  public:
+    int minToggle(vector<int>& arr) {
+        int n = arr.size();
+        vector<int> pref0(n,0),suff1(n,0);
+        pref0[0] = (arr[0] == 1);
+        suff1[n-1] = (arr[n-1] == 0);
+        for(int i = 1;i<n;i++)
+        {
+            pref0[i] = pref0[i-1] + (arr[i] == 1);
+        }
+        for(int i = n-2;i>=0;i--)
+        {
+            suff1[i] = suff1[i+1] + (arr[i] == 0);
+        }
+        int ans = n;
+        for(int i = 0;i<n-1;i++)
+        {
+            ans = min(ans,pref0[i] + suff1[i+1]);
+        }
+        ans = min({ans,suff1[0],pref0[n-1]});
+        return ans;
+    }
+};
