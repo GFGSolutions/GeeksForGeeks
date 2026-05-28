@@ -1,0 +1,23 @@
+// User template for Java
+
+class Solution {
+  public:
+    int validGroups(string &s) {
+       int n=s.length();
+       int ms=9*n;
+       vector<vector<int>>v(n+1, vector<int>(ms+1,0));
+       for(int j=0; j<=ms; j++)v[n][j]=1;
+       for(int i=n-1; i>=0;i--){
+           for(int p=0; p<=ms;p++){
+               int sc=0;
+               for(int j=i; j<n; j++){
+                   sc+=s[j]-'0';
+                   if(sc>=p){
+                       v[i][p] += v[j+1][sc];
+                   }
+               }
+           }
+       }
+       return v[0][0];
+    }
+};
