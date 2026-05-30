@@ -1,0 +1,8 @@
+// User template for Java
+
+class Solution {
+  public:
+    bool isSumOfConsecutive(int n) {
+        return (n&(n-1)) != 0;
+    }
+};
