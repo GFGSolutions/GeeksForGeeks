@@ -1,0 +1,19 @@
+// User template for Java
+
+class Solution {
+public:
+    int sumDiffPairs(vector<int>& arr, int K) {
+        sort(arr.begin(), arr.end());
+        int sum = 0;
+        for(int i = arr.size() - 1; i > 0; ) {
+            if(arr[i] - arr[i - 1] < K) {
+                sum += arr[i] + arr[i - 1];
+                i -= 2;
+            }
+            else {
+                i--;
+            }
+        }
+        return sum;
+    }
+};
