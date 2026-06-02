@@ -1,0 +1,16 @@
+// User template for Java
+
+class Solution {
+  public:
+    vector<int> freqInRange(vector<int>& arr, vector<vector<int>>& queries) {
+        unordered_map<int,set<int>>mp;
+        vector<int>ans;
+        for(int i=0;i<arr.size();i++)mp[arr[i]].insert(i);
+        for(int i=0;i<queries.size();i++){
+            auto low=mp[queries[i][2]].lower_bound(queries[i][0]);
+            auto high=mp[queries[i][2]].upper_bound(queries[i][1]);
+            ans.push_back(distance(low,high));
+        }
+        return ans;
+    }
+};
