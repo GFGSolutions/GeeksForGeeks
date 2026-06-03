@@ -1,0 +1,14 @@
+// User template for Java
+
+class Solution {
+  public:
+    int maxSubstring(string &s) {
+        int maxSum = INT_MIN;
+        int currSum = 0;
+        for(char& ch: s) {
+            currSum += (ch=='0'?1:-1);
+            maxSum = max(maxSum, currSum);
+            if(currSum<0) currSum = 0;
+        } return maxSum<=0 ? -1: maxSum;
+    }
+};
