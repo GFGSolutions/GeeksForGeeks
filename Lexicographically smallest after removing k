@@ -1,0 +1,31 @@
+// User template for Java
+
+class Solution {
+public:
+string lexicographicallySmallest(string &s, int k) {
+    const int size = s.size();
+    string ans = "";
+    k = ( (size & (size-1)) == 0 ) ? k >> 1 : k << 1;
+    if(k >= size) {
+        return "-1";
+    }
+    stack<char> st;
+    for(int i = 0; i < size; i++) {
+        while( !st.empty() && k > 0 && st.top() > s[i] ) {
+            st.pop();
+            k--;
+        }
+        st.push(s[i]);
+    }
+    while(k > 0) {
+        st.pop();
+        k--;
+    }
+    while(!st.empty()) {
+        ans += st.top();
+        st.pop();
+    }
+    reverse(ans.begin(), ans.end());
+    return ans;
+}
+};
