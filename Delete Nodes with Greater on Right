@@ -1,0 +1,70 @@
+// User template for Java
+
+class Solution {
+public:
+    Node *compute(Node *head) {
+        Node* temp = head;
+        Node* temp6 = head;
+        Node* forward;
+        Node* curr = NULL;
+        int n = 0;
+        while(temp->next != NULL){
+          n++;
+          forward = temp->next;
+          temp->next = curr;
+          curr = temp;
+          temp = forward;
+        }
+        n++;
+        temp->next = curr;
+        Node* hum = temp;
+        int *r = new int[n];
+        int maximum = hum->data;
+        int k = 0;
+        while(k<n){
+          maximum = max(maximum,hum->data);
+          r[k] = maximum;
+          k++;
+          hum = hum->next;
+        }
+        Node* forward1;
+        Node* curr1 = NULL;
+        while(temp->next != NULL){
+          forward1 = temp->next;
+          temp->next = curr1;
+          curr1 = temp;
+          temp = forward1;
+        }
+        temp->next = curr1;
+        Node* humHai = temp;
+        Node* temp5 = temp;
+        int t = n-1;
+        Node* konHo;
+        int pcount = 0;
+        int rcount = 0;
+        while(temp5 != NULL){
+            pcount++;
+            if(temp5->data >= r[t]){
+                rcount++;
+                if(rcount == 1){
+                    head = temp5;
+                }
+                t--;
+                if(pcount>1){
+                   humHai = humHai->next;
+                }
+              temp5 = temp5->next;
+            }
+            else{
+                t--;
+                konHo = temp5->next;
+                if(pcount>1){
+                    humHai->next = temp5->next;
+                }
+               temp5 = konHo;
+            }
+        }
+        return head;
+        delete[] r;
+    }
+};
