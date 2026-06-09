@@ -1,0 +1,22 @@
+// User template for Java
+
+class Solution {
+public:
+    bool binSearch(vector<int>& arr, int st, int en, const int& val) {
+        if (st > en)
+            return false;
+        int mid = (st + en) / 2;
+        if (arr[mid] == val)
+            return true;
+        if (arr[mid] > val)
+            return binSearch(arr, st, mid - 1, val);
+        return binSearch(arr, mid + 1, en, val);
+    }
+    int binarySearchable(vector<int>& arr) {
+        int res = 0;
+        for (auto it : arr)
+            if (binSearch(arr, 0, arr.size() - 1, it))
+                res++;
+        return res;
+    }
+};
