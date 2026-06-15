@@ -1,0 +1,32 @@
+// User template for Java
+
+class Solution {
+  public:
+    vector<int> constructList(vector<vector<int>> &queries) {
+        int cnt=0;
+        for(int i=0;i<queries.size();i++){
+            if(queries[i][0]==0){
+                cnt++;
+            }
+        }
+        vector<int>ans(cnt+1),store(cnt+2);
+        int k=1;
+        for(int i=0;i<queries.size();i++){
+            if(queries[i][0]==0){
+                ans[k]=queries[i][1];
+                k++;
+            }
+            else{
+                store[0]=store[0]^queries[i][1];
+                store[k]=store[k]^queries[i][1];
+            }
+        }
+        cnt=0;
+        for(int i=0;i<ans.size();i++){
+            cnt=cnt^store[i];
+            ans[i]=ans[i]^cnt;
+        }
+        sort(ans.begin(),ans.end());
+        return ans;
+    }
+};
