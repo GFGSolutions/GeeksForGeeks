@@ -1,0 +1,31 @@
+// User template for Java
+
+class Solution {
+  public:
+    string chooseSwap(string &s) {
+        vector<int> first(26, -1);
+        
+        for (int i = 0; i < s.size(); i++) {
+            if (first[s[i] - 'a'] == -1)
+                first[s[i] - 'a'] = i;
+        }
+        for (int i = 0; i < s.size(); i++) {
+            for (char ch = 'a'; ch < s[i]; ch++) {
+                if (first[ch - 'a'] > i) {
+                    char c1 = s[i];
+                    char c2 = ch;
+                    
+                    for (int j = 0; j < s.size(); j++) {
+                        if (s[j] == c1)
+                            s[j] = c2;
+                        else if (s[j] == c2)
+                            s[j] = c1;
+                    }
+                    
+                    return s;
+                }
+            }
+        }
+        return s;
+    }
+};
