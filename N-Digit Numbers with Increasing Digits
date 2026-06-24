@@ -1,0 +1,22 @@
+// User template for Java
+
+class Solution {
+public:
+    void solve(int n, int num, vector<int>& res) {
+        if (!n) {
+            res.push_back(num);
+            return;
+        }
+        for (int i = (num % 10) + 1; i <= 9; i++)
+            solve(n - 1, (num * 10) + i, res);
+    }
+    vector<int> increasingNumbers(int n) {
+        vector<int> res;
+        if (n > 9)
+            return res;
+        if (n == 1)
+            res.push_back(0);
+        solve(n, 0, res);
+        return res;
+    }
+};
