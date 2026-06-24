@@ -1,0 +1,35 @@
+// User template for Java
+
+class Solution {
+public:
+    int n;
+    vector<vector<int>> path;   
+    vector<vector<int>> dead; 
+    bool solve(int i, int j, vector<vector<int>>& mat) {
+        if (i >= n || j >= n || mat[i][j] == 0)
+            return false;
+        if (dead[i][j])
+            return false;
+        if (i == n - 1 && j == n - 1) {
+            path[i][j] = 1;
+            return true;
+        }
+        path[i][j] = 1;             
+        int maxJump = mat[i][j];
+        for (int step = 1; step <= maxJump; step++) {
+            if (solve(i, j + step, mat)) return true;  
+            if (solve(i + step, j, mat)) return true;  
+        }
+        path[i][j] = 0;            
+        dead[i][j] = 1;          
+        return false;
+    }
+    vector<vector<int>> shortestDist(vector<vector<int>>& mat) {
+        n = mat.size();
+        path.assign(n, vector<int>(n, 0));
+        dead.assign(n, vector<int>(n, 0));
+        if (solve(0, 0, mat))
+            return path;
+        return {{-1}};             
+    }
+};
