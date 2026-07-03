@@ -1,0 +1,37 @@
+// User template for Java
+
+class Solution {
+  public:
+  int lcs(string &str1, string &str2) {
+        int n=str1.size();
+        int m=str2.size();
+        vector<int> prev(m + 1, 0), curr(m + 1, 0);
+        for(int i=1; i<=n; i++){
+            for(int j=1; j<=m; j++){
+                if(str1[i-1]==str2[j-1])  curr[j] = 1 + prev[j - 1];
+                else curr[j] = max(prev[j], curr[j - 1]);
+            }prev = curr; 
+        }
+        return prev[m];
+    }
+    int waysToIncreaseLCSBy1(string &s1, string &s2) {
+        int lcs1=lcs(s1,s2);
+        int cnt=0;
+        int n1=s1.length();
+        bool in_s2[26] = {false};
+        for (char c : s2) {
+            in_s2[c - 'a'] = true;
+        }
+        for(int i=0; i<=n1; i++){
+            for(char it='a'; it<='z';it++){
+                if (!in_s2[it - 'a']) continue;
+            string slcs2=s1.substr(0,i)+it+s1.substr(i);
+            int lcs2=lcs(slcs2,s2);
+            if(lcs2==lcs1+1){
+                cnt++;
+            }
+        }
+        }
+        return cnt;
+    }
+};
