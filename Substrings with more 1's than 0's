@@ -1,0 +1,26 @@
+// User template for Java
+
+class Solution {
+  public:
+    int countSubstring(string& s) {
+        int n = s.size();
+        int offset = n;
+        vector<int> freq(2 * n + 1, 0);
+        freq[offset] = 1;
+        int prefix = 0;
+        long long smaller = 0;
+        long long answer = 0;
+        for (char ch : s) {
+            if (ch == '1') {
+                smaller += freq[prefix + offset];
+                prefix++;
+            } else {
+                smaller -= freq[prefix - 1 + offset];
+                prefix--;
+            }
+            answer += smaller;
+            freq[prefix + offset]++;
+        }
+        return static_cast<int>(answer);
+    }
+};
