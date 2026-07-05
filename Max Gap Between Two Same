@@ -1,0 +1,27 @@
+// User template for Java
+
+class Solution {
+  public:
+    int maxCharGap(string &s) {
+        vector<int>first(26,-1);
+        vector<int>end(26,-1);
+        int n=s.length();
+        for(int i=0;i<n;i++){
+            int ch=s[i]-'a';
+            if(first[ch]==-1){
+                first[ch]=i;
+            }
+            else{
+                end[ch]=i;
+            }
+        }
+        int mx=-3;
+        for(int i=0;i<26;i++){
+            if(end[i]!=-1 and first[i] !=-1){
+                mx=max(mx,end[i]-first[i]-1);
+            }
+        }
+        if(mx==-3)return -1;
+        else return mx;
+    }
+};
