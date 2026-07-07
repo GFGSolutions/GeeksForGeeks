@@ -1,24 +1,33 @@
-// User template for Java
+// User template for C++
 
 class Solution {
-public:
-    int largestArea(int n, int m, int k, vector<vector<int>>& arr) {
-        sort(arr.begin(), arr.end(),[](vector<int>& a, vector<int>& b) { return a[0] < b[0]; });
-        int r = 0;
-        int prev = 0;
-        for (auto it : arr) {
-            r = max(r, it[0] - prev - 1);
-            prev = it[0];
-        }
-        r = max(r, n - prev);
-        sort(arr.begin(), arr.end(),[](vector<int>& a, vector<int>& b) { return a[1] < b[1]; });
-        int c = 0;
-        prev = 0;
-        for (auto it : arr) {
-            c = max(c, it[1] - prev - 1);
-            prev = it[1];
-        }
-        c = max(c, m - prev);
-        return r * c;
-    }
+	public:
+	int largestArea(int n, int m, vector<vector<int>> &arr) {
+		int k = arr.size();
+		vector<int> row(n, 0);
+		vector<int> col(m, 0);
+		for (auto &a: arr) {
+			row[a[0] - 1] = 1;
+			col[a[1] - 1] = 1;
+		}
+		int prev = -1;
+		int maxi_row = 0;
+		for (int i = 0; i < n; i++) {
+			if (row[i] == 0)
+				continue;
+			maxi_row = max(maxi_row, i - prev - 1);
+			prev = i;
+		}
+		maxi_row = max(maxi_row, n - prev - 1);
+		prev = -1;
+		int maxi_col = 0;
+		for (int i = 0; i < m; i++) {
+			if (col[i] == 0)
+				continue;
+			maxi_col = max(maxi_col, i - prev - 1);
+			prev = i;
+		}
+		maxi_col = max(maxi_col, m - prev - 1);
+		return maxi_col * maxi_row;
+	}
 };
