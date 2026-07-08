@@ -1,0 +1,58 @@
+// User template for C++
+
+class Solution {
+  public:
+    int countCoordinates(vector<vector<int>>& mat) {
+        int n = mat.size();
+        int m = mat[0].size();
+        vector<vector<bool>> reachP(n, vector<bool>(m, false));
+        vector<vector<bool>> reachQ(n, vector<bool>(m, false));
+        int dr[4] = {1, -1, 0, 0};
+        int dc[4] = {0, 0, 1, -1};
+        auto dfs = [&](vector<pair<int, int>>& sources,vector<vector<bool>>& visited) {
+            vector<pair<int, int>> st;
+            for (auto [r, c] : sources) {
+                if (!visited[r][c]) {
+                    visited[r][c] = true;
+                    st.push_back({r, c});
+                }
+            }
+            while (!st.empty()) {
+                auto [r, c] = st.back();
+                st.pop_back();
+                for (int d = 0; d < 4; d++) {
+                    int nr = r + dr[d];
+                    int nc = c + dc[d];
+                    if (nr < 0 || nr >= n || nc < 0 || nc >= m)
+                        continue;
+                    if (visited[nr][nc])
+                        continue;
+                    if (mat[nr][nc] < mat[r][c])
+                        continue;
+                    visited[nr][nc] = true;
+                    st.push_back({nr, nc});
+                }
+            }
+        };
+        vector<pair<int, int>> sourcesP;
+        for (int j = 0; j < m; j++)
+            sourcesP.push_back({0, j});
+        for (int i = 0; i < n; i++)
+            sourcesP.push_back({i, 0});
+        vector<pair<int, int>> sourcesQ;
+        for (int j = 0; j < m; j++)
+            sourcesQ.push_back({n - 1, j});
+        for (int i = 0; i < n; i++)
+            sourcesQ.push_back({i, m - 1});
+        dfs(sourcesP, reachP);
+        dfs(sourcesQ, reachQ);
+        int answer = 0;
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                if (reachP[i][j] && reachQ[i][j])
+                    answer++;
+            }
+        }
+        return answer;
+    }
+};
