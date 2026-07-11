@@ -1,0 +1,31 @@
+// User template for C++
+
+class Solution {
+ public:
+ int r[4] = {0, 0, -1, 1};
+ int c[4] = {1, -1, 0, 0};
+ void solve(int x, int y, int dx, int dy, vector<vector<int>> & mat, vector<vector<int>> & visited, int &ans, int temAns, int n, int m) {
+  if (x == dx and y == dy) {
+   ans = max(ans, temAns);
+   return;
+  }
+  visited[x][y] = 1;
+  temAns += 1;
+  for (int i = 0; i<4; i++) {
+   int rr = x + r[i];
+   int cc = y + c[i];
+   if (rr >= 0 and rr<n and cc >= 0 and cc<m and visited[rr][cc] == 0 and mat[rr][cc]) {
+    solve(rr, cc, dx, dy, mat, visited, ans, temAns, n, m);
+   }
+  }
+  visited[x][y] = 0;
+ }
+ int longestPath(vector<vector<int>> & mat, int xs, int ys, int xd, int yd) {
+  if (mat[xd][yd] == 0 || mat[xs][ys] == 0)
+   return - 1;
+  int n = mat.size(), m = mat[0].size(), temAns = 0, ans = 0;
+  vector<vector<int>> visited(n, vector<int>(m, 0));
+  solve(xs, ys, xd, yd, mat, visited, ans, temAns, n, m);
+  return ans;
+ }
+};
