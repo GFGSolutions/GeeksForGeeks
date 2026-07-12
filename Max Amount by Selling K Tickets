@@ -1,0 +1,26 @@
+// User template for C++
+
+class Solution {
+  public:
+    int maxAmount(vector<int>& arr, int k) {
+         int mod = 1000000007;
+         int n = arr.size();
+         priority_queue<int> q;
+         for(int num:arr){
+            q.push(num);
+         }
+         int res=0;
+         int x;
+          while(k&&!q.empty()){
+            x = q.top();
+            q.pop();
+            res = (res + x) % mod;
+            x--;
+            k--;
+            if (x){
+            q.push(x);
+        }
+    }
+    return res;
+    }
+};
