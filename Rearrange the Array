@@ -1,0 +1,66 @@
+// User template for C++
+
+class Solution {
+public:
+    static const int MOD = 1000000007;
+    long long power(long long a, long long b) {
+        long long res = 1;
+        a %= MOD;
+        while (b > 0) {
+            if (b & 1)
+                res = (res * a) % MOD;
+            a = (a * a) % MOD;
+            b >>= 1;
+        }
+        return res;
+    }
+    int minOperations(vector<int> &b) {
+        int n = b.size();
+        vector<bool> vis(n, false);
+        vector<int> cycles;
+        for (int i = 0; i < n; i++) {
+            if (!vis[i]) {
+                int cur = i;
+                int len = 0;
+                while (!vis[cur]) {
+                    vis[cur] = true;
+                    cur = b[cur] - 1;  
+                    len++;
+                }
+                cycles.push_back(len);
+            }
+        }
+        vector<int> primes;
+        vector<bool> isPrime(n + 1, true);
+
+        for (int i = 2; i <= n; i++) {
+            if (isPrime[i]) {
+                primes.push_back(i);
+                for (int j = i * 2; j <= n; j += i)
+                    isPrime[j] = false;
+            }
+        }
+        unordered_map<int, int> maxExp;
+        for (int len : cycles) {
+            int x = len;
+            for (int p : primes) {
+                if (1LL * p * p > x) break;
+                if (x % p == 0) {
+                    int cnt = 0;
+                    while (x % p == 0) {
+                        x /= p;
+                        cnt++;
+                    }
+                    maxExp[p] = max(maxExp[p], cnt);
+                }
+            }
+            if (x > 1)
+                maxExp[x] = max(maxExp[x], 1);
+        }
+        long long ans = 1;
+        for (auto &it : maxExp) {
+            ans = (ans * power(it.first, it.second)) % MOD;
+        }
+        return (int)ans;
+    }
+};
