@@ -1,0 +1,25 @@
+// User template for C++
+
+class Solution {
+  public:
+    int countWays(int n, int sum) {
+       const int mod=1e9+7;
+        long int v[n + 1][sum + 1];
+        memset(v, 0, sizeof(v));
+        v[0][0]=1;
+         for (int d = 1; d <= 9 && sum-d>=0; d++) {
+            v[1][d] = 1;
+        }
+        for(int i=2; i<=n; i++){
+            for(int j=1; j<=sum; j++){
+                for(int d=0; d<=9; d++){
+                    if(j-d>=0){
+                        v[i][j] +=v[i-1][j-d];
+                        v[i][j] %=mod;
+                    }
+                }
+            }
+        }
+        return v[n][sum]==0?-1: v[n][sum];
+    }
+};
