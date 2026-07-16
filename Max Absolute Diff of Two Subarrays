@@ -1,0 +1,39 @@
+// User template for C++
+
+class Solution {
+  public:
+    int maxDiffSubArrays(vector<int>& arr) {
+        int n = arr.size();
+        vector<int> leftMax(n), rightMax(n), leftMin(n), rightMin(n);
+        int cur = arr[0];
+        leftMax[0] = arr[0];
+        for (int i = 1; i < n; i++) {
+            cur = max(arr[i], cur + arr[i]);
+            leftMax[i] = max(leftMax[i - 1], cur);
+        }
+        cur = arr[n - 1];
+        rightMax[n - 1] = arr[n - 1];
+        for (int i = n - 2; i >= 0; i--) {
+            cur = max(arr[i], cur + arr[i]);
+            rightMax[i] = max(rightMax[i + 1], cur);
+        }
+        cur = arr[0];
+        leftMin[0] = arr[0];
+        for (int i = 1; i < n; i++) {
+            cur = min(arr[i], cur + arr[i]);
+            leftMin[i] = min(leftMin[i - 1], cur);
+        }
+        cur = arr[n - 1];
+        rightMin[n - 1] = arr[n - 1];
+        for (int i = n - 2; i >= 0; i--) {
+            cur = min(arr[i], cur + arr[i]);
+            rightMin[i] = min(rightMin[i + 1], cur);
+        }
+        int ans = 0;
+        for (int i = 0; i < n - 1; i++) {
+            ans = max(ans, abs(leftMax[i] - rightMin[i + 1]));
+            ans = max(ans, abs(leftMin[i] - rightMax[i + 1]));
+        }
+        return ans;
+    }
+};
