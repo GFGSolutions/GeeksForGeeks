@@ -1,0 +1,34 @@
+// User template for C++
+
+class Solution {
+public:
+    vector<bool> processQueries(vector<int> &arr, vector<vector<int>> &queries) {
+        int n = arr.size();
+        vector<int> up(n), down(n);
+        up[n - 1] = n - 1;
+        for (int i = n - 2; i >= 0; i--) {
+            if (arr[i] <= arr[i + 1])
+                up[i] = up[i + 1];
+            else
+                up[i] = i;
+        }
+        down[n - 1] = n - 1;
+        for (int i = n - 2; i >= 0; i--) {
+            if (arr[i] >= arr[i + 1])
+                down[i] = down[i + 1];
+            else
+                down[i] = i;
+        }
+        vector<bool> ans;
+        for (auto &q : queries) {
+            int l = q[0];
+            int r = q[1];
+            int peak = up[l];
+            if (peak >= r || down[peak] >= r)
+                ans.push_back(true);
+            else
+                ans.push_back(false);
+        }
+        return ans;
+    }
+};
