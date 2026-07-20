@@ -1,0 +1,41 @@
+// User template for C++
+
+class Solution {
+  public:
+    struct TrieNode {
+        TrieNode* child[26];
+        int freq;
+        TrieNode() {
+            freq = 0;
+            for(int i = 0; i < 26; i++)
+                child[i] = NULL;
+        }
+    };
+    vector<string> findPrefixes(vector<string>& arr) {
+        TrieNode* root = new TrieNode();
+        for(string &word : arr) {
+            TrieNode* node = root;
+            for(char ch : word) {
+                int idx = ch - 'a';
+                if(node->child[idx] == NULL)
+                    node->child[idx] = new TrieNode();
+                node = node->child[idx];
+                node->freq++;
+            }
+        }
+        vector<string> ans;
+        for(string &word : arr) {
+            TrieNode* node = root;
+            string prefix = "";
+            for(char ch : word) {
+                int idx = ch - 'a';
+                node = node->child[idx];
+                prefix += ch;
+                if(node->freq == 1)
+                    break;
+            }
+            ans.push_back(prefix);
+        }
+        return ans;
+    }
+};
