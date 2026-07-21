@@ -1,0 +1,26 @@
+// User template for C++
+
+class Solution {
+public:
+    int maxIndexDifference(string &s) {
+        vector<vector<int>> pos(26);
+        for (int i = 0; i < s.size(); i++)
+            pos[s[i] - 'a'].push_back(i);
+        if (pos[0].empty())
+            return -1;
+        int start = pos[0][0];
+        int cur = start;
+        int ans = 0;
+        for (int ch = 1; ch < 26; ch++) {
+            if (pos[ch].empty())
+                break;
+            auto it = lower_bound(pos[ch].begin(), pos[ch].end(), cur);
+            if (it == pos[ch].end())
+                break;
+            int final = pos[ch].back();
+            ans = max(ans, final - start);
+            cur = *it;
+        }
+        return ans;
+    }
+};
