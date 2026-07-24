@@ -1,0 +1,22 @@
+// User template for C++
+
+class Solution {
+  public:
+    virtual int svc(Node *root, int c){
+      if(!root) return 0;
+      int l=0, r=0;
+      if(root->left){
+        if((root->left->data) == (root->data) + 1) l=svc(root->left, c+1);
+        else l=svc(root->left, 1);
+      }
+      if(root->right){
+        if((root->right->data) == (root->data) + 1) r=svc(root->right, c+1);
+        else r=svc(root->right, 1);
+      }
+      return max({l, r, c});
+    }
+    virtual int longestConsecutive(Node* root){
+      int ans=svc(root, 1);
+      return ans>1? ans: -1;
+    }
+};
