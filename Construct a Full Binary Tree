@@ -1,0 +1,20 @@
+// User template for C++
+
+class Solution {
+  public:
+    unordered_map<int,int>m; int ind=0;
+    Node* fun(vector<int> &pre, int i, int j) {
+        if(i>j) return NULL;
+        int a=pre[ind++];
+        auto root=new Node(a);
+        if(i==j) return root;
+        int p=m[pre[ind]];
+        root->left=fun(pre,p,j);
+        root->right=fun(pre,i+1,p-1);
+        return root;
+    }
+    Node *constructBinaryTree(vector<int> &pre, vector<int> &preMirror) {
+       for(int i=0;i<pre.size();i++) m[preMirror[i]]=i;
+        return fun(pre,0,pre.size()-1);
+    }
+};
