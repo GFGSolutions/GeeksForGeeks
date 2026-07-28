@@ -1,0 +1,30 @@
+// User template for C++
+
+class Solution {
+  public:
+    int shortestPath(int n, int src, int dest, vector<vector<int>> &edges) {
+        vector<vector<pair<int,int>>>adj(n);
+        for(auto& e : edges){
+            int u = e[0] , v = e[1], w = e[2];
+            adj[u].push_back({v,w});
+            adj[v].push_back({u,w});
+        }
+        vector<int>dist(n,INT_MAX);
+        dist[src] = 0;
+        priority_queue<pair<int,int>,vector<pair<int,int>>,greater<pair<int,int>>>pq;
+        pq.push({0,src});
+        while(!pq.empty()){
+            auto [w,u] = pq.top();
+            pq.pop();
+            for(auto& [v,wt] : adj[u]){
+                if(wt + w < dist[v]){
+                    dist[v] = wt + w;
+                    pq.push({dist[v],v});
+                }
+            }
+        }
+        if(dist[dest] == INT_MAX)
+            return -1;
+        return dist[dest];
+    }
+};
