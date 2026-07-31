@@ -1,0 +1,56 @@
+// User template for C++
+
+class Solution {
+public:
+    int countSubsets(vector<int> &arr) {
+        const int MOD = 1000000007;
+        vector<int> primes = {2, 3, 5, 7, 11, 13, 17, 19, 23, 29};
+        vector<int> mask(31, 0);
+        for (int x = 2; x <= 30; x++) {
+            int cur = x;
+            int bits = 0;
+            bool ok = true;
+            for (int i = 0; i < 10; i++) {
+                int p = primes[i];
+                int cnt = 0;
+                while (cur % p == 0) {
+                    cur /= p;
+                    cnt++;
+                }
+                if (cnt > 1) {
+                    ok = false;
+                    break;
+                }
+                if (cnt == 1)
+                    bits |= (1 << i);
+            }
+            mask[x] = ok ? bits : -1;
+        } 
+        vector<long long> dp(1 << 10, 0);
+        dp[0] = 1;
+        int ones = 0;
+        for (int x : arr) {
+            if (x == 1) {
+                ones++;
+                continue;
+            }
+            if (mask[x] == -1)
+                continue;
+            int curMask = mask[x];
+            for (int m = (1 << 10) - 1; m >= 0; m--) {
+                if ((m & curMask) != 0)
+                    continue;
+                dp[m | curMask] = (dp[m | curMask] + dp[m]) % MOD;
+            }
+        }
+        long long ans = 0;
+        for (long long ways : dp)
+            ans = (ans + ways) % MOD;
+        ans = (ans - 1 + MOD) % MOD;
+        long long mul = 1;
+        while (ones--) {
+            mul = (mul * 2) % MOD;
+        }
+        return (ans * mul) % MOD;
+    }
+};
