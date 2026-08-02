@@ -1,0 +1,7 @@
+// User template for Java
+
+class Solution {
+  public boolean stoneGame(int[] piles) {
+    return true;
+  }
+}
