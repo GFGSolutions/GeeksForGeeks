@@ -1,0 +1,39 @@
+// User template for C++
+
+class Solution {
+public:
+    int maxSumWithK(vector<int>& arr, int k) {
+        int sum1 = 0;
+        vector<int> pre;
+        for(int i = 0;i<arr.size();i++){
+            sum1 += arr[i];
+            pre.push_back(sum1);
+        }
+        int ma = INT_MIN;
+        vector<int> v(pre.size());
+        for(int i = pre.size()-1;i>=0;i--){
+            ma = max(ma,pre[i]);
+            v[i] = ma;
+        }
+        int maxi = INT_MIN;
+        int sum = 0;
+        for(int i = 0;i<k;i++){
+            sum += arr[i];
+        }
+        maxi = max(maxi,sum);
+        if(k < arr.size()){
+            maxi = max(maxi,sum+v[k]-pre[k-1]);
+        }
+        int j = 0;
+        for(int i = k;i<arr.size();i++){
+                sum -= arr[j];
+                sum += arr[i];
+                maxi = max(maxi,sum);
+                if(i+1 < arr.size()){
+                   maxi = max(maxi,sum+v[i+1]-pre[i]);
+                }
+                j++;
+        }
+        return maxi;
+    }
+};
