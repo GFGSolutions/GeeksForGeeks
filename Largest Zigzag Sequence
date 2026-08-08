@@ -1,0 +1,38 @@
+// User template for C++
+
+class Solution {
+public:
+    int zigzagSequence(vector<vector<int>>& mat) {
+        int n = mat.size();
+        if (n == 0) return 0;
+        if (n == 1) return mat[0][0];
+        vector<int> dp = mat[0];
+        for (int i = 1; i < n; ++i) {
+            int max1 = -1, max2 = -1;
+            int max1_col = -1;
+            for (int j = 0; j < n; ++j) {
+                if (dp[j] > max1) {
+                    max2 = max1;
+                    max1 = dp[j];
+                    max1_col = j;
+                } else if (dp[j] > max2) {
+                    max2 = dp[j];
+                }
+            }
+            vector<int> curr(n);
+            for (int j = 0; j < n; ++j) {
+                if (j == max1_col) {
+                    curr[j] = mat[i][j] + max2;
+                } else {
+                    curr[j] = mat[i][j] + max1;
+                }
+            }
+            dp = curr;
+        }
+        int ans = 0;
+        for (int j = 0; j < n; ++j) {
+            ans = max(ans, dp[j]);
+        }
+        return ans;
+    }
+};
