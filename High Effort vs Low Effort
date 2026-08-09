@@ -1,0 +1,22 @@
+// User template for C++
+
+class Solution {
+  public:
+    int maxTask(vector<int>& h, vector<int>& l) {
+        int n = h.size();
+        int pl = l[0],ph = h[0],pn = 0;
+        int cl = 0,ch = 0,cn = 0;
+        int res = max({pl,ph,pn});
+        for(int i = 1;i<n;i++)
+        {
+            cl = l[i] + max({ph,pl,pn});
+            ch = h[i] + pn;
+            cn = max({ph,pl,pn});
+            ph = ch;
+            pl = cl;
+            pn = cn;
+        }
+        res = max({res,ch,cl,cn});
+        return res;
+    }
+};
