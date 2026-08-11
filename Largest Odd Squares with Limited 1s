@@ -1,0 +1,52 @@
+// User template for C++
+
+class Solution {
+  public:
+    vector<int> largestSquare(vector<vector<int>>& mat, vector<vector<int>>& queries,int k) {
+        int n = mat.size();
+        int m = mat[0].size();
+        vector<int>ans;
+        vector<vector<int>>prefix_sum(n,vector<int>(m,0));
+        for(int i=0;i<n;i++){
+            for(int j=0;j<m;j++){
+                prefix_sum[i][j] = mat[i][j];
+                if(i>0) prefix_sum[i][j]+=prefix_sum[i-1][j];
+                if(j>0) prefix_sum[i][j]+=prefix_sum[i][j-1];
+                if(i>0 and j>0) prefix_sum[i][j]-=prefix_sum[i-1][j-1];
+            }
+        }
+        for(int i=0;i<queries.size();i++){
+            int r = queries[i][0];
+            int c = queries[i][1];
+            if(mat[r][c]==1 and k==0){
+                ans.push_back(-1);
+                continue;
+            }
+            int x = 1;
+            while(1){
+                int rd_r = r+x;
+                int rd_c = c+x;
+                int ld_r = r+x;
+                int ld_c = c-x;
+                int ru_r = r-x;
+                int ru_c = c+x;
+                int lu_r = r-x;
+                int lu_c = c-x;
+                int cnt = 0;
+                if(rd_r<n and rd_c<m and ld_r<n and ld_c>=0 and ru_r>=0 and ru_c<m and lu_r>=0 and lu_c>=0){
+                    cnt= prefix_sum[rd_r][rd_c];
+                    if(ru_r>=1) cnt-=prefix_sum[ru_r-1][ru_c];
+                    if(ld_c>=1) cnt-=prefix_sum[ld_r][ld_c-1];
+                    if(lu_r>=1 and lu_c>=1) cnt+=prefix_sum[lu_r-1][lu_c-1];
+                }
+                else break;
+                if(cnt>k) break;
+                else{
+                    x++;
+                }
+            }   
+            ans.push_back(2*x-1);
+        }
+        return ans;
+    }
+}; 
