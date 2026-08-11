@@ -1,0 +1,76 @@
+// User template for C++
+
+class Solution {
+public:
+    const int MOD = 1000000007;
+    vector<vector<pair<long long, int>>> dp;
+    pair<long long, int> recur(vector<vector<int>>& mat, int x, int y) {
+        int n = mat.size();
+        int m = mat[0].size();
+        if (x == n-1 && y == m-1) {
+            return {1, mat[x][y]};
+        }
+        if (x >= n || y >= m) {
+            return {0, 0};
+        }
+        if (dp[x][y].first != -1) {
+            return dp[x][y];
+        }
+        long long paths = 0;
+        int maxAdv = 0;
+        if (mat[x][y] == 1) {
+            if (y + 1 < m) {
+                auto [p, a] = recur(mat, x, y + 1);
+                if (p > 0) {
+                    paths = p % MOD;
+                    maxAdv = mat[x][y] + a;
+                }
+            }
+        } 
+        else if (mat[x][y] == 2) {
+            if (x + 1 < n) {
+                auto [p, a] = recur(mat, x + 1, y);
+                if (p > 0) {
+                    paths = p % MOD;
+                    maxAdv = mat[x][y] + a;
+                }
+            }
+        } 
+        else {
+            long long rightPaths = 0;
+            int rightAdv = 0;
+            long long downPaths = 0;
+            int downAdv = 0;
+            if (y + 1 < m) {
+                auto [p, a] = recur(mat, x, y + 1);
+                if (p > 0) {
+                    rightPaths = p % MOD;
+                    rightAdv = mat[x][y] + a;
+                }
+            }
+            if (x + 1 < n) {
+                auto [p, a] = recur(mat, x + 1, y);
+                if (p > 0) {
+                    downPaths = p % MOD;
+                    downAdv = mat[x][y] + a;
+                }
+            }
+            paths = (rightPaths + downPaths) % MOD;
+            if (rightPaths > 0 && downPaths > 0) {
+                maxAdv = max(rightAdv, downAdv);
+            } else if (rightPaths > 0) {
+                maxAdv = rightAdv;
+            } else if (downPaths > 0) {
+                maxAdv = downAdv;
+            }
+        }
+        return dp[x][y] = {paths, maxAdv};
+    }
+    vector<int> findWays(vector<vector<int>>& matrix) {
+        int n = matrix.size();
+        int m = matrix[0].size();
+        dp = vector<vector<pair<long long, int>>>(n, vector<pair<long long, int>>(m, {-1, -1}));
+        auto [totalPaths, maxAdventure] = recur(matrix, 0, 0);
+        return {(int)(totalPaths % MOD), maxAdventure};
+    }
+};
