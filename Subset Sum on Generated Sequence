@@ -1,0 +1,28 @@
+// User template for C++
+
+class Solution {
+    public:
+      bool isPossible(vector<int>& arr, int s, int x) {
+          vector<long long> nums;
+          nums.push_back(s);
+          long long sum = s;
+          for (int a : arr) {
+              long long next = sum + a;
+              if (next > x) {
+                  break;
+              }
+              nums.push_back(next);
+              sum += next;
+          }
+          long long remaining = x;
+          for (int i = (int)nums.size() - 1; i >= 0; --i) {
+              if (nums[i] <= remaining) {
+                  remaining -= nums[i];
+              }
+              if (remaining == 0) {
+                  return true;
+              }
+          }
+          return false;
+      }
+  };
