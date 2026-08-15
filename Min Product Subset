@@ -1,0 +1,23 @@
+// User template for C++
+
+class Solution {
+    public:
+      int minProd(vector<int>& arr) {
+          int minpdt= INT_MAX;
+          int n=arr.size();
+          sort(arr.begin(),arr.end());
+          if(arr[0]>=0) return arr[0];
+          int pospdt=1;
+          int negpdt=1;
+          for(int i=0;i<n;i++){
+              if(arr[i]>0){
+                  pospdt = pospdt * arr[i];
+              }
+              else if(arr[i]<0){
+                  if(i%2==1 && i+1<n && arr[i+1]<0) negpdt*= arr[i];
+                  if(i%2==0) negpdt*= arr[i];
+              }
+          }
+          return pospdt*negpdt;
+      }
+  };
