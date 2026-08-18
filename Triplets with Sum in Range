@@ -1,0 +1,27 @@
+// User template for C++
+
+class Solution {
+public:
+    long long countT(vector<int>& arr, int n, long long x) {
+        long long ans = 0;
+        for (int i = 0; i < n - 2; i++) {
+            int j = i + 1 , k = n - 1;
+            while (j < k) {
+                long long sum = (long long)arr[i] + arr[j] + arr[k];
+                if (sum <= x) {
+                    ans += (k - j);
+                    j++;
+                } 
+                else {
+                    k--;
+                }
+            }
+        }
+        return ans;
+    }
+    long long countTriplets(vector<int>& arr, int l, int r) {
+        int n = arr.size();
+        sort(arr.begin(), arr.end());
+        return countT(arr, n, r) - countT(arr, n, (long long)l - 1);
+    }
+};
