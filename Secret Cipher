@@ -1,0 +1,39 @@
+// User template for C++
+
+class Solution {
+  public:
+    string compress(string &s) {
+        int n = s.size();
+        vector<int> pi(n, 0);
+        for (int i = 1; i < n; i++) {
+            int j = pi[i - 1];
+            while (j > 0 && s[i] != s[j]) {
+                j = pi[j - 1];
+            }
+            if (s[i] == s[j]) {
+                j++;
+            }
+            pi[i] = j;
+        }
+        string ans;
+        ans.reserve(n);
+        int i = n - 1;
+        while (i >= 0) {
+            int len = i + 1;
+            if (len % 2 == 0) {
+                int period = len - pi[i];
+                if (pi[i] >= len / 2 &&
+                    len % (2 * period) == 0) {
+                    ans.push_back('*');
+                    i = len / 2;
+                    i--;
+                    continue;
+                }
+            }
+            ans.push_back(s[i]);
+            i--;
+        }
+        reverse(ans.begin(), ans.end());
+        return ans;
+    }
+};
