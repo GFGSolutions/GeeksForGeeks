@@ -1,0 +1,63 @@
+// User template for C++
+
+class Solution {
+  private:
+    Node* findLCA(Node* root, int p, int q) {
+        if (!root || root->data == p || root->data == q) 
+            return root;
+        Node* leftLCA = findLCA(root->left, p, q);
+        Node* rightLCA = findLCA(root->right, p, q);
+        if (leftLCA && rightLCA) 
+            return root;
+        return leftLCA ? leftLCA : rightLCA;
+    }
+    bool getPath(Node* root, int target, string& path) {
+        if (!root) 
+            return false;
+        if (root->data == target) 
+            return true;
+        path.push_back('L');
+        if (getPath(root->left, target, path)) 
+            return true;
+        path.pop_back();
+        path.push_back('R');
+        if (getPath(root->right, target, path)) 
+            return true;
+        path.pop_back();
+        return false;
+    }
+    int countTurns(const string& path) {
+        int turns = 0;
+        for (int i = 0; i + 1 < path.size(); i++) {
+            if (path[i] != path[i + 1]) {
+                turns++;
+            }
+        }
+        return turns;
+    }
+  public:
+    int numberOfTurns(Node* root, int p, int q) {
+        if (!root || p == q) 
+            return -1;
+        Node* lca = findLCA(root, p, q);
+        if (!lca) 
+            return -1;
+        if (lca->data == p) {
+            string path;
+            getPath(lca, q, path);
+            int turns = countTurns(path);
+            return (turns == 0) ? -1 : turns;
+        }
+        if (lca->data == q) {
+            string path;
+            getPath(lca, p, path);
+            int turns = countTurns(path);
+            return (turns == 0) ? -1 : turns;
+        }
+        string pathToP, pathToQ;
+        getPath(lca, p, pathToP);
+        getPath(lca, q, pathToQ);
+        int turns = countTurns(pathToP) + countTurns(pathToQ) + 1;
+        return (turns == 0) ? -1 : turns;
+    }
+};
