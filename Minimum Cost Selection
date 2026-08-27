@@ -1,0 +1,19 @@
+// User template for C++
+
+class Solution{
+  public:
+    virtual int minCostSvc(int i, vector<vector<int>> &mat, int prev, vector<vector<int>> &dp){
+      if(i==mat.size()) return 0;
+      if(dp[i][prev]!=-1) return dp[i][prev];
+      int ans=INT_MAX;
+      for(int j=0; j<mat[0].size(); j++){
+        if(j!=prev) ans=min(ans, mat[i][j]+minCostSvc(i+1, mat, j, dp));
+      }
+      return dp[i][prev]=ans;
+    }
+    virtual int minCost(vector<vector<int>> &mat){
+      int n=mat.size(), m=mat[0].size();
+      vector<vector<int>> dp(n+1, vector<int>(m+1, -1));  
+      return minCostSvc(0, mat, m, dp);
+    }
+};
