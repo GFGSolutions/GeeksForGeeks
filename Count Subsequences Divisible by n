@@ -1,0 +1,21 @@
+// User template for C++
+
+class Solution {
+    public:
+      int countSubsequences(string& s, int n) {
+          const int MOD = 1000000007;
+          vector<long long> dp(n, 0);
+          for (char ch : s) {
+              int digit = ch - '0';
+              vector<long long> next = dp;
+              for (int remainder = 0; remainder < n; ++remainder) {
+                  int newRemainder = (remainder * 10LL + digit) % n;
+                  next[newRemainder] =
+                      (next[newRemainder] + dp[remainder]) % MOD;
+              }
+              next[digit % n] = (next[digit % n] + 1) % MOD;
+              dp.swap(next);
+        }
+        return dp[0];
+    }
+};
