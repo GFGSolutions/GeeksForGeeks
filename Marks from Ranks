@@ -1,0 +1,23 @@
+// User template for C++
+
+class Solution {
+  public:
+    vector<int> getMarks(vector<int> &l, vector<int> &r, vector<int> &rank) 
+    {
+       int n=l.size();
+       vector<int>temp;
+       for(int i=0;i<n;i++)
+       {
+           for(int j=l[i];j<=r[i];j++)
+           {
+               temp.push_back(j);
+           }
+       }
+        vector<int>ans;
+        for(int i=0;i<rank.size();i++)
+        {
+            ans.push_back(temp[rank[i]-1]);
+        }
+        return ans;
+    }
+};
