@@ -1,0 +1,36 @@
+// User template for C++
+
+class Solution {
+  public:
+    int minCount(vector<int>& arr) {
+        int n = arr.size();
+        const int NEG = -1000000000;
+        vector<vector<int>> prev(n + 1, vector<int>(n + 1, NEG));
+        prev[0][0] = 0;
+        for (int k = 1; k <= n; ++k) {
+            vector<vector<int>> cur(n + 1, vector<int>(n + 1, NEG));
+            for (int i = 0; i <= n; ++i) {
+                for (int j = 0; j <= n; ++j) {
+                    if (prev[i][j] == NEG) {
+                        continue;
+                    }
+                    cur[i][j] = max(cur[i][j], prev[i][j]);
+                    if (i == 0 || arr[k - 1] > arr[i - 1]) {
+                        cur[k][j] = max(cur[k][j], prev[i][j] + 1);
+                    }
+                    if (j == 0 || arr[k - 1] < arr[j - 1]) {
+                        cur[i][k] = max(cur[i][k], prev[i][j] + 1);
+                    }
+                }
+            }
+            prev = move(cur);
+        }
+        int best = 0;
+        for (int i = 0; i <= n; ++i) {
+            for (int j = 0; j <= n; ++j) {
+                best = max(best, prev[i][j]);
+            }
+        }
+        return n - best;
+    }
+};
