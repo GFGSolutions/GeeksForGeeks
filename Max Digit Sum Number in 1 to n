@@ -1,0 +1,29 @@
+// User template for C++
+
+class Solution {
+  public:
+long long int sum_of_digit(long long int n){
+  long long int last_digit=0;
+  long long int sum=0;
+    while(n!=0){
+        sum+=n%10;
+        n/=10;
+    }
+    return sum;
+}
+    long long int findMax(long long int N) {
+        long long int ans=N;
+        long long int max_sum=sum_of_digit(N);
+        for(long long int i=1;i<=N;i*=10){
+            long long int  curr_num=(N/(i*10))*(i*10)-1;
+            if(curr_num>=1){
+                long long int  curr_sum=sum_of_digit(curr_num);
+                if((curr_sum>max_sum) ||(curr_sum==max_sum && curr_num>ans)){
+                    max_sum=curr_sum;
+                    ans=curr_num;
+                }
+            }
+        }
+        return ans;
+    }
+};
