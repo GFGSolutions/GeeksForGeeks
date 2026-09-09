@@ -1,0 +1,21 @@
+// User template for C++
+
+class Solution {
+  public:
+    int pairCount(int x, int y) {
+        if(y % x != 0) return 0;
+        int pro = x * y;
+        int a, b, cnt = 0;
+        for(int i = 1; i*i <= pro; i++){
+            if(pro % i == 0){
+                a = i;
+                b = pro / i;
+                if(gcd(a,b) == x && lcm(a,b) == y){
+                    if(a == b) cnt += 1;
+                    else cnt += 2;
+                }
+            }
+        }
+        return cnt;
+    }
+};
