@@ -1,0 +1,29 @@
+// User template for C++
+
+class Solution{
+  public:
+    virtual int gcdCal(int a, int b){
+      if(b==0) return a;
+      return gcdCal(b, a%b);
+    }
+    virtual int allDivisers(int x){
+      int sqrt_x=sqrt(x);
+      int count=0;
+      for(int i=1; i<=sqrt_x; i++){
+        if(x%i==0){
+          count++;
+          if((x/i) != i) count++;
+        }  
+      }
+      return count;
+    }
+    virtual int sameMod(vector<int> &arr){
+      int g=0;
+      int n=arr.size();
+      for(int i=1; i<n; i++){
+        g=gcdCal(g, abs(arr[i]-arr[i-1]));  
+      }
+      if(g==0) return -1;
+      return allDivisers(g);
+    } 
+};
