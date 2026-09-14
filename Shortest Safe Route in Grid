@@ -1,0 +1,41 @@
+// User template for C++
+
+class Solution {
+  public:
+    int shortestPath(vector<vector<int>> &mat) {
+        queue<pair<int, int>>pq;
+        for(int i=0; i<mat.size(); i++){
+            for(int j=0; j<mat[0].size(); j++){
+                if(mat[i][j]==0){
+                    if(i>0 and mat[i-1][j]!=0){mat[i-1][j]=2;}
+                    if(j>0 and mat[i][j-1]!=0){mat[i][j-1]=2;}
+                    if(j<mat[0].size()-1 and mat[i][j+1]!=0){mat[i][j+1]=2;}
+                    if(i<mat.size()-1 and mat[i+1][j]!=0){mat[i+1][j]=2;}
+                    mat[i][j]=2;
+                }
+            }
+        }
+        vector<vector<bool>>vis(mat.size(), vector<bool>(mat[0].size(), false));
+        for(int i=0; i<mat.size(); i++){
+            if(mat[i][0]==1){
+                vis[i][0]=true;
+                pq.push({i,0});
+            }
+        }
+        int dis=1;
+        while(pq.size()){
+            int sz=pq.size(); 
+            while(sz--){
+                auto b=pq.front(); pq.pop();
+                int i=b.first, j=b.second;
+                if(j==mat[0].size()-1){return dis;}
+                if(i>0 and mat[i-1][j]==1 and !vis[i-1][j]){vis[i-1][j]=true; pq.push({i-1, j});}
+                if(j>0 and mat[i][j-1]==1 and !vis[i][j-1]){vis[i][j-1]=true; pq.push({i, j-1});}
+                if(j<mat[0].size()-1 and mat[i][j+1]==1 and !vis[i][j+1]){vis[i][j+1]=true; pq.push({i, j+1});}
+                if(i<mat.size()-1 and mat[i+1][j]==1 and !vis[i+1][j]){vis[i+1][j]=true; pq.push({i+1, j});}
+            }
+            dis++;
+        }
+        return -1;
+    }
+};
