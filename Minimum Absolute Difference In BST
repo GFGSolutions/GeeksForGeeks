@@ -1,0 +1,19 @@
+// User template for C++
+
+class Solution {
+ public:
+ int ans;
+ int absDiff(Node *root) {
+  ans=1e9;
+  int prev=1e7;
+  dfs(root,prev);
+  return ans;
+ }
+ void dfs(Node* root,int &prev){
+     if(root==NULL) return;
+     dfs(root->left,prev);
+     ans=min(ans,abs(root->data-prev));
+     prev=root->data;
+     dfs(root->right,prev);
+ }
+};
