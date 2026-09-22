@@ -1,0 +1,31 @@
+// User template for C++
+
+class Solution {
+  public:
+    string findLongestWord(string &s, vector<string> &d) {
+        vector<vector<int>> pos(26);
+        for (int i = 0; i < (int)s.size(); i++) {
+            pos[s[i] - 'a'].push_back(i);
+        }
+        string ans = "";
+        for (const string &w : d) {
+            int last = -1;
+            bool ok = true;
+            for (char c : w) {
+                auto &p = pos[c - 'a'];
+                auto it = upper_bound(p.begin(), p.end(), last);
+                if (it == p.end()) {
+                    ok = false;
+                    break;
+                }
+                last = *it;
+            }
+            if (ok) {
+                if (w.size() > ans.size() || (w.size() == ans.size() && w < ans)) {
+                    ans = w;
+                }
+            }
+        }
+        return ans;
+    }
+};
