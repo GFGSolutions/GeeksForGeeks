@@ -1,0 +1,58 @@
+// User template for C++
+
+class Solution {
+  public:
+    vector<vector<int>> buildSparse(vector<int>& arr) {
+        int n = arr.size();
+        int LOG = 1;
+        while ((1 << LOG) <= n) LOG++;
+        vector<vector<int>> sp(LOG, vector<int>(n));
+        sp[0] = arr;
+        for (int j = 1; j < LOG; j++) {
+            for (int i = 0; i + (1 << j) <= n; i++) {
+                sp[j][i] = min(sp[j-1][i], sp[j-1][i + (1 << (j-1))]);
+            }
+        }
+        return sp;
+    }
+    int queryMin(vector<vector<int>>& sp, vector<int>& logTable, int l, int r) {
+        int len = r - l + 1;
+        int k = logTable[len];
+        return min(sp[k][l], sp[k][r - (1 << k) + 1]);
+    }
+    int formPyramid(vector<int>& arr) {
+        int n = arr.size();
+        vector<int> P(n), Q(n);
+        for (int i = 0; i < n; i++) {
+            P[i] = arr[i] - i;
+            Q[i] = arr[i] + i;
+        }
+        vector<vector<int>> spP = buildSparse(P);
+        vector<vector<int>> spQ = buildSparse(Q);
+        vector<int> logTable(n + 1, 0);
+        for (int i = 2; i <= n; i++) logTable[i] = logTable[i / 2] + 1;
+        long long totalSum = 0;
+        for (int v : arr) totalSum += v;
+        long long maxSq = 0;
+        for (int c = 0; c < n; c++) {
+            int maxR = min(c, n - 1 - c);
+            int lo = 0, hi = maxR, best = 0;
+            while (lo <= hi) {
+                int mid = (lo + hi) / 2;
+                int minP = queryMin(spP, logTable, c - mid, c);
+                int minQ = queryMin(spQ, logTable, c, c + mid);
+                bool condP = (minP + c) >= (mid + 1);
+                bool condQ = (minQ - c) >= (mid + 1);
+                if (condP && condQ) {
+                    best = mid;
+                    lo = mid + 1;
+                } else {
+                    hi = mid - 1;
+                }
+            }
+            long long x = best + 1;
+            maxSq = max(maxSq, x * x);
+        }
+        return (int)(totalSum - maxSq);
+    }
+};
