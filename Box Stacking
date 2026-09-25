@@ -1,0 +1,32 @@
+// User template for C++
+
+class Solution {
+  public:
+    int maxHeight(vector<int> &height, vector<int> &width, vector<int> &length) {
+        int n = height.size();
+        vector<vector<int>> boxes;
+        for (int i = 0; i < n; i++) {
+            int a = height[i], b = width[i], c = length[i];
+            boxes.push_back({max(b, c), min(b, c), a});
+            boxes.push_back({max(a, c), min(a, c), b});
+            boxes.push_back({max(a, b), min(a, b), c});
+        }
+        sort(boxes.begin(), boxes.end(), [](const vector<int>& x, const vector<int>& y) {
+            if (x[0] != y[0]) return x[0] > y[0];
+            return x[1] > y[1];
+        });
+        int m = boxes.size();
+        vector<int> dp(m);
+        int ans = 0;
+        for (int i = 0; i < m; i++) {
+            dp[i] = boxes[i][2];
+            for (int j = 0; j < i; j++) {
+                if (boxes[j][0] > boxes[i][0] && boxes[j][1] > boxes[i][1]) {
+                    dp[i] = max(dp[i], dp[j] + boxes[i][2]);
+                }
+            }
+            ans = max(ans, dp[i]);
+        }
+        return ans;
+    }
+};
