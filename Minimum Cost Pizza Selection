@@ -1,0 +1,21 @@
+// User template for C++
+
+class Solution {
+  public:
+    int minimumCost(int x, int s, int m, int l, int cs, int cm, int cl) {
+        int mx = max({s, m, l});
+        int MAX = x + mx;
+        const int INF = 1e9;
+        vector<int> dp(MAX + 1, INF);
+        dp[0] = 0;
+        for (int i = 0; i <= MAX; i++) {
+            if (dp[i] == INF) continue;
+            if (i + s <= MAX) dp[i + s] = min(dp[i + s], dp[i] + cs);
+            if (i + m <= MAX) dp[i + m] = min(dp[i + m], dp[i] + cm);
+            if (i + l <= MAX) dp[i + l] = min(dp[i + l], dp[i] + cl);
+        }
+        int ans = INF;
+        for (int i = x; i <= MAX; i++) ans = min(ans, dp[i]);
+        return ans;
+    }
+};
