@@ -1,0 +1,29 @@
+// User template for C++
+
+class Solution {
+  public:
+    int minStepToReachTarget(vector<int>& knightPos, vector<int>& targetPos, int n) {
+        int sx = knightPos[0] - 1, sy = knightPos[1] - 1;
+        int tx = targetPos[0] - 1, ty = targetPos[1] - 1;
+        if (sx == tx && sy == ty) return 0;
+        vector<vector<bool>> vis(n, vector<bool>(n, false));
+        queue<pair<pair<int,int>,int>> q;
+        q.push({{sx, sy}, 0});
+        vis[sx][sy] = true;
+        int dx[] = {-2, -2, -1, -1, 1, 1, 2, 2};
+        int dy[] = {-1, 1, -2, 2, -2, 2, -1, 1};
+        while (!q.empty()) {
+            auto cur = q.front(); q.pop();
+            int x = cur.first.first, y = cur.first.second, steps = cur.second;
+            for (int i = 0; i < 8; i++) {
+                int nx = x + dx[i], ny = y + dy[i];
+                if (nx >= 0 && nx < n && ny >= 0 && ny < n && !vis[nx][ny]) {
+                    if (nx == tx && ny == ty) return steps + 1;
+                    vis[nx][ny] = true;
+                    q.push({{nx, ny}, steps + 1});
+                }
+            }
+        }
+        return -1;
+    }
+};
