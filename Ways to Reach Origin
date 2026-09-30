@@ -1,0 +1,17 @@
+// User template for C++
+
+class Solution {
+ public:
+ int ways(int x, int y) {
+  int mod = 1e9 + 7;
+  vector<vector<int>> paths(x + 1, vector<int>(y + 1, 0));
+  paths[x][y] = 1;
+  for (int i = x; i >= 0; --i) {
+   for (int j = y; j >= 0; --j) {
+    if (i + 1 <= x)paths[i][j] = (paths[i][j]+paths[i + 1][j])%mod;
+    if (j + 1 <= y)paths[i][j] = (paths[i][j]+paths[i][j + 1])%mod;
+   }
+  }
+  return paths[0][0];
+ }
+};
