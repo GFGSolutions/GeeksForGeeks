@@ -1,0 +1,35 @@
+// User template for C++
+
+class Solution {
+  public:
+    vector<vector<int>> formCoils(int n) {
+        int m = 8 * n * n;
+        int total = 16 * n * n;
+        vector<int> base(m);
+        base[0] = 8 * n * n + 2 * n;
+        int curr = base[0];
+        int flag = 1;
+        int step = 2;
+        int idx = 1;
+        while (idx < m) {
+            for (int i = 0; i < step && idx < m; i++) {
+                curr -= 4 * n * flag;
+                base[idx++] = curr;
+            }
+            if (idx >= m) break;
+            for (int i = 0; i < step && idx < m; i++) {
+                curr += flag;
+                base[idx++] = curr;
+            }
+            flag = -flag;
+            step += 2;
+            }
+            vector<int> coil2 = base;
+            reverse(coil2.begin(), coil2.end());
+            vector<int> coil1(m);
+            for (int i = 0; i < m; i++) {
+                coil1[i] = total + 1 - coil2[i];
+            }
+        return {coil1, coil2};
+    }
+};
