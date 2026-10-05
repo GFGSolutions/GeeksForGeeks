@@ -1,0 +1,25 @@
+// User template for C++
+
+class Solution {
+public:
+    vector<vector<int>> socialNetwork(vector<int>& arr) {
+        int n = arr.size() + 1;
+        vector<vector<int>> ans;
+        for (int i = 2; i <= n; i++) {
+            vector<int> dist(n + 1, -1);
+            int curr = i;
+            int steps = 0;
+            while (curr != 1) {
+                curr = arr[curr - 2];
+                steps++;
+                dist[curr] = steps;
+            }
+            for (int j = 1; j < i; j++) {
+                if (dist[j] != -1) {
+                    ans.push_back({i, j, dist[j]});
+                }
+            }
+        }
+        return ans;
+    }
+};
