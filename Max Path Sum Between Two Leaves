@@ -1,0 +1,29 @@
+// User template for C++
+
+class Solution {
+public:
+    int solve(Node* root, int &ans) {
+        if (root == nullptr)
+            return INT_MIN;
+        if (root->left == nullptr && root->right == nullptr)
+            return root->data;
+        int left = solve(root->left, ans);
+        int right = solve(root->right, ans);
+        if (root->left != nullptr && root->right != nullptr) {
+            ans = max(ans, left + right + root->data);
+            return root->data + max(left, right);
+        }
+        if (root->left != nullptr)
+            return root->data + left;
+        return root->data + right;
+    }
+    int maxPathSum(Node *root) {
+        if (root == nullptr)
+            return -1;
+        int ans = INT_MIN;
+        solve(root, ans);
+        if (ans == INT_MIN)
+            return -1;
+        return ans;
+    }
+};
