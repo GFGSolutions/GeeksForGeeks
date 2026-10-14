@@ -1,0 +1,19 @@
+// User template for C++
+
+class Solution {
+  public:
+    string findRollOut(string& s, vector<int>& roll){
+      int n=s.size();
+      vector<int> s_int;
+      for(char ch: s) s_int.push_back(ch-97);
+      vector<int> inc(n, 0);
+      for(int x: roll) inc[x-1]++;
+      for(int i=n-2; i>=0 ;i--) inc[i]+=inc[i+1];
+      string ans;
+      for(int i=0; i<n; i++){
+        int sum = (s_int[i] + inc[i])%26;
+        ans.push_back(sum+'a');
+      }
+      return ans;
+    }
+};
