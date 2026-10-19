@@ -1,0 +1,25 @@
+// User template for C++
+
+class Solution {
+  public:
+    int goodIndices(vector<int> &arr) {
+        int n = arr.size();
+        int ans = 0;
+        vector<int>vis(n);
+        for(int i = 0 ;i<n ; i++){
+            if(vis[i])continue;
+            int curr = i;
+            vector<int>vec;
+            while(curr>=0 && curr<n && vis[curr] ==0){
+                vis[curr] = -1;
+                vec.push_back(curr);
+                curr += arr[curr];
+                }
+                if(curr<0 || curr>=n || vis[curr] == 1){
+                    ans +=vec.size();
+                    for(auto j: vec)vis[j] = 1;
+                }
+        }
+        return ans;
+    }
+};
