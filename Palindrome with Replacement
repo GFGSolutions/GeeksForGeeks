@@ -1,0 +1,27 @@
+// User template for C++
+
+class Solution {
+  public:
+    int minimumSum(string &s) {
+        int n = s.size();
+        for (int i = 0; i < n / 2; i++) {
+            if (s[i] != '?' && s[n - 1 - i] != '?' && s[i] != s[n - 1 - i])
+                return -1;
+            if (s[i] == '?' && s[n - 1 - i] != '?')
+                s[i] = s[n - 1 - i];
+            else if (s[i] != '?' && s[n - 1 - i] == '?')
+                s[n - 1 - i] = s[i];
+        }
+        int i = 0;
+        while (i < n && s[i] == '?') i++;
+        if (i == n) return 0;
+        char prev = s[i];
+        int ans = 0;
+        for (int j = i + 1; j < n; j++) {
+            if (s[j] == '?') s[j] = prev;
+            ans += abs(s[j] - prev);
+            prev = s[j];
+        }
+        return ans;
+    }
+};
