@@ -1,0 +1,20 @@
+// C++ Code
+
+class Solution {
+  public:
+    bool isPossible(int n, int m, string& s) {
+        int lmn = 0  ,rmn =0 ,rmx =0 ,lmx = 0;
+        int x  = 0 ,y = 0;
+        for(char &ch: s){
+            switch(ch){
+                case 'U': x++;lmx = max(lmx , x); break;
+                case 'D': x-- ; lmn = min(lmn , x);break;
+                case 'L': y -- ; rmn = min(rmn , y);break;
+                default: y ++; rmx = max(rmx , y);
+            }
+        }
+        lmx -= lmn;
+        rmx -= rmn;
+        return lmx<n && rmx<m;
+    }
+};
