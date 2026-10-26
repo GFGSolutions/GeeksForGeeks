@@ -1,0 +1,25 @@
+// User template for C++
+
+class Solution {
+  public:
+    int minDiff(int k, vector<int> &arr) {
+        if(arr.size() == k)return 0;
+        int n = arr.size();
+        vector<int>pref_max(n) , pref_min(n) , suff_max(n) , suff_min(n);
+        pref_max[0] = pref_min[0] = arr[0];
+        for(int i = 1 ; i<n ; i++){
+            pref_max[i] =max(pref_max[i-1] , arr[i]);
+            pref_min[i] = min(pref_min[i-1] , arr[i]);
+        }
+        suff_max[n-1] = suff_min[n-1] = arr[n-1];
+        for(int i = n-2 ; i>=0 ; i--){
+            suff_max[i] = max(suff_max[i+1] , arr[i]);
+            suff_min[i] = min(suff_min[i+1] , arr[i]);
+        }
+        int ans = min(suff_max[k] - suff_min[k] , pref_max[n-k-1] - pref_min[n-k-1]);
+        for(int i = 0 ; i<n-k-1 ; i++){
+            ans = min(ans , max(pref_max[i] , suff_max[i+k+1]) - min(pref_min[i] , suff_min[i + k+1]));
+        }
+        return ans;
+    }
+};
