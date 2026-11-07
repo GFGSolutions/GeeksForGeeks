@@ -1,0 +1,28 @@
+// User template for C++
+
+class Solution {
+  public:
+    vector<string> generateUsernames(vector<string> arr) {
+        unordered_set<string> reserved(arr.begin(), arr.end());
+        unordered_set<string> assigned;
+        vector<string> res;
+        for (const string& name : arr) {
+            if (assigned.find(name) == assigned.end()) {
+                assigned.insert(name);
+                res.push_back(name);
+            } else {
+                int k = 1;
+                while (true) {
+                    string cand = name + to_string(k);
+                    if (assigned.find(cand) == assigned.end() && reserved.find(cand) == reserved.end()) {
+                        assigned.insert(cand);
+                        res.push_back(cand);
+                        break;
+                    }
+                    k++;
+                }
+            }
+        }
+        return res;
+    }
+};
