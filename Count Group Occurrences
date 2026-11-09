@@ -1,0 +1,21 @@
+// User template for C++
+
+class Solution {
+  public:
+    int getCount(string &s, int k) {
+        vector<int> alphabets(26,0);
+        int n=s.size(), i=0;
+        while(i<n){
+            int idx=s[i]-'a';
+            alphabets[idx]++;
+            int j=i+1;
+            while(j<n && s[j]==s[i]) j++;
+            i=j;
+        }
+        int count=0;
+        for(int i=0;i<26;i++){
+            if(alphabets[i]==k) count++;
+        }
+        return count;
+    }
+};
