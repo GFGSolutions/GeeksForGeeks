@@ -1,0 +1,42 @@
+// User template for C++
+
+class Solution {
+public:
+    int maxEqualSum(vector<int> &s1, vector<int> &s2, vector<int> &s3) {
+        int sum = 0;
+        int sum1 = 0;
+        int sum2 = 0;
+        for(int i = s1.size()-1;i>=0;i--){
+            sum += s1[i];
+        }
+        for(int i = s2.size()-1;i>=0;i--){
+            sum1 += s2[i];
+        }
+        for(int i = s3.size()-1;i>=0;i--){
+            sum2 += s3[i];
+        }
+        int j = 0,k = 0,l = 0;
+        while(j < s1.size() && k < s2.size() && l < s3.size()){
+            if(sum == sum1 && sum1 == sum2){
+                return sum;
+            } 
+            int a = max({sum,sum1,sum2});
+            if(a == sum){
+                sum -= s1[j];
+                j++;
+            }
+            else if(a == sum1){
+                sum1 -= s2[k];
+                k++;
+            }
+            else{
+                sum2 -= s3[l];
+                l++;
+            }
+        }
+        if(sum == sum1 && sum1 == sum2){
+            return sum;
+        } 
+        return 0;
+    }
+};
