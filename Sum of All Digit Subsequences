@@ -1,0 +1,24 @@
+// User template for C++
+
+class Solution {
+public:
+    int subsequenceSum(string &s) {
+        const long long MOD = 1e9 + 7;
+        int n = s.size();
+        long long power = 1;
+        long long ans = 0;
+        long long base = 2;
+        int exp = n - 1;
+        while (exp > 0) {
+            if (exp & 1)
+                power = (power * base) % MOD;
+            base = (base * base) % MOD;
+            exp >>= 1;
+        }
+        for (char ch : s) {
+            int digit = ch - '0';
+            ans = (ans + digit * power) % MOD;
+        }
+        return (int)ans;
+    }
+};
