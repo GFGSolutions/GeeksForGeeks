@@ -1,0 +1,17 @@
+// User template for C++
+
+class Solution {
+  public:
+    static bool comparator(int &a, int &b){
+        if((a&1) and (b&1)){
+            return a>b;
+        }
+        else if(!(a&1) and !(b&1)){
+            return a<b;
+        }
+        return (a&1);
+    }
+    void sortIt(vector<int>& arr) {
+        sort(arr.begin(), arr.end(), comparator);
+    }
+};
