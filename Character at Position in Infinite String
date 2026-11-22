@@ -1,0 +1,29 @@
+// User template for C++
+
+class Solution {
+  public:
+    char posInfinite(string &s, int pos) {
+        long long len = s.size();
+        long long p = pos;
+        long long i = 1;
+        while (len < p) {
+            len = 2 * len + i;
+            i++;
+        }
+        while (p > (long long)s.size()) {
+            long long oldLen = (len - (i - 1)) / 2;
+            if (p <= oldLen) {
+                len = oldLen;
+            }
+            else if (p <= oldLen + i - 1) {
+                return '$';
+            }
+            else {
+                p = len - p + 1;
+                len = oldLen;
+            }
+            i--;
+        }
+        return s[p - 1];
+    }
+};
