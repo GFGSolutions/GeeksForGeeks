@@ -1,0 +1,27 @@
+// User template for C++
+
+class Solution {
+  public:
+    vector<int> findPairs(vector<int>& arr) {
+        int n = arr.size();
+        unordered_map<long long, pair<int, int>> map;
+        vector<int> ans = {-1, -1, -1, -1};
+        for (int i = 0; i < n; i++) {
+            for (int j = i +1; j < n; j++) {
+                long long sum = arr[i] + arr[j];
+                if (map.count(sum)) {
+                    auto [a, b] = map[sum];
+                    if (a != i && a != j && b != i && b != j) {
+                        vector<int>temp = {a, b, i, j};
+                        if (ans[0] == -1 || temp < ans) {
+                            ans = temp;
+                        }
+                    }
+                } else {
+                    map[sum] = {i, j};
+                }
+            }
+        }
+        return ans;
+    }
+};
