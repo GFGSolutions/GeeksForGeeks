@@ -1,0 +1,11 @@
+// User template for C++
+
+class Solution {
+  public:
+    int countEdges(vector<vector<int>> &adj) {
+        int res = 0;
+        for(auto vec : adj)
+        res += vec.size();
+        return res/2;
+    }
+};
