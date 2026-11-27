@@ -1,0 +1,25 @@
+// User template for C++
+
+class Solution {
+  public:
+    bool checkPath(vector<vector<int>> &adj, int u, int v) {
+        int n = adj.size();
+        vector<bool> visited(n, false);
+        stack<int> st;
+        st.push(u);
+        visited[u] = true;
+        while (!st.empty()) {
+            int node = st.top();
+            st.pop();
+            if (node == v)
+                return true;
+            for (int neighbor : adj[node]) {
+                if (!visited[neighbor]) {
+                    visited[neighbor] = true;
+                    st.push(neighbor);
+                }
+            }
+        }
+        return false;
+    }
+};
